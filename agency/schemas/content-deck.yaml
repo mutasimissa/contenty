@@ -1,0 +1,9 @@
+type: object
+description: Structured copy for all website pages, organized by page with section-level detail.
+required:
+  - pages
+properties:
+  pages:
+    type: array
+    description: Array of page objects, each containing section-level copy.
+    example: [{ "page": "Home", "hero": { "headline": "...", "subheadline": "...", "cta": "..." } }]

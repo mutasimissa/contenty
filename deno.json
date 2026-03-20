@@ -1,0 +1,18 @@
+{
+  "tasks": {
+    "start": "deno run --allow-read --allow-write --allow-run cli/start.ts",
+    "intake": "deno run --allow-read --allow-write cli/intake.ts",
+    "validate": "deno run --allow-read cli/validate.ts",
+    "clone-brief": "deno run --allow-read --allow-write cli/clone-page-brief.ts",
+    "init-project": "deno run --allow-read --allow-write cli/init-project.ts",
+    "prelaunch": "deno run --allow-read cli/prelaunch-check.ts",
+    "init-website": "deno run --allow-read --allow-write --allow-run --allow-net cli/init-website.ts",
+    "new-page": "deno run --allow-read --allow-write cli/new-page.ts",
+    "new-blog": "deno run --allow-read --allow-write cli/new-blog.ts",
+    "new-landing": "deno run --allow-read --allow-write cli/new-landing.ts",
+    "audit": "deno run --allow-read cli/audit.ts",
+    "analytics": "deno run --allow-read --allow-write cli/analytics.ts",
+    "brand-check": "deno run --allow-read cli/brand-check.ts",
+    "add-locale": "deno run --allow-read --allow-write cli/add-locale.ts"
+  }
+}

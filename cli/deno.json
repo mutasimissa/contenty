@@ -1,0 +1,24 @@
+{
+  "imports": {
+    "@std/yaml": "jsr:@std/yaml@^1",
+    "@std/fs": "jsr:@std/fs@^1",
+    "@std/path": "jsr:@std/path@^1",
+    "@cliffy/prompt": "jsr:@cliffy/prompt@^1"
+  },
+  "tasks": {
+    "start": "deno run --allow-read --allow-write --allow-run start.ts",
+    "intake": "deno run --allow-read --allow-write intake.ts",
+    "validate": "deno run --allow-read validate.ts",
+    "clone-brief": "deno run --allow-read --allow-write clone-page-brief.ts",
+    "init-project": "deno run --allow-read --allow-write init-project.ts",
+    "prelaunch": "deno run --allow-read prelaunch-check.ts",
+    "init-website": "deno run --allow-read --allow-write --allow-run --allow-net init-website.ts",
+    "new-page": "deno run --allow-read --allow-write new-page.ts",
+    "new-blog": "deno run --allow-read --allow-write new-blog.ts",
+    "new-landing": "deno run --allow-read --allow-write new-landing.ts",
+    "audit": "deno run --allow-read audit.ts",
+    "analytics": "deno run --allow-read --allow-write analytics.ts",
+    "brand-check": "deno run --allow-read brand-check.ts",
+    "add-locale": "deno run --allow-read --allow-write add-locale.ts"
+  }
+}

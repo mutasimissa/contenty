@@ -1,0 +1,109 @@
+# Website Implementation
+
+> **Role:** You are a frontend developer building a production-ready website using Fresh 2.2+, Tailwind CSS 4, and Deno, guided entirely by the business files in this repository.
+
+## Goal
+
+Build the website inside `website/` based on the completed business strategy, content deck, and page briefs. Every page, section, headline, and CTA must trace back to a business file.
+
+## Tech stack
+
+| Layer | Technology | Version |
+|---|---|---|
+| **Runtime** | Deno | 2.x |
+| **Framework** | Fresh | 2.2+ |
+| **Bundler** | Vite | (bundled with Fresh) |
+| **Styling** | Tailwind CSS | 4.x (via `@tailwindcss/vite`) |
+| **Rendering** | Server-side with island architecture | — |
+
+## Prerequisites
+
+- All business files (`business/01-*` through `business/10-*`) are complete and QA'd
+- User has run `deno task init-website` to bootstrap the Fresh project in `website/`
+- `docs/decisions/tech-stack.md` exists
+
+## Read these files first
+
+1. `business/06-sitemap.yaml` — page inventory and navigation
+2. `business/07-page-briefs/` — all page briefs (section structure per page)
+3. `business/09-content-deck.md` — all page copy
+4. `business/08-seo-brief.md` — metadata, schema markup, keywords
+5. `business/02-brand-strategy.md` — tone and message pillars
+6. `agency/blueprints/` — section-level page structures
+7. `agency/rubrics/launch-rubric.md` — launch readiness criteria
+
+## Working method
+
+1. **Review the sitemap** — confirm which pages to build and their navigation order
+2. **Set up routing** — create Fresh routes for each page in `website/routes/`
+3. **Build shared layout** — header with navigation, footer with CTA and legal links
+4. **Build each page** following this pattern:
+   a. Read the page brief for section structure
+   b. Read the content deck for actual copy
+   c. Read the blueprint for section-level guidance
+   d. Implement sections as Fresh components
+   e. Use Tailwind CSS 4 for styling
+   f. Add islands only where client-side interactivity is required (forms, mobile nav)
+5. **Implement SEO** — add meta tags, Open Graph, schema markup per the SEO brief
+6. **Implement contact form** — as an island component with server-side handling
+7. **Add accessibility** — semantic HTML, ARIA labels, keyboard navigation, skip links
+8. **Test** — verify all pages render, navigation works, CTAs link correctly
+
+## Architecture principles
+
+- **Server-first:** Render everything on the server. Only use islands for interactive elements.
+- **Minimal JS:** No client-side JavaScript unless strictly necessary (forms, mobile menu).
+- **Semantic HTML:** Use proper heading hierarchy, landmarks, and ARIA where needed.
+- **Performance:** No layout shift, fast first paint, minimal bundle size.
+- **Content-driven:** Every heading, paragraph, and CTA comes from `business/09-content-deck.md`.
+
+## File structure guidance
+
+```
+website/
+  routes/
+    index.tsx          # Home page
+    solutions.tsx      # Solutions page
+    industries.tsx     # Industries page
+    about.tsx          # About page
+    contact.tsx        # Contact page
+    _layout.tsx        # Shared layout (header + footer)
+    _404.tsx           # 404 page
+  islands/
+    ContactForm.tsx    # Interactive contact form
+    MobileNav.tsx      # Mobile navigation toggle
+  components/
+    Header.tsx         # Site header with navigation
+    Footer.tsx         # Site footer
+    Hero.tsx           # Reusable hero section
+    CTA.tsx            # Reusable CTA block
+    Section.tsx        # Reusable content section wrapper
+  static/
+    styles.css         # Tailwind CSS entry point
+```
+
+## Validation criteria
+
+- [ ] Every page in `business/06-sitemap.yaml` has a corresponding route
+- [ ] All copy matches `business/09-content-deck.md` exactly
+- [ ] Primary CTA is consistent across all pages
+- [ ] Meta tags match `business/08-seo-brief.md` metadata direction
+- [ ] Schema markup is implemented where noted in SEO brief
+- [ ] Navigation matches the sitemap primary navigation order
+- [ ] Contact form works and submits to a handler
+- [ ] Site is accessible (semantic HTML, keyboard nav, skip links)
+- [ ] No layout shift, images have dimensions, fonts are optimized
+
+## Dependency chain
+
+- **Requires:** All business files complete, `deno task init-website` already run
+- **This is the final implementation phase**
+
+## Guardrails
+
+- Never invent copy — all text comes from business files
+- Never add pages not in the sitemap without updating `business/06-sitemap.yaml`
+- Prefer server rendering over client-side JavaScript
+- Record any implementation decisions in `docs/decisions/`
+- Keep components small and composable
+- Use Tailwind utility classes — no custom CSS unless absolutely necessary

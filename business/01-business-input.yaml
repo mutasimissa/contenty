@@ -1,0 +1,17 @@
+# Run `deno task intake` to fill this file interactively,
+# or edit it manually following the schema in agency/schemas/business-input.yaml
+
+business_name:
+website_goal:
+industry:
+target_markets: []
+target_segments: []
+offers: []
+primary_cta:
+desired_tone:
+competitors: []
+constraints: []
+
+# i18n — leave default_locale only if the site is single-language
+default_locale: en
+locales: []

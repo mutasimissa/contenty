@@ -1,0 +1,22 @@
+business_name: Acme Industrial Systems
+website_goal: Generate qualified inbound leads for industrial operations solutions
+industry: Industrial technology
+target_markets:
+  - KSA
+  - GCC
+target_segments:
+  - Operations leaders
+  - Plant managers
+  - Procurement stakeholders
+offers:
+  - Industrial monitoring systems
+  - Maintenance visibility solutions
+  - Operational dashboards
+primary_cta: Book a discovery call
+desired_tone: Clear, credible, practical
+competitors:
+  - Competitor A
+  - Competitor B
+constraints:
+  - Claims must be supportable
+  - No unverified customer logos

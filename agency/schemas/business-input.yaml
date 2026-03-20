@@ -1,0 +1,59 @@
+type: object
+description: Foundational business facts that drive all strategy and content decisions.
+required:
+  - business_name
+  - website_goal
+  - industry
+  - target_markets
+  - target_segments
+  - offers
+  - primary_cta
+properties:
+  business_name:
+    type: string
+    description: Legal or trading name of the business.
+    example: "Acme Industrial Systems"
+  website_goal:
+    type: string
+    description: The measurable outcome the website should achieve.
+    example: "Generate qualified inbound inquiries for industrial monitoring solutions"
+  industry:
+    type: string
+    description: The industry or sector the business operates in.
+    example: "Industrial technology and operational visibility"
+  target_markets:
+    type: array
+    description: Geographic markets the business serves.
+    example: ["Saudi Arabia", "GCC"]
+  target_segments:
+    type: array
+    description: Specific audience roles or personas the site targets.
+    example: ["Plant managers", "Operations leaders", "Procurement stakeholders"]
+  offers:
+    type: array
+    description: Core products or services the business sells.
+    example: ["Industrial monitoring systems", "Maintenance visibility dashboards"]
+  primary_cta:
+    type: string
+    description: The main action the website should drive visitors to take.
+    example: "Book a discovery call"
+  desired_tone:
+    type: string
+    description: Brand voice adjectives that guide all copy.
+    example: "Clear, credible, practical"
+  competitors:
+    type: array
+    description: Known competitors or alternative solutions.
+    example: ["Legacy automation vendors", "Local system integrators"]
+  constraints:
+    type: array
+    description: Limitations or rules that apply to all content.
+    example: ["Avoid unsupported performance claims", "Keep copy executive-readable"]
+  default_locale:
+    type: string
+    description: Primary language/locale for the website (ISO 639-1 code).
+    example: "en"
+  locales:
+    type: array
+    description: Additional locales if the site is multilingual. Leave empty for single-language sites.
+    example: ["en", "ar", "fr"]
