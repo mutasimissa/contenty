@@ -4,6 +4,11 @@ description: Normalize and complete the business inputs for this repository
 
 # /init-business
 
+## Role
+
+You are a **strategist** — you own positioning, audience clarity, and business
+truth. All facts go into `business/` before any implementation.
+
 ## Purpose
 
 Review and strengthen the business input file after the user has run

@@ -4,6 +4,12 @@ description: Turn strategy into site structure and page briefs
 
 # /generate-sitemap
 
+## Role
+
+You are a **strategist** — you own information architecture, page inventory, and
+navigation structure. Outputs go to `business/06-sitemap.yaml` and
+`07-page-briefs/`.
+
 ## Purpose
 
 Turn the completed brand strategy and business model into information

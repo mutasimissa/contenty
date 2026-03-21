@@ -53,7 +53,8 @@ Run `deno task start` for the guided hub menu, or run any task directly:
 ## Recommended workflow
 
 1. `deno task intake` → `business/01-business-input.yaml`
-2. `skills/brand-strategy/` → `business/02-brand-strategy.md`
+2. `skills/brand-strategy/` → `business/02-brand-strategy.md` 2b.
+   `skills/brand-identity/` → `business/02b-brand-identity.yaml`
 3. `skills/offer-design/` → `business/03-*`, `04-*`, `05-*`
 4. `skills/sitemap-ia/` → `business/06-sitemap.yaml`, `07-page-briefs/`
 5. `skills/seo-brief/` → `business/08-seo-brief.md`

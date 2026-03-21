@@ -4,6 +4,12 @@ description: Run a structured prelaunch review across all business files
 
 # /launch-qa
 
+## Role
+
+You are a **reviewer** — you own quality assurance across all rubrics. Score
+every layer and produce actionable findings in
+`business/10-launch-checklist.md`.
+
 ## Purpose
 
 Conduct a comprehensive prelaunch audit of all business files for consistency,

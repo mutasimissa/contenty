@@ -1,9 +1,8 @@
 import {
   askText, askList, askConfirm,
-  printSuccess, printNext, printSection, printHint, printInfo,
+  printSuccess, printNext, printSection, printHint,
 } from "./_shared/prompts.ts";
 import { writeYaml, writeText, readText } from "./_shared/files.ts";
-import { Select } from "@cliffy/prompt";
 
 console.log(`
 ╔══════════════════════════════════════════════════════════╗
@@ -15,7 +14,7 @@ console.log(`
 // ── 1. Identity ──────────────────────────────────────────
 
 printSection(
-  "1/7 — Business Identity",
+  "1/8 — Business Identity",
   "Basic facts about who you are and what you do.",
 );
 
@@ -28,7 +27,7 @@ const industry = await askText("Industry or sector");
 // ── 2. Website goal ──────────────────────────────────────
 
 printSection(
-  "2/7 — Website Goal",
+  "2/8 — Website Goal",
   "What should the website accomplish? Think about the single most important outcome.",
 );
 
@@ -43,7 +42,7 @@ const websiteGoal = await askText("Website goal");
 // ── 3. Audience ──────────────────────────────────────────
 
 printSection(
-  "3/7 — Audience & Markets",
+  "3/8 — Audience & Markets",
   "Who are you trying to reach, and where are they?",
 );
 
@@ -63,7 +62,7 @@ const targetSegments = await askList("Target audience segments");
 // ── 4. Offers ────────────────────────────────────────────
 
 printSection(
-  "4/7 — Core Offers",
+  "4/8 — Core Offers",
   "What do you sell or provide? List your main products or services.",
 );
 
@@ -77,7 +76,7 @@ const offers = await askList("Core offers / services");
 // ── 5. Conversion & Tone ─────────────────────────────────
 
 printSection(
-  "5/7 — Conversion & Tone",
+  "5/8 — Conversion & Tone",
   "How do you want visitors to act, and how should the site feel?",
 );
 
@@ -99,7 +98,7 @@ const desiredTone = await askText("Desired tone");
 // ── 6. Competitive landscape ─────────────────────────────
 
 printSection(
-  "6/7 — Competitive Landscape",
+  "6/8 — Competitive Landscape",
   "Who else does your audience consider? (optional but helpful)",
 );
 
@@ -122,7 +121,7 @@ const constraints = await askList("Constraints");
 // ── 7. Language / i18n ───────────────────────────────────
 
 printSection(
-  "7/7 — Language & Localization",
+  "7/8 — Language & Localization",
   "Will your site need to support multiple languages?",
 );
 
@@ -142,7 +141,38 @@ if (multiLingual) {
   locales = await askList("All supported locales", [defaultLocale]);
 }
 
-// ── Write output ─────────────────────────────────────────
+// ── 8. Brand Identity Seeds ───────────────────────────────────
+
+printSection(
+  "8/8 — Brand Identity Seeds",
+  "Optional visual identity inputs. These help the AI generate your design tokens.",
+);
+
+printHint(
+  'If you have a logo file, provide the path relative to the project root.\n' +
+  '     Example: "assets/brand/logo-color.svg"\n' +
+  '     Press Enter to skip if you don\'t have one yet.',
+);
+const logoPath = await askText("Logo file path (optional)", "");
+
+printHint(
+  'If you have a brand color in mind, enter a hex code.\n' +
+  '     Example: "#2d5490" or "#e63946"\n' +
+  '     Press Enter to skip.',
+);
+const brandColorHint = await askText("Brand color hint (optional)", "");
+
+printHint(
+  'A short statement describing the visual feel you want for the brand.\n' +
+  '     Examples:\n' +
+  '     "Clean, minimal, and trustworthy — convey authority without heaviness"\n' +
+  '     "Bold and energetic — stand out in a crowded market"\n' +
+  '     "Refined and corporate — match Big 4 credibility"\n' +
+  '     Press Enter to skip.',
+);
+const brandPhilosophy = await askText("Brand philosophy (optional)", "");
+
+// ── Write output ─────────────────────────────────────────────
 
 const data: Record<string, unknown> = {
   business_name: businessName,
@@ -157,6 +187,9 @@ const data: Record<string, unknown> = {
   ...(constraints.length > 0 && { constraints }),
   default_locale: defaultLocale,
   ...(locales.length > 1 && { locales }),
+  ...(logoPath && { logo_path: logoPath }),
+  ...(brandColorHint && { brand_color_hint: brandColorHint }),
+  ...(brandPhilosophy && { brand_philosophy: brandPhilosophy }),
 };
 
 await writeYaml("business/01-business-input.yaml", data);
@@ -185,9 +218,13 @@ console.log(`  Offers:    ${offers.join(", ")}`);
 if (locales.length > 1) {
   console.log(`  Locales:   ${locales.join(", ")} (default: ${defaultLocale})`);
 }
+if (logoPath) console.log(`  Logo:      ${logoPath}`);
+if (brandColorHint) console.log(`  Color:     ${brandColorHint}`);
+if (brandPhilosophy) console.log(`  Identity:  ${brandPhilosophy}`);
 console.log(`${"═".repeat(60)}\n`);
 
 printNext(
   "Open this repo in Windsurf or Claude and say:\n" +
-  '  "Follow the skill in skills/brand-strategy/SKILL.md"',
+  '  "Follow the skill in skills/brand-strategy/SKILL.md"\n' +
+  '  Then: "Follow the skill in skills/brand-identity/SKILL.md"',
 );

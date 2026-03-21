@@ -1,9 +1,9 @@
 # Contenty
 
-A strategy-first website template for AI-assisted delivery. Clone it, run the
-hub CLI, and let AI skills guide you through strategy, content, and
-implementation — whether you're launching for the first time or coming back to
-add a blog post.
+A strategy-first website system for AI-assisted delivery. One command
+(`deno task start`) guides you through strategy, content, and implementation —
+whether you're launching for the first time, rebuilding after a strategy change,
+or adding a blog post.
 
 > **One repo = one business = one website.**
 
@@ -11,7 +11,7 @@ add a blog post.
 
 ## Prerequisites
 
-- [Deno 2.x](https://deno.land/) installed
+- [Deno 2.x](https://deno.land/)
 - [Git](https://git-scm.com/)
 - An AI coding tool: [Windsurf](https://codeium.com/windsurf) or
   [Claude Code](https://claude.ai/)
@@ -21,224 +21,223 @@ add a blog post.
 ## Quick Start
 
 ```bash
-# 1. Clone the template
 git clone https://github.com/your-org/contenty.git my-business-site
 cd my-business-site
-
-# 2. Run the hub — it detects your project state and guides you
 deno task start
 ```
 
-`deno task start` is the **single entry point** for everything. It checks which
-business files exist, detects your project stage, and presents a menu of what
-you can do next — whether that's first-time intake, adding a landing page,
-running a content audit, or checking your brand assets.
-
-You can also run any task directly: `deno task intake`, `deno task new-blog`,
-etc.
+**`deno task start` is the only command you need.** It detects your project
+state, shows a checklist of what's done and what's next, and routes you to the
+right action — CLI task or AI workflow. You never need to remember individual
+task names.
 
 ---
 
 ## How It Works
 
-This repo separates **three concerns**:
+| Folder      | Role                                                        | Who writes it                 |
+| ----------- | ----------------------------------------------------------- | ----------------------------- |
+| `business/` | Source of truth — strategy, offers, personas, sitemap, copy | AI skills guided by you       |
+| `agency/`   | Reusable method — frameworks, schemas, rubrics, blueprints  | Pre-built (you can customize) |
+| `website/`  | The actual website (Fresh 2.2+ / Tailwind 4 / Deno)         | CLI scaffold + AI content     |
 
-| Folder      | Role                                                                         | Who writes it                     |
-| ----------- | ---------------------------------------------------------------------------- | --------------------------------- |
-| `business/` | The truth about this business — strategy, offers, personas, sitemap, content | AI skills guided by you           |
-| `agency/`   | Reusable methodology — frameworks, templates, schemas, rubrics, blueprints   | Pre-built (you can customize)     |
-| `website/`  | The actual website implementation                                            | AI + you (after strategy is done) |
-
-The first launch is **sequential**: intake → strategy → content → build. After
-that, operations are **cyclical** — you come back to add pages, write posts,
-update strategy, run audits, and extend the site.
+The first launch is **sequential**: intake → strategy → identity → offers →
+sitemap → SEO → copy → QA → build. After that, operations are **cyclical** — add
+pages, write posts, update strategy, rebuild the site.
 
 ---
 
 ## First Launch
 
-The first time through, follow these 8 phases in order:
+Run `deno task start` and choose **First Launch**. The hub shows a numbered
+checklist and auto-advances to the next pending phase:
 
-| # | Phase           | How                                                           | Output                                        |
-| - | --------------- | ------------------------------------------------------------- | --------------------------------------------- |
-| 1 | Business intake | `deno task intake`                                            | `business/01-business-input.yaml`             |
-| 2 | Brand strategy  | AI: `skills/brand-strategy/SKILL.md`                          | `business/02-brand-strategy.md`               |
-| 3 | Offer design    | AI: `skills/offer-design/SKILL.md`                            | `business/03-*`, `04-*`, `05-*`               |
-| 4 | Sitemap & IA    | AI: `skills/sitemap-ia/SKILL.md`                              | `business/06-sitemap.yaml`, `07-page-briefs/` |
-| 5 | SEO brief       | AI: `skills/seo-brief/SKILL.md`                               | `business/08-seo-brief.md`                    |
-| 6 | Page copy       | AI: `skills/page-copy/SKILL.md`                               | `business/09-content-deck.md`                 |
-| 7 | Launch QA       | AI: `skills/launch-qa/SKILL.md`                               | `business/10-launch-checklist.md`             |
-| 8 | Website build   | `deno task init-website` + AI: `skills/website-init/SKILL.md` | `website/`                                    |
+| #  | Phase           | Action                      | Output                                        |
+| -- | --------------- | --------------------------- | --------------------------------------------- |
+| 1  | Business intake | CLI: `deno task intake`     | `business/01-business-input.yaml`             |
+| 2  | Brand strategy  | AI: `/build-brand-strategy` | `business/02-brand-strategy.md`               |
+| 2b | Brand identity  | AI: `/build-brand-strategy` | `business/02b-brand-identity.yaml`            |
+| 3  | Offer design    | AI: `/run-offer-design`     | `business/03-*`, `04-*`, `05-*`               |
+| 4  | Sitemap & IA    | AI: `/generate-sitemap`     | `business/06-sitemap.yaml`, `07-page-briefs/` |
+| 5  | SEO brief       | AI: `/run-seo-brief`        | `business/08-seo-brief.md`                    |
+| 6  | Page copy       | AI: `/write-page-copy`      | `business/09-content-deck.md`                 |
+| 7  | Launch QA       | AI: `/launch-qa`            | `business/10-launch-checklist.md`             |
+| 8  | Website build   | CLI + AI: `/init-website`   | `website/`                                    |
 
-Each AI phase means telling your AI tool:
+The hub tells you the exact slash command for both Windsurf and Claude, plus
+which files will be read and written.
 
-> Follow the skill in `skills/<name>/SKILL.md`
+---
 
-The AI reads your business files, applies the agency methodology, writes the
-output, and validates against the rubric.
+## Rebuilding the Website
+
+After changing business files (brand identity, sitemap, copy, etc.), you can
+rebuild the website to re-sync:
+
+1. Run `deno task start` → choose **Rebuild Website**
+2. The CLI wipes `website/` and regenerates a branded scaffold from `business/`
+   — styles, routes, components, locale config
+3. Then your AI tool populates the content using the `/init-website` workflow
+
+### What gets regenerated (CLI)
+
+- `website/assets/styles.css` — Tailwind `@theme` from brand identity tokens
+- `website/utils/locale.ts` — locale list, RTL detection
+- `website/routes/_app.tsx` — HTML shell with correct fonts
+- `website/routes/*.tsx` — route stubs for every page in the sitemap
+- `website/components/` — Header, Footer, Hero, CTA, Section, HrefLang
+- `website/locales/*.json` — translation stubs
+- Middleware for locale routing
+
+### What needs AI re-population (workflow)
+
+- Page copy from `business/09-content-deck.md`
+- Section layouts from `business/07-page-briefs/*.md`
+- SEO metadata from `business/08-seo-brief.md`
+- Islands: BookingModal, MobileNav, LocaleSwitcher
+- Translated UI strings in locale JSON files
+
+The hub will warn you when branding is out of sync (brand identity file is newer
+than `website/assets/styles.css`).
 
 ---
 
 ## Ongoing Operations
 
-After first launch, you come back to extend and maintain the site. Run
-`deno task start` and pick what you need:
+After first launch, run `deno task start` and pick what you need:
 
-### Add content
+- **Add Content** — new page, blog post, or landing page (interactive wizards)
+- **Update** — revise any strategy, copy, or SEO file via AI workflow
+- **Audit & QA** — validate files, run content audit, prelaunch check
+- **Rebuild Website** — full rebuild from business files
+- **Analytics** — GTM + GA4 guided setup
+- **Brand** — check logos, update design tokens
+- **Localization** — add a locale
 
-| Task                 | Command                        | What it does                                                           |
-| -------------------- | ------------------------------ | ---------------------------------------------------------------------- |
-| **New page**         | `deno task new-page`           | Interactive wizard → creates brief, updates sitemap, scaffolds route   |
-| **New blog post**    | `deno task new-blog`           | Scaffolds blog post with frontmatter — asks for locale if multilingual |
-| **New landing page** | `deno task new-landing`        | Creates brief, route, and sitemap entry for a conversion page          |
-| **Clone a brief**    | `deno task clone-brief <slug>` | Scaffolds a blank page brief from template                             |
-
-### Update strategy or content
-
-Re-run any AI skill to update its output. The AI reads your current files and
-proposes changes:
-
-- **Update positioning** → re-run `skills/brand-strategy/SKILL.md`
-- **Change offers** → re-run `skills/offer-design/SKILL.md`
-- **Refresh SEO** → re-run `skills/seo-brief/SKILL.md`
-- **Rewrite page copy** → re-run `skills/page-copy/SKILL.md` for that page
-- **Re-run intake** → `deno task intake` (overwrites business input)
-
-### Audit and QA
-
-| Task                | Command                         | What it does                                                       |
-| ------------------- | ------------------------------- | ------------------------------------------------------------------ |
-| **Validate files**  | `deno task validate`            | Checks all required business files exist and validates YAML keys   |
-| **Content audit**   | `deno task audit`               | Checks sitemap ↔ brief ↔ copy ↔ route coverage and CTA consistency |
-| **Prelaunch check** | `deno task prelaunch`           | Counts unchecked items in the launch checklist                     |
-| **Full launch QA**  | AI: `skills/launch-qa/SKILL.md` | Comprehensive review across all rubrics                            |
-
-### Analytics and tracking
-
-| Task                | Command               | What it does                                                  |
-| ------------------- | --------------------- | ------------------------------------------------------------- |
-| **Analytics setup** | `deno task analytics` | Guided GTM + GA4 setup → writes `docs/decisions/analytics.md` |
-
-Walks you through Google Tag Manager container ID, GA4 measurement ID,
-recommended conversion events (form_submit, cta_click, phone_click, etc.),
-Search Console, cookie consent, and Meta Pixel. Generates an implementation
-checklist.
-
-### Brand assets
-
-| Task            | Command                 | What it does                                                      |
-| --------------- | ----------------------- | ----------------------------------------------------------------- |
-| **Brand check** | `deno task brand-check` | Validates logo files in `assets/brand/` against naming convention |
-
-Expected files in `assets/brand/`:
-
-```
-logo-icon.svg / .png       Square icon, favicon source
-logo-horizontal.svg / .png Wide horizontal lockup
-logo-vertical.svg / .png   Stacked vertical lockup
-logo-color.svg             Full-color version
-logo-white.svg             White-only (dark backgrounds)
-logo-black.svg             Black-only (light backgrounds)
-```
-
-Optional: `favicon.ico`, `og-image.png` (1200×630), `apple-touch-icon.png`
-(180×180).
-
-### Localization
-
-| Task           | Command                | What it does                                             |
-| -------------- | ---------------------- | -------------------------------------------------------- |
-| **Add locale** | `deno task add-locale` | Adds a new language to `business/01-business-input.yaml` |
-
-The intake CLI asks about languages upfront. Blog and landing page CLIs are
-i18n-aware — they ask which locale to write in and create files in the correct
-directory.
-
-### Project setup
-
-| Task             | Command                  | What it does                                    |
-| ---------------- | ------------------------ | ----------------------------------------------- |
-| **Init website** | `deno task init-website` | Bootstraps Fresh 2.2 + Tailwind 4 in `website/` |
-| **Init project** | `deno task init-project` | Sets project name and basic config              |
+Every option shows the exact AI slash command for both tools, the files it
+reads, and the files it writes.
 
 ---
 
-## CLI Reference
+## Using with Windsurf
 
-All tasks are available via `deno task <name>`. Run `deno task start` for the
-guided hub menu.
+Windsurf reads `AGENTS.md` at the repo root and picks up:
 
-| Category           | Task             | Command                        |
-| ------------------ | ---------------- | ------------------------------ |
-| **Hub**            | Start            | `deno task start`              |
-| **First launch**   | Intake           | `deno task intake`             |
-|                    | Init website     | `deno task init-website`       |
-| **Content**        | New page         | `deno task new-page`           |
-|                    | New blog post    | `deno task new-blog`           |
-|                    | New landing page | `deno task new-landing`        |
-|                    | Clone brief      | `deno task clone-brief <slug>` |
-| **Quality**        | Validate         | `deno task validate`           |
-|                    | Content audit    | `deno task audit`              |
-|                    | Prelaunch check  | `deno task prelaunch`          |
-| **Infrastructure** | Analytics setup  | `deno task analytics`          |
-|                    | Brand check      | `deno task brand-check`        |
-|                    | Add locale       | `deno task add-locale`         |
-|                    | Init project     | `deno task init-project`       |
+- **Rules** in `.windsurf/rules/` — content quality, SEO quality, website
+  standards
+- **Workflows** in `.windsurf/workflows/` — slash-command automations with agent
+  role context
+
+### Slash commands
+
+| Command                 | Phase             |
+| ----------------------- | ----------------- |
+| `/init-business`        | Normalize inputs  |
+| `/build-brand-strategy` | Brand strategy    |
+| `/run-offer-design`     | Offers & personas |
+| `/generate-sitemap`     | Sitemap & IA      |
+| `/run-seo-brief`        | SEO brief         |
+| `/write-page-copy`      | Page copy         |
+| `/launch-qa`            | Prelaunch QA      |
+| `/init-website`         | Website build     |
+
+Each workflow includes a `## Role` section that frames the AI's behavioral
+context (strategist, copywriter, SEO specialist, reviewer, or builder).
 
 ---
 
-## Skills vs CLI Tools
+## Using with Claude
 
-| Layer                            | What                                              | How to use                                                   |
-| -------------------------------- | ------------------------------------------------- | ------------------------------------------------------------ |
-| **Skills** (`skills/*/SKILL.md`) | AI instructions for strategy and content work     | Tell your AI: "Follow the skill in `skills/<name>/SKILL.md`" |
-| **CLI tools** (`cli/*.ts`)       | Automation for scaffolding, validation, and setup | Run in terminal: `deno task <name>`                          |
+Claude reads `CLAUDE.md` at the repo root and picks up:
+
+- **Rules** in `.claude/rules/` — same quality standards as Windsurf
+- **Agents** in `.claude/agents/` — enriched role definitions with source files,
+  skills, rubrics, and guardrails
+- **Commands** in `.claude/commands/` — slash-command automations mirroring
+  Windsurf workflows
+
+### Slash commands
+
+| Command                 | Phase             |
+| ----------------------- | ----------------- |
+| `/init-business`        | Normalize inputs  |
+| `/build-brand-strategy` | Brand strategy    |
+| `/run-offer-design`     | Offers & personas |
+| `/generate-sitemap`     | Sitemap & IA      |
+| `/run-seo-brief`        | SEO brief         |
+| `/write-page-copy`      | Page copy         |
+| `/launch-qa`            | Prelaunch QA      |
+| `/init-website`         | Website build     |
+
+### Agents
+
+| Agent        | Owns                                              |
+| ------------ | ------------------------------------------------- |
+| `strategist` | Positioning, audience, messaging, offers, sitemap |
+| `copywriter` | Page copy, content deck, tone alignment           |
+| `seo`        | Keywords, metadata, schema, internal linking      |
+| `reviewer`   | QA across all rubrics, launch checklist           |
+| `builder`    | Website implementation from business files        |
 
 ---
 
 ## Folder Map
 
 ```
-business/     Source of truth — strategy, offers, personas, sitemap, content
-agency/       Reusable method — frameworks, templates, schemas, rubrics, blueprints
-  blueprints/   Section-level page structures (homepage, about, service, etc.)
-  methodology/  Strategic frameworks (brand, SEO, content, CRO, QA, lifecycle)
-  rubrics/      Scoring criteria for quality review
-  schemas/      YAML schemas for structured business files
-  templates/    Blank starting templates for each business file
-skills/       AI instructions — each skill is a SKILL.md the AI follows
-cli/          Deno scripts — hub, intake, scaffolding, audit, analytics, brand check
-website/      Implementation target — empty until Phase 8
-assets/       Logos and brand files (see naming convention above)
-  brand/        Logo variants: icon, horizontal, vertical, color, white, black
-  images/       Site images and references
-docs/         Decision records (tech stack, analytics, handoff notes)
-.windsurf/    Windsurf-specific workflows and rules
-.claude/      Claude-specific rules
+business/          Source of truth
+  01-business-input.yaml       Raw business facts, locales, constraints
+  02-brand-strategy.md         Positioning, tone, message pillars
+  02b-brand-identity.yaml      Design tokens (colors, typography, radii, shadows)
+  03-business-model.md         Revenue model and offers
+  04-value-proposition.md      Promise and proof
+  05-personas-jobs.md          Buyer segments and jobs-to-be-done
+  06-sitemap.yaml              Page inventory and navigation
+  07-page-briefs/              One brief per page
+  08-seo-brief.md              Keyword strategy and metadata direction
+  09-content-deck.md           Implementation-ready page copy
+  10-launch-checklist.md       QA findings and launch readiness
+
+agency/            Reusable methodology
+  blueprints/        Section-level page structures
+  methodology/       Strategic frameworks
+  rubrics/           Scoring criteria for quality review
+  schemas/           YAML schemas for structured outputs
+  templates/         Blank starting templates
+
+skills/            AI instructions (each is a SKILL.md)
+  brand-strategy/    Positioning, tone, trust anchors
+  brand-identity/    Colors, typography, spacing, logo rules
+  offer-design/      Business model, value prop, personas
+  sitemap-ia/        Information architecture and page briefs
+  seo-brief/         Keyword strategy and metadata
+  page-copy/         Structured page copy
+  launch-qa/         Prelaunch QA across all rubrics
+  website-init/      Multi-locale website build with RTL
+
+cli/               Deno automation scripts
+  start.ts           Hub menu (the only command you need)
+  _shared/           Shared utilities (files, prompts, state, brand-gen)
+  intake.ts          Business intake questionnaire
+  init-website.ts    Fresh scaffold + branded file generation
+  ...                (new-page, new-blog, new-landing, audit, etc.)
+
+website/           Implementation target (Fresh 2.2+ / Tailwind 4 / Deno)
+
+assets/            Logos and brand files
+  brand/             Logo variants (icon, horizontal, vertical, color, white, black)
+  images/            Site images and references
+
+docs/              Decision records (tech stack, analytics, handoff)
+
+.windsurf/         Windsurf configuration
+  workflows/         8 slash-command workflows with role context
+  rules/             Content quality, SEO quality, website standards
+
+.claude/           Claude configuration
+  commands/          8 slash-command workflows (mirrors Windsurf)
+  agents/            5 enriched agent definitions
+  rules/             Content quality, SEO quality, website standards
 ```
-
----
-
-## Using with Windsurf
-
-Windsurf reads `AGENTS.md` at the repo root. It also picks up:
-
-- **Rules** in `.windsurf/rules/` — content quality, SEO quality, website
-  standards
-- **Workflows** in `.windsurf/workflows/` — slash-command automations
-
-Use slash commands: `/build-brand-strategy`, `/generate-sitemap`,
-`/write-page-copy`, `/launch-qa`, `/init-website`, etc.
-
-## Using with Claude
-
-Claude reads `CLAUDE.md` at the repo root. It also picks up:
-
-- **Rules** in `.claude/rules/` — same quality standards as Windsurf
-
-Tell Claude which skill to run:
-
-> Read and follow `skills/brand-strategy/SKILL.md`
 
 ---
 
@@ -247,19 +246,20 @@ Tell Claude which skill to run:
 **`business/` defines truth. `agency/` defines method. `website/` defines
 implementation.**
 
-Never skip to code before the business files are coherent. Never invent business
-facts outside `business/`. Never implement without a page brief.
+- Never skip to code before business files are coherent
+- Never invent business facts outside `business/`
+- Never implement without a page brief
+- Always rebuild the website from business files — not the other way around
 
 ---
 
-## Template Philosophy
+## Skills vs CLI
 
-This template is **strategy-first by design**. The `website/` directory is
-intentionally empty. You must complete the business and content foundations
-before touching implementation. This prevents the common failure mode of jumping
-into UI code before the positioning, messaging, and content are solid.
+| Layer                            | What                                          | How to use                            |
+| -------------------------------- | --------------------------------------------- | ------------------------------------- |
+| **Skills** (`skills/*/SKILL.md`) | AI instructions for strategy and content work | Use the slash command in your AI tool |
+| **CLI tools** (`cli/*.ts`)       | Automation for scaffolding and validation     | All accessed via `deno task start`    |
 
-After launch, the same repo supports **ongoing operations** — adding pages,
-writing blog posts, creating landing pages, refreshing SEO, running audits, and
-managing brand assets. One entry point (`deno task start`), one source of truth
-(`business/`), one methodology (`agency/`).
+Skills are invoked through slash commands (`/build-brand-strategy`,
+`/write-page-copy`, etc.) — the same commands work in both Windsurf and Claude.
+The hub tells you which command to run next.

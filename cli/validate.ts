@@ -4,6 +4,7 @@ import { printSuccess, printError, printInfo } from "./_shared/prompts.ts";
 const REQUIRED_FILES = [
   "business/01-business-input.yaml",
   "business/02-brand-strategy.md",
+  "business/02b-brand-identity.yaml",
   "business/03-business-model.md",
   "business/04-value-proposition.md",
   "business/05-personas-jobs.md",
@@ -22,6 +23,11 @@ const REQUIRED_YAML_KEYS: Record<string, string[]> = {
     "target_segments",
     "offers",
     "primary_cta",
+  ],
+  "business/02b-brand-identity.yaml": [
+    "brand_philosophy",
+    "colors",
+    "typography",
   ],
 };
 

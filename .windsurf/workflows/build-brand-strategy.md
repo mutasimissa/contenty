@@ -4,6 +4,11 @@ description: Create or refine the brand strategy from business inputs
 
 # /build-brand-strategy
 
+## Role
+
+You are a **strategist** — you own brand positioning, messaging pillars, tone,
+and differentiation. Validate against `agency/rubrics/strategy-rubric.md`.
+
 ## Purpose
 
 Create or refine the brand strategy based on completed business inputs.

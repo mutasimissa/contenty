@@ -1,7 +1,26 @@
-import { writeText, resolve } from "./_shared/files.ts";
-import { printSuccess, printError, printInfo, printNext, askConfirm } from "./_shared/prompts.ts";
+import { writeText, resolve, fileExists } from "./_shared/files.ts";
+import { printSuccess, printError, printInfo, printNext, askConfirm, printSection } from "./_shared/prompts.ts";
+import { generateAllBrandedFiles } from "./_shared/brand-gen.ts";
 
 const WEBSITE_DIR = "website";
+
+// ── Pre-flight checks ────────────────────────────────────
+
+const requiredFiles = [
+  "business/01-business-input.yaml",
+  "business/02b-brand-identity.yaml",
+  "business/06-sitemap.yaml",
+];
+
+const missingFiles = requiredFiles.filter((f) => !fileExists(f));
+if (missingFiles.length > 0) {
+  printError("Missing required business files:");
+  for (const f of missingFiles) console.log(`  - ${f}`);
+  printInfo("Complete these files before running init-website.");
+  Deno.exit(1);
+}
+
+// ── Confirm overwrite if website exists ──────────────────
 
 const hasFiles = (() => {
   try {
@@ -15,14 +34,19 @@ const hasFiles = (() => {
 })();
 
 if (hasFiles) {
-  const proceed = await askConfirm("website/ already has files. Overwrite?", false);
+  const proceed = await askConfirm(
+    "website/ already has files. This will do a full rebuild from business files. Continue?",
+    false,
+  );
   if (!proceed) {
     printInfo("Aborted.");
     Deno.exit(0);
   }
 }
 
-printInfo("Bootstrapping Fresh 2.2+ project in website/...\n");
+// ── Step 1: Scaffold Fresh project ───────────────────────
+
+printSection("Step 1/3", "Scaffolding Fresh 2.2+ project");
 
 const command = new Deno.Command("deno", {
   args: ["run", "-Ar", "jsr:@fresh/init", resolve(WEBSITE_DIR)],
@@ -39,6 +63,25 @@ if (code !== 0) {
 }
 
 printSuccess("Fresh project created in website/");
+
+// ── Step 2: Generate branded files from business data ────
+
+printSection("Step 2/3", "Generating branded files from business/");
+
+try {
+  const written = await generateAllBrandedFiles();
+  printSuccess(`Generated ${written.length} branded files:`);
+  for (const f of written) {
+    console.log(`  + ${f}`);
+  }
+} catch (err) {
+  printError(`Brand generation failed: ${err instanceof Error ? err.message : String(err)}`);
+  Deno.exit(1);
+}
+
+// ── Step 3: Write tech stack decision record ─────────────
+
+printSection("Step 3/3", "Writing decision records");
 
 const techStackDoc = `# Tech Stack Decision
 
@@ -61,6 +104,14 @@ separate plugin. This stack prioritizes performance, simplicity, and modern stan
 await writeText("docs/decisions/tech-stack.md", techStackDoc);
 printSuccess("Wrote docs/decisions/tech-stack.md");
 
-printNext(
-  'Tell your AI tool:\n  "Follow the skill in skills/website-init/SKILL.md and build the website based on the business files."'
-);
+// ── Next steps ───────────────────────────────────────────
+
+console.log("");
+printSection("What's next", "The branded scaffold is ready. Now populate content with your AI tool.");
+console.log("  Run one of these commands in your AI tool:\n");
+console.log("  Windsurf:  /init-website");
+console.log("  Claude:    /init-website");
+console.log("");
+console.log("  The AI will read your content deck, page briefs, and SEO brief");
+console.log("  to populate each route with actual copy, meta tags, and islands.");
+console.log("");

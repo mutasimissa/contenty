@@ -53,6 +53,7 @@ the guided hub menu, or run any task directly:
 
 - strategy work → read `skills/brand-strategy/SKILL.md` or
   `skills/business-intake/SKILL.md`
+- brand identity → read `skills/brand-identity/SKILL.md`
 - offer design → read `skills/offer-design/SKILL.md`
 - sitemap and IA → read `skills/sitemap-ia/SKILL.md`
 - SEO work → read `skills/seo-brief/SKILL.md`

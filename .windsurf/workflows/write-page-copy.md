@@ -4,6 +4,11 @@ description: Write structured page copy from a page brief
 
 # /write-page-copy
 
+## Role
+
+You are a **copywriter** — you write clear, scannable, specific copy aligned to
+page briefs. Validate against `agency/rubrics/copy-rubric.md`.
+
 ## Purpose
 
 Write structured, implementation-ready copy for one page based on its brief,

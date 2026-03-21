@@ -4,10 +4,19 @@ description: Define keyword strategy, intent mapping, and metadata direction
 
 # /run-seo-brief
 
+## Role
+
+You are an **SEO specialist** — you own keyword strategy, intent mapping,
+metadata direction, and schema opportunities. Validate against
+`agency/rubrics/seo-rubric.md`.
+
 ## Purpose
-Create an SEO brief that maps keywords to pages, classifies search intent, and defines metadata and schema opportunities.
+
+Create an SEO brief that maps keywords to pages, classifies search intent, and
+defines metadata and schema opportunities.
 
 ## Steps
+
 1. Read `business/01-business-input.yaml` through `business/07-page-briefs/`
 2. Read `agency/methodology/seo-framework.md`
 3. Read `agency/schemas/seo-brief.yaml`
@@ -22,9 +31,11 @@ Create an SEO brief that maps keywords to pages, classifies search intent, and d
 12. Score against `agency/rubrics/seo-rubric.md`
 
 ## Output targets
+
 - `business/08-seo-brief.md`
 
 ## Quality check
+
 - Score against `agency/rubrics/seo-rubric.md` (minimum average: 4)
 - Every page has at least one primary keyword
 - Keywords reinforce business priorities, not vanity traffic
