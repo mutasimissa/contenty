@@ -15,7 +15,9 @@ homepage copy, navigation structure, proof sections, and CTA language.
 
 ## Read these files first
 
-1. `business/01-business-input.yaml` — business facts
+1. `business/01-business-input.yaml` — business facts + seed fields: `brand.*`
+   (one-liner, mission, vision, promise, UVP, differentiation, positioning,
+   personality, keywords, words to avoid), `proof.*`, `messaging.*`
 2. `agency/methodology/brand-strategy-framework.md` — questions to answer
 3. `agency/templates/brand-strategy.template.md` — output structure
 4. `agency/schemas/brand-strategy.yaml` — required fields

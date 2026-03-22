@@ -17,7 +17,10 @@ grounded in the business strategy, not vanity metrics.
 
 ## Read these files first
 
-1. `business/01-business-input.yaml` — industry, offers, audience
+1. `business/01-business-input.yaml` — industry, offers, audience + seed fields:
+   `seo.*` (keywords, intent mapping, geo targets, topical authority clusters),
+   `seo_content.*` (FAQ questions, glossary, blog topics, comparison/landing
+   pages)
 2. `business/02-brand-strategy.md` — positioning and message pillars
 3. `business/04-value-proposition.md` — promise and differentiation
 4. `business/06-sitemap.yaml` — page inventory
@@ -105,6 +108,31 @@ Write `business/08-seo-brief.md`:
 
 - [Page A] → [Page B]: [reason]
 - [Page B] → [Page C]: [reason]
+
+## Canonical URL pattern
+
+- Pattern: `https://DOMAIN/<slug>`
+- Locale pattern: `https://DOMAIN/<locale>/<slug>`
+- Trailing slash: [yes/no]
+
+## OG image strategy
+
+- Default: `/og-image.png` (1200×630, brand colors, business name)
+- Per-page: [describe any page-specific OG images if needed]
+
+## Structured data plan
+
+- **All pages:** Organization, WebSite, BreadcrumbList
+- **Service pages:** Service
+- **FAQ sections:** FAQPage
+- **Blog posts:** Article
+- **Contact page:** LocalBusiness (if applicable)
+
+## Content cluster strategy
+
+- **Pillar page:** [main topic page] → clusters around [theme]
+- **Supporting posts:** [3-5 blog post ideas that link back to the pillar]
+- **Intent coverage:** [how clusters cover awareness → evaluation → decision]
 ```
 
 ## Validation criteria
@@ -117,6 +145,10 @@ Score output against `agency/rubrics/seo-rubric.md`. Before finishing:
 - [ ] Schema opportunities are specific to page types
 - [ ] Keywords reinforce business priorities (not random traffic)
 - [ ] E-E-A-T signals are actionable
+- [ ] Canonical URL pattern is defined
+- [ ] OG image strategy is defined
+- [ ] Structured data plan covers all page types
+- [ ] Content cluster strategy links blog to service pages
 
 ## Dependency chain
 
@@ -133,4 +165,6 @@ After this skill: run `skills/page-copy/SKILL.md`
 - Prefer structured markdown over prose
 - Keep all business truth in `business/`
 - Do not optimize pages without business relevance
+- H1 must contain primary keyword (not just a brand tagline)
+- Meta description must include primary keyword + action verb
 - Validate output against the SEO rubric before finishing

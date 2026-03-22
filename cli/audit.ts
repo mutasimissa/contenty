@@ -132,6 +132,85 @@ try {
   fail("Could not check CTA consistency");
 }
 
+// ── 6. Launch checklist progress ─────────────────────────
+
+printSection("6/7 — Launch Checklist", "How many launch checklist items remain?");
+
+try {
+  if (!fileExists("business/10-launch-checklist.md")) {
+    fail("Launch checklist not found: business/10-launch-checklist.md");
+  } else {
+    const checklist = readText("business/10-launch-checklist.md");
+    const done = (checklist.match(/- \[x\]/gi) || []).length;
+    const todo = (checklist.match(/- \[ \]/g) || []).length;
+    const total = done + todo;
+    if (total === 0) {
+      printInfo("  No checklist items found.");
+    } else if (todo === 0) {
+      pass(`All ${total} checklist items complete`);
+    } else {
+      fail(`${todo}/${total} checklist items remaining`);
+    }
+  }
+} catch {
+  fail("Could not read launch checklist");
+}
+
+// ── 7. Website SEO technical checks ─────────────────────
+
+printSection("7/7 — SEO Technical", "Checking technical SEO in website routes (if bootstrapped).");
+
+const websiteExists = fileExists("website/deno.json") || fileExists("website/fresh.config.ts");
+
+if (!websiteExists) {
+  printInfo("  Website not bootstrapped — skipping SEO technical checks.");
+} else {
+  const seoChecks = [
+    { file: "website/static/robots.txt", label: "robots.txt" },
+    { file: "website/components/OGMeta.tsx", label: "OG meta component" },
+    { file: "website/components/JsonLd.tsx", label: "JSON-LD component" },
+    { file: "website/routes/sitemap.xml.ts", label: "Sitemap XML route" },
+    { file: "website/static/manifest.json", label: "PWA manifest" },
+    { file: "website/routes/_404.tsx", label: "Custom 404 page" },
+  ];
+
+  for (const check of seoChecks) {
+    if (fileExists(check.file)) {
+      pass(`${check.label} exists`);
+    } else {
+      fail(`Missing: ${check.label} (${check.file})`);
+    }
+  }
+
+  // Check route files for OG meta usage
+  try {
+    const sitemap = readYaml<Record<string, unknown>>("business/06-sitemap.yaml");
+    const primary = (sitemap.primary_navigation as string[]) || [];
+    let ogPresent = 0;
+    let ogMissing = 0;
+
+    for (const page of primary) {
+      const slug = page.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+      const routePath = slug === "home" ? "website/routes/index.tsx" : `website/routes/${slug}.tsx`;
+      if (fileExists(routePath)) {
+        const content = readText(routePath);
+        if (content.includes("OGMeta")) {
+          ogPresent++;
+        } else {
+          ogMissing++;
+          fail(`${page} route missing OGMeta component`);
+        }
+      }
+    }
+
+    if (ogMissing === 0 && ogPresent > 0) {
+      pass(`All ${ogPresent} route(s) include OGMeta`);
+    }
+  } catch {
+    // Skip if sitemap can't be read — already reported in section 1
+  }
+}
+
 // ── Summary ──────────────────────────────────────────────
 
 console.log(`\n${"═".repeat(60)}`);

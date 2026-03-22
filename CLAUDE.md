@@ -19,23 +19,67 @@ criteria.
 
 ## CLI tools
 
-The `cli/` directory contains Deno automation scripts. Run `deno task start` for
-the guided hub menu, or run any task directly:
+Run `deno task start` for the guided hub menu, or run any task directly:
 
-- `deno task start` — hub menu: detects project state, routes to the right task
-- `deno task intake` — interactive business intake questionnaire (with i18n
-  support)
-- `deno task validate` — check business files exist and validate YAML
-- `deno task clone-brief <slug>` — scaffold a new page brief from template
-- `deno task new-page` — add a new page (brief + sitemap entry + optional route)
-- `deno task new-blog` — scaffold a blog post with frontmatter (i18n-aware)
-- `deno task new-landing` — scaffold a conversion-focused landing page
-- `deno task audit` — content audit (sitemap ↔ brief ↔ copy ↔ route coverage)
-- `deno task analytics` — GTM + GA4 setup guide → `docs/decisions/analytics.md`
-- `deno task brand-check` — validate logo files against naming convention
-- `deno task add-locale` — add a new language to the site
-- `deno task init-website` — bootstrap Fresh 2.2+ project in `website/`
-- `deno task prelaunch` — count unchecked launch checklist items
+- `start` — hub menu: detects project state, routes to the right task
+- `intake` — quick business intake (5 core questions, then AI fills the rest via
+  `/init-business`)
+- `validate` — check business files, YAML keys, brand assets, and SEO files
+- `audit` — content audit (sitemap ↔ brief ↔ copy ↔ route ↔ SEO coverage)
+- `sync` — detect changed business files and suggest AI workflows
+- `snapshot` — save file hashes for change detection
+- `new-page` — add a new page (brief + sitemap entry + optional route)
+- `new-blog` — scaffold a blog post with frontmatter, category, and routes
+- `new-landing` — scaffold a conversion-focused landing page
+- `add-locale` — add a new language to the site
+- `init-website` — bootstrap Fresh 2.2+ project in `website/`
+
+## Three developer paths
+
+1. **Fresh start** — `deno task start` → Fresh Start → sequential build
+2. **Edit & sync** — change business files, `deno task sync` → propagate
+3. **Rebuild** — `deno task start` → Rebuild Website → regenerate from scratch
+
+## SEO requirements
+
+Every page must have:
+
+- `OGMeta` component with page-specific title, description, path
+- JSON-LD structured data (Organization, Service, FAQPage, BreadcrumbList)
+- Canonical URL via OGMeta
+- H1 containing the primary keyword naturally
+- Title tag (50-60 chars) and meta description (150-160 chars)
+
+The website must have: robots.txt, sitemap.xml route, manifest.json, custom 404.
+
+## Commands
+
+Use `.claude/commands/` for slash-command workflows. Available commands:
+
+- `/fresh-start` — full guided build from scratch
+- `/edit-sync` — detect changes and propagate updates
+- `/rebuild-website` — wipe and regenerate website
+- `/add-page` — add a new page end-to-end
+- `/add-blog-post` — write and publish a blog post
+- `/add-landing-page` — add a conversion-focused landing page
+- `/add-locale` — add a new language
+- `/remove-page` — cleanly remove a page
+- `/build-brand-strategy` — create or refine brand strategy
+- `/run-offer-design` — clarify business model and personas
+- `/generate-sitemap` — turn strategy into site structure
+- `/run-seo-brief` — define keyword strategy and metadata
+- `/write-page-copy` — write structured page copy
+- `/launch-qa` — prelaunch review against rubrics
+- `/init-website` — build the website from business files
+- `/init-business` — normalize business inputs
+
+## Agents
+
+- `strategist` — positioning, audience, messaging, offers, sitemap
+- `copywriter` — page copy, blog posts, tone alignment
+- `seo` — keywords, metadata, OG tags, schema, internal linking
+- `reviewer` — QA across all rubrics, launch checklist
+- `builder` — website implementation from business files
 
 ## Mandatory rules
 
@@ -49,26 +93,13 @@ the guided hub menu, or run any task directly:
 - Prefer reuse over reinvention.
 - Keep implementation decisions documented in `docs/decisions/`.
 
-## Role routing
+## Content lifecycle
 
-- strategy work → read `skills/brand-strategy/SKILL.md` or
-  `skills/business-intake/SKILL.md`
-- brand identity → read `skills/brand-identity/SKILL.md`
-- offer design → read `skills/offer-design/SKILL.md`
-- sitemap and IA → read `skills/sitemap-ia/SKILL.md`
-- SEO work → read `skills/seo-brief/SKILL.md`
-- page copy → read `skills/page-copy/SKILL.md`
-- launch QA → read `skills/launch-qa/SKILL.md`
-- website implementation → read `skills/website-init/SKILL.md`
-
-## Working sequence
-
-1. Confirm relevant source files exist
-2. Read the appropriate `skills/<name>/SKILL.md`
-3. Follow its working method step by step
-4. Update `business/` deliverables
-5. Validate against the relevant rubric
-6. Only touch `website/` after all business files are complete and QA'd
+- **Add page:** `deno task new-page` → `/add-page`
+- **Add blog post:** `deno task new-blog` → `/add-blog-post`
+- **Add landing page:** `deno task new-landing` → `/add-landing-page`
+- **Add locale:** `deno task add-locale` → `/add-locale`
+- **Remove page:** `/remove-page` (AI-driven cleanup)
 
 ## Boundaries
 

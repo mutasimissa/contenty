@@ -67,10 +67,14 @@ shadows:
   xl: "0 20px 25px rgba(0,0,0,0.1)"
 
 logo:
-  primary: "assets/brand/logo-color.svg"
+  source: "assets/brand/logo.svg"
+  icon_source: "assets/brand/logo-icon.svg"
   white: "assets/brand/logo-white.svg"
   black: "assets/brand/logo-black.svg"
-  icon: "assets/brand/logo-icon.svg"
+  icon_png: "assets/brand/logo-icon.png"
+  favicon: "assets/brand/favicon.ico"
+  og_image: "assets/brand/og-image.png"
+  apple_touch_icon: "assets/brand/apple-touch-icon.png"
   min_clear_space: "1x logo height"
 
 rtl_fonts: {}

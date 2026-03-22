@@ -1,5 +1,5 @@
-import { askText, printSuccess, printError, printInfo, printNext } from "./_shared/prompts.ts";
-import { writeText, readText, readYaml, writeYaml, fileExists } from "./_shared/files.ts";
+import { askText, printSuccess, printError, printInfo } from "./_shared/prompts.ts";
+import { writeText, readYaml, writeYaml, fileExists } from "./_shared/files.ts";
 
 console.log("\n🎯 New Landing Page\n");
 console.log("This will scaffold a conversion-focused landing page with:");
@@ -94,6 +94,18 @@ try {
   printInfo("Could not update sitemap — you may need to add the page manually.");
 }
 
-printNext(
-  'Tell your AI tool:\n  "Write landing page copy for ' + briefPath + ' following skills/page-copy/SKILL.md and agency/methodology/cro-framework.md"'
-);
+console.log(`
+${"─".repeat(60)}
+  Next: run the /add-landing-page workflow in your AI tool
+  to complete this landing page end-to-end.
+
+  Windsurf:  /add-landing-page
+  Claude:    /add-landing-page
+
+  The workflow will:
+  1. Fill in the brief using the landing page blueprint
+  2. Write conversion-focused copy (CRO framework)
+  3. Implement the route with hero, proof, objections, CTA
+  4. Add OG meta, canonical, JSON-LD
+${"─".repeat(60)}
+`);

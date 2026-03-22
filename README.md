@@ -47,6 +47,108 @@ pages, write posts, update strategy, rebuild the site.
 
 ---
 
+## System Flowchart
+
+Three developer paths share the same business files and converge on the website.
+Content operations (add page, blog, landing, locale, remove page) branch off the
+main lifecycle at any point after first launch.
+
+```mermaid
+flowchart TD
+    %% ── Entry ───────────────────────────────────────────
+    START["deno task start"] --> MENU{"Hub Menu"}
+
+    %% ── Path 1: Fresh Start ────────────────────────────
+    MENU -->|"Fresh Start"| FS_INTAKE["1. CLI: deno task intake<br/>(5 questions + logo check)"]
+    FS_INTAKE --> FS_INIT_BIZ["2. AI: /init-business<br/>(fill ~15 seed sections)"]
+    FS_INIT_BIZ --> FS_BRAND["3. AI: /build-brand-strategy<br/>→ 02-brand-strategy.md"]
+    FS_BRAND --> FS_IDENTITY["3b. AI: /build-brand-strategy<br/>→ 02b-brand-identity.yaml"]
+    FS_IDENTITY --> FS_OFFERS["4. AI: /run-offer-design<br/>→ 03/04/05-*.md"]
+    FS_OFFERS --> FS_SITEMAP["5. AI: /generate-sitemap<br/>→ 06-sitemap.yaml + briefs"]
+    FS_SITEMAP --> FS_SEO["6. AI: /run-seo-brief<br/>→ 08-seo-brief.md"]
+    FS_SEO --> FS_COPY["7. AI: /write-page-copy<br/>→ 09-content-deck.md"]
+    FS_COPY --> FS_QA["8. AI: /launch-qa<br/>→ 10-launch-checklist.md"]
+    FS_QA --> FS_BUILD["9. CLI + AI: /init-website<br/>→ website/"]
+    FS_BUILD --> SNAPSHOT["deno task snapshot"]
+
+    %% ── Path 2: Edit & Sync ────────────────────────────
+    MENU -->|"Sync"| SYNC_RUN["CLI: deno task sync<br/>(detect changes)"]
+    SYNC_RUN --> SYNC_REPORT["Change report:<br/>stale files + suggested workflows"]
+    SYNC_REPORT --> SYNC_AI["AI: /edit-sync<br/>(propagate updates)"]
+    SYNC_AI --> SNAPSHOT
+
+    %% ── Path 3: Rebuild ────────────────────────────────
+    MENU -->|"Rebuild Website"| REBUILD["AI: /rebuild-website<br/>(wipe + regenerate website/)"]
+    REBUILD --> SNAPSHOT
+
+    %% ── Content Operations ─────────────────────────────
+    MENU -->|"Add Content"| CONTENT{"What to add?"}
+    CONTENT -->|"Page"| ADD_PAGE["CLI: deno task new-page<br/>→ brief + sitemap entry"]
+    CONTENT -->|"Blog post"| ADD_BLOG["CLI: deno task new-blog<br/>→ frontmatter + routes"]
+    CONTENT -->|"Landing page"| ADD_LANDING["CLI: deno task new-landing<br/>→ brief + route"]
+    ADD_PAGE --> AI_PAGE["AI: /add-page<br/>→ write copy + build route"]
+    ADD_BLOG --> AI_BLOG["AI: /add-blog-post<br/>→ write post + build route"]
+    ADD_LANDING --> AI_LANDING["AI: /add-landing-page<br/>→ write copy + build route"]
+    AI_PAGE --> SNAPSHOT
+    AI_BLOG --> SNAPSHOT
+    AI_LANDING --> SNAPSHOT
+
+    %% ── Other Operations ───────────────────────────────
+    MENU -->|"Localization"| ADD_LOCALE["CLI: deno task add-locale<br/>→ locale stubs + routes"]
+    ADD_LOCALE --> AI_LOCALE["AI: /add-locale<br/>→ translate + build routes"]
+    AI_LOCALE --> SNAPSHOT
+
+    MENU -->|"Update"| UPDATE{"What to update?"}
+    UPDATE -->|"Brand strategy"| U_BRAND["AI: /build-brand-strategy"]
+    UPDATE -->|"Offers"| U_OFFERS["AI: /run-offer-design"]
+    UPDATE -->|"SEO"| U_SEO["AI: /run-seo-brief"]
+    UPDATE -->|"Copy"| U_COPY["AI: /write-page-copy"]
+    UPDATE -->|"Sitemap"| U_SITEMAP["AI: /generate-sitemap"]
+    UPDATE -->|"Business intake"| U_INTAKE["AI: /init-business"]
+    U_BRAND --> SYNC_RUN
+    U_OFFERS --> SYNC_RUN
+    U_SEO --> SYNC_RUN
+    U_COPY --> SYNC_RUN
+    U_SITEMAP --> SYNC_RUN
+    U_INTAKE --> SYNC_RUN
+
+    MENU -->|"Audit & QA"| AUDIT{"What check?"}
+    AUDIT -->|"Validate"| VALIDATE["CLI: deno task validate"]
+    AUDIT -->|"Content audit"| AUDIT_RUN["CLI: deno task audit"]
+    AUDIT -->|"Launch QA"| QA["AI: /launch-qa"]
+
+    %% ── Remove Page ────────────────────────────────────
+    REMOVE["AI: /remove-page"] --> SYNC_RUN
+
+    %% ── Styling ────────────────────────────────────────
+    classDef cli fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
+    classDef ai fill:#e3f2fd,stroke:#1565c0,color:#0d47a1
+    classDef hub fill:#fff3e0,stroke:#e65100,color:#bf360c
+    classDef snap fill:#f3e5f5,stroke:#6a1b9a,color:#4a148c
+
+    class FS_INTAKE,SYNC_RUN,ADD_PAGE,ADD_BLOG,ADD_LANDING,ADD_LOCALE,VALIDATE,AUDIT_RUN cli
+    class FS_INIT_BIZ,FS_BRAND,FS_IDENTITY,FS_OFFERS,FS_SITEMAP,FS_SEO,FS_COPY,FS_QA,FS_BUILD,SYNC_AI,REBUILD,AI_PAGE,AI_BLOG,AI_LANDING,AI_LOCALE,U_BRAND,U_OFFERS,U_SEO,U_COPY,U_SITEMAP,U_INTAKE,QA,REMOVE ai
+    class START,MENU,CONTENT,UPDATE,AUDIT hub
+    class SNAPSHOT snap
+```
+
+**Legend:** 🟢 Green = CLI command | 🔵 Blue = AI workflow | 🟠 Orange = Hub
+menu | 🟣 Purple = Snapshot
+
+### Key relationships
+
+- **Fresh Start** is linear (1→9), used only once for initial build
+- **Edit & Sync** is cyclical — edit any business file, run sync, propagate
+- **Rebuild** is a reset — wipes `website/` and regenerates from `business/`
+- **Content ops** (add page/blog/landing/locale) branch off at any time
+  post-launch
+- **Update** flows into **Sync** — changing a strategy file triggers propagation
+- **Remove page** (`/remove-page`) cleans up business files, sitemap, and routes
+- **Snapshot** (`deno task snapshot`) is the convergence point — saves file
+  hashes for future change detection
+
+---
+
 ## First Launch
 
 Run `deno task start` and choose **First Launch**. The hub shows a numbered
@@ -106,16 +208,23 @@ than `website/assets/styles.css`).
 
 After first launch, run `deno task start` and pick what you need:
 
+- **Sync** — detect business file changes, propagate to website
 - **Add Content** — new page, blog post, or landing page (interactive wizards)
 - **Update** — revise any strategy, copy, or SEO file via AI workflow
-- **Audit & QA** — validate files, run content audit, prelaunch check
+- **Audit & QA** — validate files, run content audit
 - **Rebuild Website** — full rebuild from business files
-- **Analytics** — GTM + GA4 guided setup
-- **Brand** — check logos, update design tokens
 - **Localization** — add a locale
 
-Every option shows the exact AI slash command for both tools, the files it
-reads, and the files it writes.
+### Content lifecycle
+
+| Action           | CLI                     | AI Workflow         |
+| ---------------- | ----------------------- | ------------------- |
+| Add page         | `deno task new-page`    | `/add-page`         |
+| Add blog post    | `deno task new-blog`    | `/add-blog-post`    |
+| Add landing page | `deno task new-landing` | `/add-landing-page` |
+| Add locale       | `deno task add-locale`  | `/add-locale`       |
+| Remove page      | —                       | `/remove-page`      |
+| Sync changes     | `deno task sync`        | `/edit-sync`        |
 
 ---
 
@@ -130,19 +239,31 @@ Windsurf reads `AGENTS.md` at the repo root and picks up:
 
 ### Slash commands
 
-| Command                 | Phase             |
-| ----------------------- | ----------------- |
-| `/init-business`        | Normalize inputs  |
-| `/build-brand-strategy` | Brand strategy    |
-| `/run-offer-design`     | Offers & personas |
-| `/generate-sitemap`     | Sitemap & IA      |
-| `/run-seo-brief`        | SEO brief         |
-| `/write-page-copy`      | Page copy         |
-| `/launch-qa`            | Prelaunch QA      |
-| `/init-website`         | Website build     |
+**Build workflows:**
 
-Each workflow includes a `## Role` section that frames the AI's behavioral
-context (strategist, copywriter, SEO specialist, reviewer, or builder).
+| Command                 | Phase              |
+| ----------------------- | ------------------ |
+| `/fresh-start`          | Full guided build  |
+| `/edit-sync`            | Propagate changes  |
+| `/rebuild-website`      | Full website regen |
+| `/init-business`        | Normalize inputs   |
+| `/build-brand-strategy` | Brand strategy     |
+| `/run-offer-design`     | Offers & personas  |
+| `/generate-sitemap`     | Sitemap & IA       |
+| `/run-seo-brief`        | SEO brief          |
+| `/write-page-copy`      | Page copy          |
+| `/launch-qa`            | Prelaunch QA       |
+| `/init-website`         | Website build      |
+
+**Content lifecycle:**
+
+| Command             | Action         |
+| ------------------- | -------------- |
+| `/add-page`         | Add a new page |
+| `/add-blog-post`    | New blog post  |
+| `/add-landing-page` | Landing page   |
+| `/add-locale`       | New language   |
+| `/remove-page`      | Remove a page  |
 
 ---
 
@@ -153,31 +274,20 @@ Claude reads `CLAUDE.md` at the repo root and picks up:
 - **Rules** in `.claude/rules/` — same quality standards as Windsurf
 - **Agents** in `.claude/agents/` — enriched role definitions with source files,
   skills, rubrics, and guardrails
-- **Commands** in `.claude/commands/` — slash-command automations mirroring
-  Windsurf workflows
+- **Commands** in `.claude/commands/` — all slash-command workflows (mirrors
+  Windsurf)
 
-### Slash commands
-
-| Command                 | Phase             |
-| ----------------------- | ----------------- |
-| `/init-business`        | Normalize inputs  |
-| `/build-brand-strategy` | Brand strategy    |
-| `/run-offer-design`     | Offers & personas |
-| `/generate-sitemap`     | Sitemap & IA      |
-| `/run-seo-brief`        | SEO brief         |
-| `/write-page-copy`      | Page copy         |
-| `/launch-qa`            | Prelaunch QA      |
-| `/init-website`         | Website build     |
+All slash commands from the Windsurf table above work identically in Claude.
 
 ### Agents
 
-| Agent        | Owns                                              |
-| ------------ | ------------------------------------------------- |
-| `strategist` | Positioning, audience, messaging, offers, sitemap |
-| `copywriter` | Page copy, content deck, tone alignment           |
-| `seo`        | Keywords, metadata, schema, internal linking      |
-| `reviewer`   | QA across all rubrics, launch checklist           |
-| `builder`    | Website implementation from business files        |
+| Agent        | Owns                                                  |
+| ------------ | ----------------------------------------------------- |
+| `strategist` | Positioning, audience, messaging, offers, sitemap     |
+| `copywriter` | Page copy, blog posts, content deck, tone alignment   |
+| `seo`        | Keywords, metadata, OG tags, schema, internal linking |
+| `reviewer`   | QA across all rubrics, launch checklist               |
+| `builder`    | Website implementation from business files            |
 
 ---
 
@@ -209,17 +319,21 @@ skills/            AI instructions (each is a SKILL.md)
   brand-identity/    Colors, typography, spacing, logo rules
   offer-design/      Business model, value prop, personas
   sitemap-ia/        Information architecture and page briefs
-  seo-brief/         Keyword strategy and metadata
+  seo-brief/         Keyword strategy, metadata, OG, JSON-LD
   page-copy/         Structured page copy
+  blog-strategy/     Blog categories, content clusters, publishing plan
   launch-qa/         Prelaunch QA across all rubrics
-  website-init/      Multi-locale website build with RTL
+  website-init/      Multi-locale website build with SEO + RTL
 
 cli/               Deno automation scripts
   start.ts           Hub menu (the only command you need)
-  _shared/           Shared utilities (files, prompts, state, brand-gen)
+  _shared/           Shared utilities (files, prompts, state, brand-gen, dep-graph)
   intake.ts          Business intake questionnaire
   init-website.ts    Fresh scaffold + branded file generation
-  ...                (new-page, new-blog, new-landing, audit, etc.)
+  sync.ts            Change detection and workflow suggestions
+  validate.ts        Business files + brand assets + SEO validation
+  audit.ts           Content audit (7 sections incl. SEO technical)
+  ...                (new-page, new-blog, new-landing, add-locale)
 
 website/           Implementation target (Fresh 2.2+ / Tailwind 4 / Deno)
 
@@ -230,11 +344,11 @@ assets/            Logos and brand files
 docs/              Decision records (tech stack, analytics, handoff)
 
 .windsurf/         Windsurf configuration
-  workflows/         8 slash-command workflows with role context
+  workflows/         16 slash-command workflows with role context
   rules/             Content quality, SEO quality, website standards
 
 .claude/           Claude configuration
-  commands/          8 slash-command workflows (mirrors Windsurf)
+  commands/          16 slash-command workflows (mirrors Windsurf)
   agents/            5 enriched agent definitions
   rules/             Content quality, SEO quality, website standards
 ```

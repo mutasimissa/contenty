@@ -20,8 +20,12 @@ logo-derived colors — no arbitrary values.
 
 ## Read these files first
 
-1. `business/01-business-input.yaml` — seed fields: `logo_path`,
-   `brand_color_hint`, `brand_philosophy`
+1. `business/01-business-input.yaml` — seed fields: `design.*` (visual style,
+   reference brands, color preferences/avoidance, typography, imagery, icon
+   style, UI density, accessibility level), `brand_color_hint`,
+   `brand_philosophy` 1b. `assets/brand/logo.svg` — primary logo (required,
+   checked at intake) 1c. `assets/brand/logo-icon.svg` — square icon (required,
+   checked at intake)
 2. `business/02-brand-strategy.md` — tone of voice, positioning, audience
 3. `agency/methodology/brand-identity-framework.md` — derivation methods
 4. `agency/schemas/brand-identity.yaml` — required fields and structure
@@ -31,12 +35,14 @@ logo-derived colors — no arbitrary values.
 ## Working method
 
 1. **Read inputs** — load the business input and brand strategy files
-2. **Check for a logo** — if `logo_path` is set and the file exists, examine it
-   and extract the dominant 2–3 colors. Present them to the user for
-   confirmation.
-3. **Check for a color hint** — if `brand_color_hint` is set, use it as a
-   starting seed for the primary palette. If logo colors were also extracted,
-   logo colors take precedence; use the hint as a fallback or accent seed.
+2. **Load source logos** — read `assets/brand/logo.svg` and
+   `assets/brand/logo-icon.svg` (both are required; intake enforces this).
+   Examine the primary logo and extract the dominant 2–3 colors. Present them to
+   the user for confirmation.
+3. **Check for a color hint** — if `brand_color_hint` is set in
+   `design.color_preferences`, use it as a starting seed for the primary
+   palette. Logo-derived colors take precedence; use hints as fallback or accent
+   seeds.
 4. **Check for a brand philosophy** — if `brand_philosophy` is set, use it as
    the guiding direction for all visual decisions. If missing, ask the user to
    provide a 1–2 sentence statement describing the visual identity they want
@@ -57,17 +63,25 @@ logo-derived colors — no arbitrary values.
 10. **Select typography** — match font personality to tone of voice:
     - Select heading and body font families
     - Define scale ratio, weights, and base size
-    - If the project has RTL locales (check `locales` in business input),
-      select appropriate RTL font families with matching x-height
+    - If the project has RTL locales (check `locales` in business input), select
+      appropriate RTL font families with matching x-height
 11. **Define spacing, radii, and shadows** — use sensible defaults from the
     template unless the brand philosophy suggests otherwise (e.g. a "soft"
     philosophy → larger radii; a "sharp" philosophy → smaller radii).
-12. **Define logo usage rules** — list expected file paths (per the naming
-    convention in `cli/brand-check.ts`) and specify minimum clear space.
-13. **Present the full token set to the user** — ask for confirmation or
+12. **Generate logo variations** — from the two source SVGs, produce all derived
+    assets listed in `agency/methodology/brand-assets-guide.md`:
+    - `assets/brand/logo-white.svg` — strip fills from `logo.svg`, set to #fff
+    - `assets/brand/logo-black.svg` — strip fills from `logo.svg`, set to #000
+    - `assets/brand/logo-icon.png` — raster export of `logo-icon.svg` at 512×512
+    - `assets/brand/favicon.ico` — multi-size ICO from `logo-icon.svg`
+    - `assets/brand/og-image.png` — 1200×630 composite (logo + brand colors)
+    - `assets/brand/apple-touch-icon.png` — 180×180 from `logo-icon.svg`
+13. **Define logo usage rules** — record source and generated file paths in the
+    `logo` section of the output, specify minimum clear space.
+14. **Present the full token set to the user** — ask for confirmation or
     adjustments before writing.
-14. **Write output** — save to `business/02b-brand-identity.yaml`
-15. **Score** — evaluate the output against the brand identity rubric. Minimum
+15. **Write output** — save to `business/02b-brand-identity.yaml`
+16. **Score** — evaluate the output against the brand identity rubric. Minimum
     average score of 4.
 
 ## Output format
@@ -128,10 +142,14 @@ shadows:
   xl: "..."
 
 logo:
-  primary: "assets/brand/logo-color.svg"
+  source: "assets/brand/logo.svg"
+  icon_source: "assets/brand/logo-icon.svg"
   white: "assets/brand/logo-white.svg"
   black: "assets/brand/logo-black.svg"
-  icon: "assets/brand/logo-icon.svg"
+  icon_png: "assets/brand/logo-icon.png"
+  favicon: "assets/brand/favicon.ico"
+  og_image: "assets/brand/og-image.png"
+  apple_touch_icon: "assets/brand/apple-touch-icon.png"
   min_clear_space: "1x logo height"
 
 rtl_fonts: {}
@@ -160,8 +178,8 @@ finishing, verify:
 - **Requires:** `business/01-business-input.yaml`,
   `business/02-brand-strategy.md`
 - **Feeds into:** `skills/website-init/` (consumes tokens for Tailwind
-  `@theme`), `skills/page-copy/` (tone alignment check),
-  `skills/launch-qa/` (visual consistency check)
+  `@theme`), `skills/page-copy/` (tone alignment check), `skills/launch-qa/`
+  (visual consistency check)
 
 ## Next step
 

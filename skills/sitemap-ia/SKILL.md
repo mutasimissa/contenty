@@ -19,15 +19,17 @@ is written.
 
 ## Read these files first
 
-1. `business/02-brand-strategy.md` — positioning and audience
-2. `business/03-business-model.md` — offers and conversion path
-3. `business/04-value-proposition.md` — promise and differentiation
-4. `business/05-personas-jobs.md` — buyer needs and objections
-5. `agency/schemas/sitemap.yaml` — required sitemap fields
-6. `agency/schemas/page-brief.yaml` — required page brief fields
-7. `agency/templates/sitemap.template.yaml` — sitemap structure
-8. `agency/templates/page-brief.template.md` — page brief structure
-9. `agency/blueprints/` — read all blueprint files for section guidance
+1. `business/01-business-input.yaml` — seed fields: `site_map.*` (desired pages,
+   navigation, page priority), `page_modules` (section hints per page)
+2. `business/02-brand-strategy.md` — positioning and audience
+3. `business/03-business-model.md` — offers and conversion path
+4. `business/04-value-proposition.md` — promise and differentiation
+5. `business/05-personas-jobs.md` — buyer needs and objections
+6. `agency/schemas/sitemap.yaml` — required sitemap fields
+7. `agency/schemas/page-brief.yaml` — required page brief fields
+8. `agency/templates/sitemap.template.yaml` — sitemap structure
+9. `agency/templates/page-brief.template.md` — page brief structure
+10. `agency/blueprints/` — read all blueprint files for section guidance
 
 ## Working method
 

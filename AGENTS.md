@@ -9,8 +9,7 @@ This is a **single-business website system**.
   blueprints)
 - `website/` = implementation (Fresh 2.2+ / Tailwind 4 / Deno)
 - `skills/` = AI instructions (each skill is a SKILL.md you follow step by step)
-- `cli/` = Deno automation scripts (hub, intake, scaffolding, audit, analytics,
-  brand check)
+- `cli/` = Deno automation scripts (hub, intake, scaffolding, audit, sync)
 
 ## How to use skills
 
@@ -28,18 +27,35 @@ delivery phase:
 Run `deno task start` for the guided hub menu, or run any task directly:
 
 - `start` — hub menu: detects project state, routes to the right task
-- `intake` — interactive business intake questionnaire (with i18n support)
-- `validate` — check business files exist and validate YAML
-- `clone-brief <slug>` — scaffold a new page brief from template
+- `intake` — quick business intake (5 core questions, then AI fills the rest via
+  `/init-business`)
+- `validate` — check business files, YAML keys, brand assets, and SEO files
+- `audit` — content audit (sitemap ↔ brief ↔ copy ↔ route ↔ SEO coverage)
+- `sync` — detect changed business files and suggest AI workflows
+- `snapshot` — save file hashes for change detection
 - `new-page` — add a new page (brief + sitemap entry + optional route)
-- `new-blog` — scaffold a blog post with frontmatter (i18n-aware)
+- `new-blog` — scaffold a blog post with frontmatter, category, and routes
 - `new-landing` — scaffold a conversion-focused landing page
-- `audit` — content audit (sitemap ↔ brief ↔ copy ↔ route coverage)
-- `analytics` — GTM + GA4 setup guide → `docs/decisions/analytics.md`
-- `brand-check` — validate logo files against naming convention
 - `add-locale` — add a new language to the site
 - `init-website` — bootstrap Fresh 2.2+ project in `website/`
-- `prelaunch` — count unchecked launch checklist items
+
+## Three developer paths
+
+1. **Fresh start** — `deno task start` → Fresh Start → sequential build
+2. **Edit & sync** — change business files, `deno task sync` → propagate
+3. **Rebuild** — `deno task start` → Rebuild Website → regenerate from scratch
+
+## SEO requirements
+
+Every page must have:
+
+- `OGMeta` component with page-specific title, description, path
+- JSON-LD structured data (Organization, Service, FAQPage, BreadcrumbList)
+- Canonical URL via OGMeta
+- H1 containing the primary keyword naturally
+- Title tag (50-60 chars) and meta description (150-160 chars)
+
+The website must have: robots.txt, sitemap.xml route, manifest.json, custom 404.
 
 ## Rules
 
@@ -61,6 +77,15 @@ Run `deno task start` for the guided hub menu, or run any task directly:
 6. `skills/page-copy/` → `business/09-content-deck.md`
 7. `skills/launch-qa/` → `business/10-launch-checklist.md`
 8. `deno task init-website` → `website/`
+9. `deno task snapshot` → `.contenty-state.json`
+
+## Content lifecycle
+
+- **Add page:** `deno task new-page` → `/add-page` workflow
+- **Add blog post:** `deno task new-blog` → `/add-blog-post` workflow
+- **Add landing page:** `deno task new-landing` → `/add-landing-page` workflow
+- **Add locale:** `deno task add-locale` → `/add-locale` workflow
+- **Remove page:** `/remove-page` workflow (AI-driven cleanup)
 
 ## Output discipline
 

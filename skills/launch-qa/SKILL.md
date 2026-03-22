@@ -97,6 +97,14 @@ Write `business/10-launch-checklist.md`:
 - [x] Keywords mapped to all pages
 - [x] Metadata direction defined
 - [x] Schema opportunities identified
+- [ ] OGMeta component on every page with page-specific props
+- [ ] JSON-LD structured data on every page (Organization, Service, FAQ,
+      Breadcrumb)
+- [ ] Canonical URL set on every page
+- [ ] robots.txt present with Sitemap directive
+- [ ] sitemap.xml route returns valid XML
+- [ ] manifest.json present with brand colors
+- [ ] Custom 404 page renders
 - [ ] [Any gap found]
 
 ## Conversion readiness

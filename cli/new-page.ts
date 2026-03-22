@@ -1,4 +1,4 @@
-import { askText, askConfirm, printSuccess, printError, printInfo, printNext } from "./_shared/prompts.ts";
+import { askText, askConfirm, printSuccess, printError, printInfo } from "./_shared/prompts.ts";
 import { writeText, readYaml, writeYaml, fileExists } from "./_shared/files.ts";
 import { Select } from "@cliffy/prompt";
 
@@ -138,6 +138,19 @@ if (scaffoldRoute) {
   }
 }
 
-printNext(
-  `Tell your AI tool:\n  "Fill in the page brief at ${briefPath} using the ${pageType} blueprint, then write copy following skills/page-copy/SKILL.md"`
-);
+console.log(`
+${"─".repeat(60)}
+  Next: run the /add-page workflow in your AI tool to
+  complete this page end-to-end.
+
+  Windsurf:  /add-page
+  Claude:    /add-page
+
+  The workflow will:
+  1. Fill in the page brief using the ${pageType} blueprint
+  2. Add SEO keywords for this page
+  3. Write page copy
+  4. Implement the route with OG, canonical, JSON-LD
+  5. Update navigation
+${"─".repeat(60)}
+`);

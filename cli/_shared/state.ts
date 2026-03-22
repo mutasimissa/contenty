@@ -38,15 +38,8 @@ const BUSINESS_FILES = [
 ];
 
 const BRAND_ASSET_FILES = [
+  "assets/brand/logo.svg",
   "assets/brand/logo-icon.svg",
-  "assets/brand/logo-icon.png",
-  "assets/brand/logo-horizontal.svg",
-  "assets/brand/logo-horizontal.png",
-  "assets/brand/logo-vertical.svg",
-  "assets/brand/logo-vertical.png",
-  "assets/brand/logo-color.svg",
-  "assets/brand/logo-white.svg",
-  "assets/brand/logo-black.svg",
 ];
 
 const isPopulated = (path: string): boolean => {

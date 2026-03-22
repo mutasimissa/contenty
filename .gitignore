@@ -26,6 +26,9 @@ node_modules/
 # Generated archives
 *.zip
 
+# Contenty state
+.contenty-state.json
+
 # Build artifacts
 dist/
 build/

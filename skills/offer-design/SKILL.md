@@ -16,7 +16,10 @@ can present clear offers with a logical conversion path.
 
 ## Read these files first
 
-1. `business/01-business-input.yaml` — business facts
+1. `business/01-business-input.yaml` — business facts + seed fields:
+   `audience.*` (personas, decision makers, influencers, buyer journey),
+   `offers_detail`, `conversion.*` (goals, sales model, lead capture,
+   qualification questions)
 2. `business/02-brand-strategy.md` — positioning and audience
 3. `agency/methodology/business-model-framework.md` — what to capture
 4. `agency/methodology/value-proposition-framework.md` — value prop structure

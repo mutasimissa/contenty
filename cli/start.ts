@@ -173,25 +173,24 @@ const launchPhases: LaunchPhase[] = [
 // ── Main menu ────────────────────────────────────────────
 
 const menuOptions = [
-  { name: "🚀  First Launch — guided step-by-step build", value: "launch" },
-  { name: "📄  Add Content — new page, blog post, or landing page", value: "content" },
+  { name: "🚀  Fresh Start — guided step-by-step build from scratch", value: "launch" },
+  { name: "�  Sync — detect changes and propagate updates", value: "sync" },
+  { name: "�  Add Content — new page, blog post, or landing page", value: "content" },
   { name: "✏️   Update — revise strategy, copy, SEO, or offers", value: "update" },
-  { name: "🔍  Audit & QA — validate files, run QA, prelaunch check", value: "audit" },
-  { name: "📊  Analytics — GTM, conversion, reporting setup", value: "analytics" },
-  { name: "🎨  Brand — check logos and design tokens", value: "brand" },
+  { name: "🔍  Audit & QA — validate files, run content audit", value: "audit" },
   { name: "🌐  Localization — add a locale", value: "i18n" },
 ];
 
 if (state.hasWebsite) {
   menuOptions.push({
     name: state.isBrandingStale
-      ? "🔄  Rebuild Website — branding out of sync, re-generate from business files"
-      : "🔄  Rebuild Website — full rebuild from business files",
+      ? "♻️   Rebuild Website — branding out of sync, re-generate from business files"
+      : "♻️   Rebuild Website — full rebuild from business files",
     value: "rebuild",
   });
 }
 
-menuOptions.push({ name: "⚙️   Setup — init website, rename project", value: "setup" });
+menuOptions.push({ name: "⚙️   Setup — init website, validate files", value: "setup" });
 
 const category = await Select.prompt({
   message: "What do you need?",
@@ -222,15 +221,33 @@ if (category === "launch") {
   }
 }
 
+// ── Sync ─────────────────────────────────────────────────
+
+if (category === "sync") {
+  printSection("Sync", "Detect business file changes and propagate updates.");
+  printInfo("Running change detection...\n");
+  await run("sync");
+  console.log(`
+${"─".repeat(60)}
+  After reviewing the report, run the edit-sync workflow
+  in your AI tool to propagate changes:
+
+  Windsurf:  /edit-sync
+  Claude:    /edit-sync
+${"─".repeat(60)}
+`);
+}
+
 // ── Rebuild Website ──────────────────────────────────────
 
 if (category === "rebuild") {
   printSection("Rebuild Website", "Full rebuild from business files — wipes website/ and regenerates.");
-  printInfo("This runs deno task init-website which:\n");
-  console.log("  1. Scaffolds a fresh Fresh 2.2+ project");
-  console.log("  2. Generates branded styles, routes, and components from business/");
-  console.log("  3. Then your AI tool populates content\n");
-  await run("init-website");
+  showAICommand("rebuild-website", "Regenerate the entire website from business files", {
+    windsurf: "/rebuild-website",
+    claude: "/rebuild-website",
+    reads: ["business/01-* through business/09-*"],
+    writes: ["website/"],
+  });
 }
 
 // ── Add Content ──────────────────────────────────────────
@@ -244,7 +261,6 @@ if (category === "content") {
       { name: "📄  New page (content, service, industry, legal, etc.)", value: "new-page" },
       { name: "📝  New blog post", value: "new-blog" },
       { name: "🎯  New landing page (conversion-focused)", value: "new-landing" },
-      { name: "📋  Clone a page brief from template", value: "clone-brief" },
     ],
   });
   await run(task);
@@ -296,10 +312,9 @@ if (category === "audit") {
   const task = await Select.prompt({
     message: "What kind of check?",
     options: [
-      { name: "✓  Validate business files (exist + YAML keys)", value: "validate" },
-      { name: "📊  Content audit (coverage, brief ↔ copy, SEO)", value: "audit" },
-      { name: "🚀  Prelaunch check (unchecked items)", value: "prelaunch" },
-      { name: "🔍  Full launch QA (AI-driven review)", value: "launch-qa" },
+      { name: "✓  Validate business files (exist + YAML keys + brand assets)", value: "validate" },
+      { name: "📊  Content audit (coverage, SEO, launch checklist)", value: "audit" },
+      { name: "🔍  Full launch QA (AI-driven review against rubrics)", value: "launch-qa" },
     ],
   });
 
@@ -312,42 +327,6 @@ if (category === "audit") {
     });
   } else {
     await run(task);
-  }
-}
-
-// ── Analytics & Tracking ─────────────────────────────────
-
-if (category === "analytics") {
-  await run("analytics");
-}
-
-// ── Brand Assets ─────────────────────────────────────────
-
-if (category === "brand") {
-  printSection("Brand Assets & Identity", "Check logo files and manage visual identity tokens.");
-
-  const task = await Select.prompt({
-    message: "What do you need?",
-    options: [
-      { name: "🖼️   Check logo files & naming convention", value: "brand-check" },
-      { name: "🎨  Generate / update brand identity tokens", value: "brand-identity" },
-    ],
-  });
-
-  if (task === "brand-identity") {
-    showAICommand("brand-identity", state.hasBrandIdentity
-      ? "Update your visual identity tokens"
-      : "Generate design tokens from your brand strategy", {
-      windsurf: "/build-brand-strategy",
-      claude: "/build-brand-strategy",
-      reads: ["business/02-brand-strategy.md", "business/01-business-input.yaml"],
-      writes: ["business/02b-brand-identity.yaml"],
-    });
-    if (!state.hasBrandIdentity) {
-      printHint("Make sure business/02-brand-strategy.md exists first.");
-    }
-  } else {
-    await run("brand-check");
   }
 }
 
@@ -381,8 +360,8 @@ if (category === "setup") {
     message: "What do you need?",
     options: [
       { name: "🏗️   Bootstrap website (Fresh 2.2 + Tailwind 4)", value: "init-website" },
-      { name: "✏️   Rename project / set business name", value: "init-project" },
       { name: "✓  Validate business files", value: "validate" },
+      { name: "📸  Save snapshot for change detection", value: "snapshot" },
     ],
   });
   await run(task);

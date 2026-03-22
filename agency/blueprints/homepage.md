@@ -33,6 +33,14 @@ the right next step.
 - Proof section links to case studies
 - Final CTA links to contact page
 
+## SEO requirements
+
+- H1 must contain the primary commercial keyword (not just a brand tagline)
+- Title tag: "[Primary Keyword] | Business Name" (50-60 chars)
+- OG-specific description: shorter than meta desc, action-oriented
+- JSON-LD: Organization + WebSite on homepage
+- Internal links to all key service pages
+
 ## Accessibility
 
 - H1 in hero, H2 for each major section

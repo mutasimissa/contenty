@@ -35,3 +35,19 @@ properties:
   internal_linking_plan:
     type: array
     description: Directional links between pages with rationale.
+  canonical_url_pattern:
+    type: string
+    description: URL pattern for canonical tags (e.g. https://DOMAIN/<slug>).
+    example: "https://example.com/<slug>"
+  og_image_strategy:
+    type: object
+    description: Default and per-page OG image strategy.
+    example: { "default": "/og-image.png", "per_page": "none" }
+  structured_data_plan:
+    type: object
+    description: JSON-LD types per page category.
+    example: { "all_pages": ["Organization", "WebSite", "BreadcrumbList"], "service_pages": ["Service"], "faq_sections": ["FAQPage"], "blog_posts": ["Article"] }
+  content_cluster_strategy:
+    type: array
+    description: Pillar pages and their supporting content clusters.
+    example: ["Solutions (pillar) → 3 blog posts on operational visibility"]

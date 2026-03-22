@@ -129,24 +129,40 @@ properties:
         example: "0 20px 25px rgba(0,0,0,0.1)"
   logo:
     type: object
-    description: Logo file paths and usage rules.
+    description: Logo source files (user-provided) and generated variants.
     properties:
-      primary:
+      source:
         type: string
-        description: Full-color logo path.
-        example: "assets/brand/logo-color.svg"
+        description: Primary full-color logo (user-provided SVG).
+        example: "assets/brand/logo.svg"
+      icon_source:
+        type: string
+        description: Square icon logo (user-provided SVG).
+        example: "assets/brand/logo-icon.svg"
       white:
         type: string
-        description: White-only logo for dark backgrounds.
+        description: White-only variant (generated from source).
         example: "assets/brand/logo-white.svg"
       black:
         type: string
-        description: Black-only logo for light backgrounds.
+        description: Black-only variant (generated from source).
         example: "assets/brand/logo-black.svg"
-      icon:
+      icon_png:
         type: string
-        description: Square icon variant.
-        example: "assets/brand/logo-icon.svg"
+        description: Raster icon export (generated from icon_source).
+        example: "assets/brand/logo-icon.png"
+      favicon:
+        type: string
+        description: Multi-size favicon (generated from icon_source).
+        example: "assets/brand/favicon.ico"
+      og_image:
+        type: string
+        description: Open Graph image (generated composite).
+        example: "assets/brand/og-image.png"
+      apple_touch_icon:
+        type: string
+        description: Apple touch icon (generated from icon_source).
+        example: "assets/brand/apple-touch-icon.png"
       min_clear_space:
         type: string
         description: Minimum clear space around the logo.

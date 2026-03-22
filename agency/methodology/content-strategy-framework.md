@@ -51,3 +51,34 @@ Prioritize pages scoring 4+ across all dimensions for first implementation.
 - Proof appears within the first scroll
 - CTA appears at least twice per long page (after value, after proof)
 - FAQ addresses real buyer objections, not filler questions
+
+## Blog / content marketing
+
+Blog content serves three purposes: capturing informational search intent,
+building topical authority (E-E-A-T), and creating internal linking
+opportunities to commercial pages.
+
+### Content cluster model
+
+Each service pillar should have a content cluster:
+
+1. **Pillar page** — the service/solution page (commercial intent)
+2. **Cluster posts** — 3-5 blog posts on related informational topics
+3. **Internal linking** — every cluster post links to the pillar; the pillar
+   links back
+
+### Blog post quality bar
+
+- Minimum 800 words for informational posts, 1200+ for pillar topics
+- H1 contains primary keyword naturally
+- Author bio with credentials (E-E-A-T)
+- At least 2 internal links to service pages
+- At least 1 internal link to a related blog post
+- FAQ section with 2-3 questions (for schema markup) where relevant
+- Meta description with keyword + value proposition
+
+### Publishing cadence
+
+- Quality over quantity — 1-2 well-researched posts per month beats daily filler
+- Each post should map to a keyword with real search volume
+- Prioritize posts that support commercial pages over standalone topics

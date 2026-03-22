@@ -4,6 +4,14 @@
 
 -
 
+## Page type
+
+-
+
+## Blueprint reference
+
+-
+
 ## Audience
 
 -

@@ -18,15 +18,19 @@ implementation — scannable, specific, and conversion-oriented.
 
 ## Read these files first
 
-1. `business/07-page-briefs/<page>.md` — the specific page brief
-2. `business/02-brand-strategy.md` — tone, positioning, message pillars
-3. `business/04-value-proposition.md` — promise and differentiation
-4. `business/05-personas-jobs.md` — buyer needs and objections
-5. `business/08-seo-brief.md` — keywords, metadata direction, FAQ targets
-6. `agency/blueprints/<page-type>.md` — section-level structure for this page
+1. `business/01-business-input.yaml` — seed fields: `messaging.*` (hero
+   headline, key messages, pain points, transformation outcomes, objection
+   handling, CTA variants), `content_rules.*`, `generation.*` (depth, style,
+   creativity)
+2. `business/07-page-briefs/<page>.md` — the specific page brief
+3. `business/02-brand-strategy.md` — tone, positioning, message pillars
+4. `business/04-value-proposition.md` — promise and differentiation
+5. `business/05-personas-jobs.md` — buyer needs and objections
+6. `business/08-seo-brief.md` — keywords, metadata direction, FAQ targets
+7. `agency/blueprints/<page-type>.md` — section-level structure for this page
    type
-7. `agency/methodology/content-strategy-framework.md` — writing rules
-8. `agency/rubrics/copy-rubric.md` — scoring criteria
+8. `agency/methodology/content-strategy-framework.md` — writing rules
+9. `agency/rubrics/copy-rubric.md` — scoring criteria
 
 ## Working method
 
@@ -85,11 +89,15 @@ Append to or update `business/09-content-deck.md`:
 Score output against `agency/rubrics/copy-rubric.md`. Before finishing:
 
 - [ ] Hero headline is clear and specific (not generic)
+- [ ] H1 contains the primary keyword naturally (not just a brand tagline)
 - [ ] Copy matches the brand tone from `business/02-brand-strategy.md`
 - [ ] Every section serves the page objective from the brief
 - [ ] Claims are supportable (flag unsupported claims)
 - [ ] CTA is consistent with the page brief and brand strategy
 - [ ] Primary keyword appears naturally in headline and opening
+- [ ] Meta description includes primary keyword + action verb (150-160 chars)
+- [ ] OG description is shorter than meta desc and action-oriented
+- [ ] FAQ sections use structured Q&A format (for FAQPage schema)
 - [ ] Copy is scannable — short paragraphs, bullet points, clear headings
 - [ ] Average rubric score is 4 or above
 

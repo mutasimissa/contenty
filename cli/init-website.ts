@@ -1,5 +1,5 @@
 import { writeText, resolve, fileExists } from "./_shared/files.ts";
-import { printSuccess, printError, printInfo, printNext, askConfirm, printSection } from "./_shared/prompts.ts";
+import { printSuccess, printError, printInfo, askConfirm, printSection } from "./_shared/prompts.ts";
 import { generateAllBrandedFiles } from "./_shared/brand-gen.ts";
 
 const WEBSITE_DIR = "website";

@@ -1,5 +1,5 @@
-import { askText, printSection, printSuccess, printInfo, printHint, printNext } from "./_shared/prompts.ts";
-import { readYaml, writeYaml, getLocales } from "./_shared/files.ts";
+import { askText, printSection, printSuccess, printInfo, printHint } from "./_shared/prompts.ts";
+import { readYaml, writeYaml, writeText, getLocales, fileExists } from "./_shared/files.ts";
 
 console.log(`
 ╔══════════════════════════════════════════════════════════╗
@@ -49,16 +49,45 @@ try {
   Deno.exit(1);
 }
 
-console.log(`
-  Next steps for the "${newLocale}" locale:
-  ─────────────────────────────────────────
-  1. Create translated page briefs or content as needed
-  2. Use \`deno task new-blog\` to write blog posts in this locale
-  3. Implement locale routing in website/routes/ (e.g. /${newLocale}/...)
-  4. Add hreflang tags for SEO (see agency/methodology/seo-framework.md)
-`);
+// ── Generate locale stub files if website exists ────────
 
-printNext(
-  'Tell your AI tool:\n' +
-  `  "The site now supports ${updatedLocales.join(", ")}. Update the SEO brief and sitemap for locale ${newLocale}."`,
-);
+const hasWebsite = fileExists("website/deno.json") || fileExists("website/fresh.config.ts");
+
+if (hasWebsite) {
+  // Create locale JSON stub
+  const localeJsonPath = `website/locales/${newLocale}.json`;
+  if (!fileExists(localeJsonPath)) {
+    const input = readYaml<Record<string, string>>("business/01-business-input.yaml");
+    const stub = JSON.stringify({
+      nav: { home: "Home", services: "Services", about: "About", contact: "Contact", book_cta: input.primary_cta || "" },
+      footer: { copyright: "© {year} {business}. All rights reserved.", services: "Services", company: "Company", get_started: "Get started" },
+      meta: {},
+      pages: {},
+    }, null, 2) + "\n";
+    await writeText(localeJsonPath, stub);
+    printSuccess(`Created ${localeJsonPath}`);
+  }
+
+  // Create locale route directory stubs
+  const localeIndexPath = `website/routes/[locale]/index.tsx`;
+  if (!fileExists(localeIndexPath)) {
+    printInfo("Locale routes already exist or will be created by init-website.");
+  }
+}
+
+console.log(`
+${"─".repeat(60)}
+  Next: run the /add-locale workflow in your AI tool to
+  fully implement the "${newLocale}" locale.
+
+  Windsurf:  /add-locale
+  Claude:    /add-locale
+
+  The workflow will:
+  1. Create locale route stubs for all pages
+  2. Translate UI strings in website/locales/${newLocale}.json
+  3. Add hreflang tags to all existing pages
+  4. Update the LocaleSwitcher component
+  5. Verify RTL styling (if applicable)
+${"─".repeat(60)}
+`);

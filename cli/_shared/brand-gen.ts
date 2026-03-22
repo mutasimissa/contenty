@@ -1,4 +1,4 @@
-import { readYaml, getLocales, writeText, readText, fileExists } from "./files.ts";
+import { readYaml, getLocales, writeText } from "./files.ts";
 
 // ── Types ────────────────────────────────────────────────
 
@@ -50,7 +50,6 @@ interface BusinessInput {
   default_locale: string;
   locales: string[];
   primary_cta: string;
-  logo_path?: string;
   brand_color_hint?: string;
   brand_philosophy?: string;
   constraints?: string[];
@@ -69,7 +68,7 @@ const slugify = (name: string): string =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-const routePath = (pillar: string): string => {
+const _routePath = (pillar: string): string => {
   const slug = slugify(pillar);
   if (["home"].includes(slug)) return "/";
   return `/${slug}`;
@@ -243,7 +242,7 @@ ${hasRtl ? `  const fontClass = dir === "rtl"
 `;
 };
 
-const generateRootMiddleware = (input: BusinessInput): string => {
+const generateRootMiddleware = (_input: BusinessInput): string => {
   return `import { define } from "../utils.ts";
 import config from "../utils/locale.ts";
 
@@ -558,7 +557,7 @@ export default function Section({ headline, bg = "white", children }: SectionPro
 }
 `;
 
-const generateHrefLangTsx = (input: BusinessInput): string => {
+const generateHrefLangTsx = (_input: BusinessInput): string => {
   return `import config from "../utils/locale.ts";
 
 interface HrefLangProps {
@@ -584,7 +583,7 @@ export default function HrefLang({ path, baseUrl = "" }: HrefLangProps) {
 `;
 };
 
-const generateLocaleJson = (locale: string, input: BusinessInput): string => {
+const generateLocaleJson = (_locale: string, input: BusinessInput): string => {
   return JSON.stringify(
     {
       nav: {
@@ -656,6 +655,305 @@ export default define.page(function LocaleCatchAll() {
     <>
       {/* Translation placeholder for non-default locale pages */}
       <p>Translation in progress</p>
+    </>
+  );
+});
+`;
+
+// ── SEO generators ───────────────────────────────────────
+
+const generateRobotsTxt = (input: BusinessInput): string => `# Robots.txt for ${input.business_name}
+User-agent: *
+Allow: /
+
+Sitemap: https://REPLACE_WITH_DOMAIN/sitemap.xml
+`;
+
+const generateSitemapRoute = (_input: BusinessInput): string => {
+  return `import config from "../utils/locale.ts";
+
+interface SitemapEntry {
+  loc: string;
+  changefreq: string;
+  priority: string;
+}
+
+const STATIC_PAGES: SitemapEntry[] = [];
+
+// Build sitemap entries from the sitemap YAML at build time
+// This route reads business/06-sitemap.yaml and generates XML
+const buildEntries = (): SitemapEntry[] => {
+  const entries: SitemapEntry[] = [...STATIC_PAGES];
+
+  // Add entries for each locale
+  for (const locale of config.locales) {
+    const prefix = locale === config.defaultLocale ? "" : \`/\${locale}\`;
+    entries.push({ loc: \`\${prefix}/\`, changefreq: "weekly", priority: "1.0" });
+  }
+
+  return entries;
+};
+
+export const handler = {
+  GET(_req: Request): Response {
+    const baseUrl = "https://REPLACE_WITH_DOMAIN";
+    const entries = buildEntries();
+
+    const urls = entries
+      .map(
+        (e) => \`  <url>
+    <loc>\${baseUrl}\${e.loc}</loc>
+    <changefreq>\${e.changefreq}</changefreq>
+    <priority>\${e.priority}</priority>
+  </url>\`,
+      )
+      .join("\\n");
+
+    const xml = \`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+\${urls}
+</urlset>\`;
+
+    return new Response(xml, {
+      headers: { "Content-Type": "application/xml; charset=utf-8" },
+    });
+  },
+};
+`;
+};
+
+const generateOGMetaTsx = (input: BusinessInput): string => `interface OGMetaProps {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+  type?: "website" | "article";
+  siteName?: string;
+  locale?: string;
+  publishedTime?: string;
+  author?: string;
+}
+
+export default function OGMeta({
+  title,
+  description,
+  path,
+  image = "/og-image.png",
+  type = "website",
+  siteName = "${input.business_name}",
+  locale = "${input.default_locale}",
+  publishedTime,
+  author,
+}: OGMetaProps) {
+  const baseUrl = "https://REPLACE_WITH_DOMAIN";
+  const url = \`\${baseUrl}\${path}\`;
+  const imageUrl = image.startsWith("http") ? image : \`\${baseUrl}\${image}\`;
+
+  return (
+    <>
+      {/* Open Graph */}
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={url} />
+      <meta property="og:image" content={imageUrl} />
+      <meta property="og:type" content={type} />
+      <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content={locale} />
+
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={imageUrl} />
+
+      {/* Canonical */}
+      <link rel="canonical" href={url} />
+
+      {/* Article-specific */}
+      {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {author && <meta property="article:author" content={author} />}
+    </>
+  );
+}
+`;
+
+const generateJsonLdTsx = (input: BusinessInput): string => `interface JsonLdProps {
+  data: Record<string, unknown>;
+}
+
+export const JsonLd = ({ data }: JsonLdProps) => (
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+  />
+);
+
+export const OrganizationJsonLd = () => (
+  <JsonLd
+    data={{
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "${input.business_name}",
+      url: "https://REPLACE_WITH_DOMAIN",
+      logo: "https://REPLACE_WITH_DOMAIN/logo.svg",
+    }}
+  />
+);
+
+export const WebSiteJsonLd = () => (
+  <JsonLd
+    data={{
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "${input.business_name}",
+      url: "https://REPLACE_WITH_DOMAIN",
+    }}
+  />
+);
+
+export const BreadcrumbJsonLd = ({ items }: { items: { name: string; href: string }[] }) => (
+  <JsonLd
+    data={{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: items.map((item, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: item.name,
+        item: \`https://REPLACE_WITH_DOMAIN\${item.href}\`,
+      })),
+    }}
+  />
+);
+
+export const FAQJsonLd = ({ questions }: { questions: { q: string; a: string }[] }) => (
+  <JsonLd
+    data={{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: questions.map((faq) => ({
+        "@type": "Question",
+        name: faq.q,
+        acceptedAnswer: { "@type": "Answer", text: faq.a },
+      })),
+    }}
+  />
+);
+
+export const ServiceJsonLd = ({ name, description }: { name: string; description: string }) => (
+  <JsonLd
+    data={{
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name,
+      description,
+      provider: {
+        "@type": "Organization",
+        name: "${input.business_name}",
+      },
+    }}
+  />
+);
+`;
+
+const generateManifestJson = (brand: BrandIdentity, input: BusinessInput): string =>
+  JSON.stringify(
+    {
+      name: input.business_name,
+      short_name: input.business_name,
+      start_url: "/",
+      display: "standalone",
+      background_color: brand.colors.neutral["50"] || "#ffffff",
+      theme_color: brand.colors.primary["600"] || "#2563eb",
+      icons: [
+        { src: "/logo-icon.png", sizes: "192x192", type: "image/png" },
+        { src: "/logo-icon.png", sizes: "512x512", type: "image/png" },
+      ],
+    },
+    null,
+    2,
+  ) + "\n";
+
+const generate404Page = (input: BusinessInput): string => `import { Head } from "fresh/runtime";
+import { define } from "../utils.ts";
+import Header from "../components/Header.tsx";
+import Footer from "../components/Footer.tsx";
+
+export default define.page(function NotFoundPage() {
+  return (
+    <>
+      <Head>
+        <title>Page Not Found | ${input.business_name}</title>
+        <meta name="robots" content="noindex" />
+      </Head>
+      <Header />
+      <main id="main-content" class="flex items-center justify-center min-h-[60vh]">
+        <div class="text-center px-4">
+          <h1 class="text-6xl font-bold text-brand-600">404</h1>
+          <p class="mt-4 text-xl text-neutral-600">
+            The page you're looking for doesn't exist.
+          </p>
+          <a
+            href="/"
+            class="mt-8 inline-flex items-center px-6 py-3 text-base font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg transition-colors"
+          >
+            Go to homepage
+          </a>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+});
+`;
+
+const generateBlogSlugRoute = (): string => `import { define } from "../../utils.ts";
+import { Head } from "fresh/runtime";
+import Header from "../../components/Header.tsx";
+import Footer from "../../components/Footer.tsx";
+import OGMeta from "../../components/OGMeta.tsx";
+
+export default define.page(function BlogPost({ params }) {
+  const _slug = params.slug;
+  return (
+    <>
+      <Head>
+        <title>Blog Post</title>
+        <OGMeta title="Blog Post" description="" path={\`/blog/\${_slug}\`} />
+      </Head>
+      <Header />
+      <main id="main-content">
+        <article class="max-w-3xl mx-auto px-4 py-16">
+          {/* Populate from website/content/blog/ markdown files */}
+        </article>
+      </main>
+      <Footer />
+    </>
+  );
+});
+`;
+
+const generateBlogIndexRoute = (input: BusinessInput): string => `import { define } from "../../utils.ts";
+import { Head } from "fresh/runtime";
+import Header from "../../components/Header.tsx";
+import Footer from "../../components/Footer.tsx";
+import OGMeta from "../../components/OGMeta.tsx";
+
+export default define.page(function BlogIndex() {
+  return (
+    <>
+      <Head>
+        <title>Blog | ${input.business_name}</title>
+        <OGMeta title="Blog" description="Latest articles and insights from ${input.business_name}" path="/blog" />
+      </Head>
+      <Header />
+      <main id="main-content">
+        <section class="max-w-7xl mx-auto px-4 py-16">
+          <h1 class="text-4xl font-bold text-neutral-900">Blog</h1>
+          {/* Populate blog listing from website/content/blog/ */}
+        </section>
+      </main>
+      <Footer />
     </>
   );
 });
@@ -757,6 +1055,18 @@ export const generateAllBrandedFiles = async (): Promise<string[]> => {
   // Locale routes
   await write("website/routes/[locale]/index.tsx", generateLocaleIndex());
   await write("website/routes/[locale]/[...slug].tsx", generateLocaleCatchAll());
+
+  // SEO files
+  await write("website/static/robots.txt", generateRobotsTxt(input));
+  await write("website/routes/sitemap.xml.ts", generateSitemapRoute(input));
+  await write("website/components/OGMeta.tsx", generateOGMetaTsx(input));
+  await write("website/components/JsonLd.tsx", generateJsonLdTsx(input));
+  await write("website/static/manifest.json", generateManifestJson(brand, input));
+  await write("website/routes/_404.tsx", generate404Page(input));
+
+  // Blog routes
+  await write("website/routes/blog/index.tsx", generateBlogIndexRoute(input));
+  await write("website/routes/blog/[slug].tsx", generateBlogSlugRoute());
 
   return written;
 };
