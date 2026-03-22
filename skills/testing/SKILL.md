@@ -17,7 +17,7 @@ counts and specific failure details.
 
 ## Read these files first
 
-1. `business/06-sitemap.yaml` — page inventory (drives data-driven tests)
+1. `content/01-sitemap.yaml` — page inventory (drives data-driven tests)
 2. `business/01-business-input.yaml` — site type and locale config
 3. `agency/site-types.yaml` — which tests apply per site type
 

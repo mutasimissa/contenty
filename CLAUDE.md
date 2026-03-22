@@ -5,10 +5,32 @@ This repository represents **one business and one website only**.
 ## Priority order
 
 1. `PROJECT.md`
-2. `business/` as source of truth
-3. `agency/` as methodology
-4. `skills/` as AI instructions
-5. `website/` as implementation target
+2. `business/` as source of truth (human-authored)
+3. `content/` as derived deliverables (regeneratable from business/)
+4. `agency/` as methodology
+5. `skills/` as AI instructions
+6. `website/` as implementation target
+
+## Two-directory architecture
+
+```
+business/   Source of truth (human-authored, not auto-generated)
+  01-business-input.yaml    Core facts, offers, proof, seeds
+  02-brand-strategy.md      Positioning, tone, pillars, CTA logic
+  03-brand-identity.yaml    Colors, fonts, tokens (from logo)
+  04-business-model.md      Full 12-dimension business model
+  05-value-proposition.md   Value proposition canvas with proof matrix
+  06-personas-jtbd.md       Personas with jobs/pains/gains
+
+content/    Derived (fully regeneratable from business/)
+  01-sitemap.yaml           Pages, navigation, goals, linking
+  02-page-briefs/           Per-page briefs
+  03-seo-brief.md           Keywords, metadata, schema plan
+  04-content-deck.md        Actual page copy
+  05-checklist.md           Auto-generated QA tracking
+```
+
+**Regeneration rule:** `content/` is fully regenerated from `business/` anytime.
 
 ## How to use skills
 
@@ -26,7 +48,8 @@ validation rules apply for the current project.
 Run with `deno task <command>`:
 
 - `validate` — check business files, YAML keys, brand assets, and SEO files
-- `audit` — content audit (sitemap ↔ brief ↔ copy ↔ route ↔ SEO coverage)
+- `audit` — content audit (sitemap / brief / copy / route / SEO coverage)
+- `check` — unified validation: logos, business, brand assets, content, rubrics
 - `init-website` — bootstrap Fresh 2.2+ project in `website/`
 - `test` — run all tests (unit + E2E)
 - `test:unit` — Deno unit tests for CLI utilities
@@ -36,7 +59,7 @@ Run with `deno task <command>`:
 
 ## Testing
 
-Tests are data-driven from `business/06-sitemap.yaml` and site type config.
+Tests are data-driven from `content/01-sitemap.yaml` and site type config.
 
 - **Unit tests** (`tests/unit/`) — Deno native, test CLI utilities
 - **E2E tests** (`tests/e2e/specs/`) — Playwright, test the running website
@@ -49,13 +72,12 @@ Tests are data-driven from `business/06-sitemap.yaml` and site type config.
 - `.github/workflows/ci.yml` — YAML validation, markdown lint, unit tests,
   content audit, business/website drift check (every push and PR)
 - `.github/workflows/preview.yml` — build preview, E2E tests, broken link check,
-  Lighthouse CI, visual diff snapshots (PR only, requires website)
+  Lighthouse CI, visual diff snapshots, PR summary report (PR only, requires website)
 
-## Three developer paths
+## Entry point
 
-1. **Fresh start** — `/fresh-start` in Claude Code (fully AI-guided)
-2. **Edit & sync** — change business files, then `/edit-sync` in Claude Code
-3. **Rebuild** — `/rebuild-website` in Claude Code
+One command: `/start`. It detects project state and routes to the right workflow
+based on conversation, not command names.
 
 ## Site types
 
@@ -81,27 +103,6 @@ Every page must have:
 
 The website must have: robots.txt, sitemap.xml route, manifest.json, custom 404.
 
-## Commands
-
-Use `.claude/commands/` for slash-command workflows. Available commands:
-
-- `/fresh-start` — full guided build from scratch
-- `/edit-sync` — detect changes and propagate updates
-- `/rebuild-website` — wipe and regenerate website
-- `/add-page` — add a new page end-to-end
-- `/add-blog-post` — write and publish a blog post
-- `/add-landing-page` — add a conversion-focused landing page
-- `/add-locale` — add a new language
-- `/remove-page` — cleanly remove a page
-- `/build-brand-strategy` — create or refine brand strategy
-- `/run-offer-design` — clarify business model and personas
-- `/generate-sitemap` — turn strategy into site structure
-- `/run-seo-brief` — define keyword strategy and metadata
-- `/write-page-copy` — write structured page copy
-- `/launch-qa` — prelaunch review against rubrics
-- `/init-website` — build the website from business files
-- `/init-business` — normalize business inputs
-
 ## Agents
 
 - `strategist` — positioning, audience, messaging, offers, sitemap
@@ -124,17 +125,10 @@ Use `.claude/commands/` for slash-command workflows. Available commands:
 - Prefer reuse over reinvention.
 - Keep implementation decisions documented in `docs/decisions/`.
 
-## Content lifecycle
-
-- **Add page:** `/add-page`
-- **Add blog post:** `/add-blog-post`
-- **Add landing page:** `/add-landing-page`
-- **Add locale:** `/add-locale`
-- **Remove page:** `/remove-page`
-
 ## Boundaries
 
 - Do not create extra businesses or project folders.
 - Do not put business truth into code files only.
 - Do not bypass `business/` when generating copy, metadata, or navigation.
 - Do not skip to website implementation before business files are coherent.
+- `content/` files are always derived — edit `business/` and regenerate.

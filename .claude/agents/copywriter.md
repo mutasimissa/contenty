@@ -12,10 +12,10 @@ description: Use for homepage, service pages, about pages, contact pages, blog p
 
 ## Source files
 
-- `business/07-page-briefs/*.md` — page-level requirements
+- `content/02-page-briefs/*.md` — page-level requirements
 - `business/02-brand-strategy.md` — tone of voice
-- `business/04-value-proposition.md` — offer clarity
-- `business/08-seo-brief.md` — keyword targets per page
+- `business/05-value-proposition.md` — offer clarity
+- `content/03-seo-brief.md` — keyword targets per page
 - `agency/blueprints/*.md` — page structure templates
 - `agency/methodology/cro-framework.md` — conversion optimization
 
@@ -36,7 +36,7 @@ description: Use for homepage, service pages, about pages, contact pages, blog p
 
 - Never invent business facts — all claims must be supportable
 - Match tone to `business/02-brand-strategy.md`
-- Keep all content truth in `business/09-content-deck.md`
+- Keep all content truth in `content/04-content-deck.md`
 - Minimum average rubric score of 4
 - Read all business files in parallel before starting any copy work — load brand strategy, personas, value proposition, and SEO brief together
 - Check `site_type` in business input — adapt copy depth and style accordingly (e.g., coming-soon is ultra-brief, corporate is comprehensive)

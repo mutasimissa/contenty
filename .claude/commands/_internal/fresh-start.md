@@ -27,19 +27,19 @@ Run the complete Contenty pipeline from business intake to a fully built website
 
 ## Phase 2: Brand & Strategy
 6. Read `skills/brand-strategy/SKILL.md`. Follow every step to produce `business/02-brand-strategy.md`. Score against `agency/rubrics/strategy-rubric.md` — minimum average 4.
-7. Read `skills/brand-identity/SKILL.md`. Follow every step to produce `business/02b-brand-identity.yaml`. Score against `agency/rubrics/brand-identity-rubric.md` — minimum average 4.
+7. Read `skills/brand-identity/SKILL.md`. Follow every step to produce `business/03-brand-identity.yaml`. Score against `agency/rubrics/brand-identity-rubric.md` — minimum average 4.
 
 ## Phase 3: Offers & Structure (skip for coming-soon, single-page)
-8. If site_type requires it: Read `skills/offer-design/SKILL.md`. Follow every step to produce `business/03-business-model.md`, `business/04-value-proposition.md`, and `business/05-personas-jobs.md`.
-9. If site_type requires it: Read `skills/sitemap-ia/SKILL.md`. Use `agency/site-types.yaml` required_pages as baseline. Follow every step to produce `business/06-sitemap.yaml` and page briefs in `business/07-page-briefs/`.
+8. If site_type requires it: Read `skills/offer-design/SKILL.md`. Follow every step to produce `business/04-business-model.md`, `business/05-value-proposition.md`, and `business/06-personas-jtbd.md`.
+9. If site_type requires it: Read `skills/sitemap-ia/SKILL.md`. Use `agency/site-types.yaml` required_pages as baseline. Follow every step to produce `content/01-sitemap.yaml` and page briefs in `content/02-page-briefs/`.
 
 ## Phase 4: SEO & Content
-10. If site_type requires it: Read `skills/seo-brief/SKILL.md`. Follow every step to produce `business/08-seo-brief.md`. Score against `agency/rubrics/seo-rubric.md` — minimum average 4.
-11. For each page in `business/06-sitemap.yaml` (or the single page for single-page/coming-soon types), read the page brief and follow `skills/page-copy/SKILL.md` to write copy. Append each page's copy to `business/09-content-deck.md`. Score against `agency/rubrics/copy-rubric.md`.
+10. If site_type requires it: Read `skills/seo-brief/SKILL.md`. Follow every step to produce `content/03-seo-brief.md`. Score against `agency/rubrics/seo-rubric.md` — minimum average 4.
+11. For each page in `content/01-sitemap.yaml` (or the single page for single-page/coming-soon types), read the page brief and follow `skills/page-copy/SKILL.md` to write copy. Append each page's copy to `content/04-content-deck.md`. Score against `agency/rubrics/copy-rubric.md`.
 
 ## Phase 5: QA & Validation
 12. **Checkpoint:** Run `deno task validate` to verify all business files are complete and valid. Show results to user. Fix any issues before proceeding.
-13. If site_type requires it: Read `skills/launch-qa/SKILL.md`. Score all business files against all rubrics. Produce `business/10-launch-checklist.md`.
+13. If site_type requires it: Read `skills/launch-qa/SKILL.md`. Score all business files against all rubrics. Produce `content/05-checklist.md`.
 
 ## Phase 6: Website Build
 14. Run `deno task init-website` to scaffold the Fresh project and generate branded files.

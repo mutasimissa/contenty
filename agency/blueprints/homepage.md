@@ -5,17 +5,25 @@
 State the business clearly, establish trust quickly, and route the visitor to
 the right next step.
 
+## Component variants
+
+See `agency/blueprints/component-variants.md` for the full variant system.
+
+- **Hero:** `centered` — text-centered with gradient background
+- **Sections:** `cards` (offerings), `stats` (proof), `testimonials` (trust)
+- **CTA:** `banner` — full-width colored band
+
 ## Recommended sections
 
-1. Hero
-2. Problem and stakes
-3. Solution overview
-4. Key offerings
-5. Differentiators
-6. Proof / trust
-7. Industries or use cases
-8. FAQ or objections
-9. Final CTA
+1. Hero (`centered` variant)
+2. Problem and stakes (`default` section)
+3. Solution overview (`split` section)
+4. Key offerings (`cards` section — 3-4 columns)
+5. Differentiators (`split` section)
+6. Proof / trust (`stats` + `testimonials` sections)
+7. Industries or use cases (`cards` section)
+8. FAQ or objections (`default` section)
+9. Final CTA (`banner` variant)
 
 ## Inputs required
 

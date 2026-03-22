@@ -11,8 +11,8 @@ description: Use for keyword strategy, intent mapping, metadata direction, inter
 
 ## Source files
 
-- `business/06-sitemap.yaml` — page inventory
-- `business/07-page-briefs/*.md` — page-level SEO targets
+- `content/01-sitemap.yaml` — page inventory
+- `content/02-page-briefs/*.md` — page-level SEO targets
 - `agency/methodology/seo-framework.md` — SEO methodology
 - `agency/rubrics/seo-rubric.md` — scoring criteria
 - `agency/schemas/seo-brief.yaml` — required structure

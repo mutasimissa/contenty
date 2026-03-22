@@ -6,7 +6,7 @@
 
 ## Goal
 
-Produce a structured brand identity file (`business/02b-brand-identity.yaml`)
+Produce a structured brand identity file (`business/03-brand-identity.yaml`)
 containing all design tokens needed to implement the website's visual layer.
 Every token must trace back to the brand philosophy, brand strategy tone, or
 logo-derived colors — no arbitrary values.
@@ -80,13 +80,13 @@ logo-derived colors — no arbitrary values.
     `logo` section of the output, specify minimum clear space.
 14. **Present the full token set to the user** — ask for confirmation or
     adjustments before writing.
-15. **Write output** — save to `business/02b-brand-identity.yaml`
+15. **Write output** — save to `business/03-brand-identity.yaml`
 16. **Score** — evaluate the output against the brand identity rubric. Minimum
     average score of 4.
 
 ## Output format
 
-Write `business/02b-brand-identity.yaml` matching this structure:
+Write `business/03-brand-identity.yaml` matching this structure:
 
 ```yaml
 brand_philosophy: "..."

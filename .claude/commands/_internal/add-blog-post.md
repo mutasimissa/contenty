@@ -6,7 +6,7 @@ Complete workflow for creating a blog post from topic to live page.
 
 1. Read `business/01-business-input.yaml` — check `site_type`. If site_type is `coming-soon` or `single-page`, warn that blog posts aren't typical for this site type.
 2. Ask the user for post title, category, and primary keyword. Create the blog post file with frontmatter (title, slug, date, author, category, tags, draft: true, description, primary_keyword). Create blog routes if they don't exist.
-3. Read `business/02-brand-strategy.md` (tone), `business/08-seo-brief.md` (keywords), `business/05-personas-jobs.md` (audience), and `agency/blueprints/blog-post.md` (structure).
+3. Read `business/02-brand-strategy.md` (tone), `content/03-seo-brief.md` (keywords), `business/06-personas-jtbd.md` (audience), and `agency/blueprints/blog-post.md` (structure).
 4. Write the full blog post content following the blueprint:
    - H1 with primary keyword placed naturally
    - Introduction that hooks the reader and establishes relevance

@@ -1,15 +1,15 @@
 # Repository Instructions
 
-This is a **single-business website system**.
+This is a **single-business website system** (v4).
 
 ## Meaning of folders
 
-- `business/` = truth (strategy, offers, personas, sitemap, content)
-- `agency/` = reusable method (frameworks, templates, schemas, rubrics,
-  blueprints)
+- `business/` = source of truth (strategy, offers, personas — human-authored)
+- `content/` = derived deliverables (sitemap, briefs, copy, checklist — regeneratable)
+- `agency/` = reusable method (frameworks, templates, schemas, rubrics, blueprints)
 - `website/` = implementation (Fresh 2.2+ / Tailwind 4 / Deno)
 - `skills/` = AI instructions (each skill is a SKILL.md you follow step by step)
-- `cli/` = Deno automation scripts (validation, audit, website init)
+- `cli/` = Deno automation scripts (validation, audit, check, website init)
 
 ## How to use skills
 
@@ -39,11 +39,13 @@ and consult `agency/site-types.yaml` to determine which skills and pages apply.
 - **reviewer** — final quality review against all rubrics and launch-readiness
   checks. Runs CLI validation tools before manual review.
 - **builder** — translates approved business and content files into website
-  implementation (routes, components, SEO, styling). Reads site type to
-  determine required pages and runs scaffolding before implementing routes.
-- **researcher** — validates market claims, researches competitors, checks
-  keyword data, and gathers external context. Supports strategist and SEO agents
-  with verified findings.
+  implementation (routes, components, SEO, styling). Uses Context7 MCP for
+  up-to-date Fresh/Tailwind/Preact API docs. Reads site type to determine
+  required pages and runs scaffolding before implementing routes.
+- **researcher** — runs market research after intake: competitor extraction,
+  keyword discovery, and market-language analysis. Enriches business input with
+  `competitor_analysis`, SEO keyword seeds, and `market_language` fields.
+  Supports strategist and SEO agents with verified findings.
 - **qa-runner** — automated QA that runs CLI validation tools, scores every
   applicable rubric, and produces a structured report with pass/fail status and
   fix recommendations. Adapts checks to site type.
@@ -52,20 +54,25 @@ and consult `agency/site-types.yaml` to determine which skills and pages apply.
 
 Run with `deno task <command>`:
 
+- `check` — unified validation: logos, business files, brand assets, content
+  audit, website SEO, CTA consistency. Generates `content/05-checklist.md`.
 - `validate` — check business files, YAML keys, brand assets, and SEO files
-- `audit` — content audit (sitemap <-> brief <-> copy <-> route <-> SEO coverage)
+- `audit` — content audit (sitemap / brief / copy / route / SEO coverage)
 - `init-website` — bootstrap Fresh 2.2+ project in `website/`
 - `test` — run all tests (unit + E2E)
 - `test:unit` — Deno unit tests for CLI utilities
 - `test:e2e` — Playwright E2E tests against running website
 - `test:smoke` — quick pre-launch smoke suite (subset of E2E)
-- `prelaunch` — full pre-launch gate: validate + audit + smoke tests
+- `prelaunch` — full pre-launch gate: `check` + `test:smoke`
 
-## Three developer paths
+## Entry point
 
-1. **Fresh start** — `/fresh-start` in Claude Code (fully AI-guided)
-2. **Edit & sync** — change business files, then `/edit-sync` in Claude Code
-3. **Rebuild** — `/rebuild-website` in Claude Code
+One command: `/start`. It detects project state and routes to the right
+workflow conversationally. Users never need to know skill names or file paths.
+
+- **Empty project** — conversational intake, then auto-continues through pipeline
+- **In-progress project** — shows progress, asks "continue or change something?"
+- **Launched project** — asks what you want to do (add page, blog post, edit, etc.)
 
 ## SEO requirements
 
@@ -83,6 +90,7 @@ The website must have: robots.txt, sitemap.xml route, manifest.json, custom 404.
 
 - Always read `PROJECT.md` first.
 - Use `business/` as the source of truth.
+- `content/` is derived from `business/` — regenerate, don't edit directly.
 - Use `agency/` for frameworks, templates, schemas, blueprints, and rubrics.
 - Only implement into `website/` after business files are coherent.
 - Review outputs against `agency/rubrics/` — minimum average score of 4.
@@ -90,23 +98,32 @@ The website must have: robots.txt, sitemap.xml route, manifest.json, custom 404.
 
 ## Recommended workflow
 
-1. `/fresh-start` or `/init-business` -> `business/01-business-input.yaml`
-2. `skills/brand-strategy/` -> `business/02-brand-strategy.md` 2b.
-   `skills/brand-identity/` -> `business/02b-brand-identity.yaml`
-3. `skills/offer-design/` -> `business/03-*`, `04-*`, `05-*`
-4. `skills/sitemap-ia/` -> `business/06-sitemap.yaml`, `07-page-briefs/`
-5. `skills/seo-brief/` -> `business/08-seo-brief.md`
-6. `skills/page-copy/` -> `business/09-content-deck.md`
-7. `skills/launch-qa/` -> `business/10-launch-checklist.md`
-8. `deno task init-website` -> `website/`
+```
+1. /start              → business/01-business-input.yaml  (conversational intake)
+2. market-research     → enriches business input           (competitor, keyword, market language)
+3. brand-strategy      → business/02-brand-strategy.md
+4. brand-identity      → business/03-brand-identity.yaml   (extracted from logo SVGs)
+5. offer-design        → business/04-business-model.md
+                         business/05-value-proposition.md
+                         business/06-personas-jtbd.md
+6. sitemap-ia          → content/01-sitemap.yaml
+                         content/02-page-briefs/
+7. seo-brief           → content/03-seo-brief.md
+8. page-copy           → content/04-content-deck.md
+9. launch-qa           → content/05-checklist.md
+10. init-website       → website/
+```
 
 ## Content lifecycle
 
-- **Add page:** `/add-page`
-- **Add blog post:** `/add-blog-post`
-- **Add landing page:** `/add-landing-page`
-- **Add locale:** `/add-locale`
-- **Remove page:** `/remove-page`
+All content operations route through `/start` when the project is in the
+`launched` stage:
+
+- "Add a page" — creates brief, writes copy, generates route
+- "Add a blog post" — writes post, publishes
+- "Add a landing page" — creates conversion-focused page
+- "Add a language" — adds locale routes, translations, hreflang
+- "Remove a page" — cleans up sitemap, content, and route
 
 ## Output discipline
 

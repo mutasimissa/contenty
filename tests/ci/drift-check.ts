@@ -29,7 +29,7 @@ console.log("\n🔄 Business/Website Drift Check\n");
 // 1. Check sitemap pages have routes
 console.log("  Routes vs Sitemap:");
 try {
-  const sitemap = readYaml<Record<string, unknown>>("business/06-sitemap.yaml");
+  const sitemap = readYaml<Record<string, unknown>>("content/01-sitemap.yaml");
   const primary = (sitemap.primary_navigation as string[]) || [];
   const secondary = (sitemap.secondary_pages as string[]) || [];
   const allPages = [...primary, ...secondary];
@@ -68,7 +68,7 @@ try {
 // 2. Check brand identity vs styles freshness
 console.log("\n  Brand Identity Freshness:");
 try {
-  const brandMtime = Deno.statSync(`${ROOT}/business/02b-brand-identity.yaml`).mtime;
+  const brandMtime = Deno.statSync(`${ROOT}/business/03-brand-identity.yaml`).mtime;
   const stylesMtime = Deno.statSync(`${ROOT}/website/assets/styles.css`).mtime;
   if (brandMtime && stylesMtime && brandMtime > stylesMtime) {
     drift("Brand identity is newer than website styles — styles need regeneration");

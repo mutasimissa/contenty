@@ -7,16 +7,18 @@ workflow that supports both initial launch and ongoing operations.
 
 ## First Launch (linear, one-time)
 
-| Phase              | Deliverable                                   | Produced by                                       |
-| ------------------ | --------------------------------------------- | ------------------------------------------------- |
-| 1. Business intake | `business/01-business-input.yaml`             | `/fresh-start` or `/init-business`                |
-| 2. Brand strategy  | `business/02-brand-strategy.md`               | `skills/brand-strategy/`                          |
-| 3. Offer design    | `business/03-*`, `04-*`, `05-*`               | `skills/offer-design/`                            |
-| 4. Sitemap & IA    | `business/06-sitemap.yaml`, `07-page-briefs/` | `skills/sitemap-ia/`                              |
-| 5. SEO brief       | `business/08-seo-brief.md`                    | `skills/seo-brief/`                               |
-| 6. Page copy       | `business/09-content-deck.md`                 | `skills/page-copy/`                               |
-| 7. Launch QA       | `business/10-launch-checklist.md`             | `skills/launch-qa/`                               |
-| 8. Website build   | `website/`                                    | `deno task init-website` + `skills/website-init/` |
+| Phase               | Deliverable                                          | Produced by                                       |
+| ------------------- | ---------------------------------------------------- | ------------------------------------------------- |
+| 1. Business intake  | `business/01-business-input.yaml`                    | `/start` (conversational)                         |
+| 2. Market research  | Enriches `business/01-business-input.yaml`           | `skills/market-research/`                         |
+| 3. Brand strategy   | `business/02-brand-strategy.md`                      | `skills/brand-strategy/`                          |
+| 3b. Brand identity  | `business/03-brand-identity.yaml`                    | `skills/brand-identity/`                          |
+| 4. Offer design     | `business/04-*`, `05-*`, `06-*`                      | `skills/offer-design/`                            |
+| 5. Sitemap & IA     | `content/01-sitemap.yaml`, `content/02-page-briefs/` | `skills/sitemap-ia/`                              |
+| 6. SEO brief        | `content/03-seo-brief.md`                            | `skills/seo-brief/`                               |
+| 7. Page copy        | `content/04-content-deck.md`                         | `skills/page-copy/`                               |
+| 8. Launch QA        | `content/05-checklist.md`                            | `skills/launch-qa/`                               |
+| 9. Website build    | `website/`                                           | `deno task init-website` + `skills/website-init/` |
 
 ## Ongoing Operations (cyclical, recurring)
 
@@ -51,7 +53,7 @@ workflow that supports both initial launch and ongoing operations.
 
 ## Central entry point
 
-Run `/fresh-start` in Claude Code for a new project, or `/edit-sync` to propagate
+Run `/start` in Claude Code for any project state. It detects stage and routes to propagate
 changes. Claude detects the project stage and guides you through the right
 workflow — whether you're launching for the first time, adding content, updating
 strategy, or running an audit.

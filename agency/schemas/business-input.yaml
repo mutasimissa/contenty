@@ -3,7 +3,7 @@ description: >
   Foundational business facts that drive all strategy and content decisions.
   Fields marked (seed) are starting hints — downstream skills produce the
   canonical versions. Only the three core fields are required; everything
-  else is optional and can be filled interactively via the /init-business
+  else is optional and can be filled interactively via the /start
   AI workflow. Logo files (assets/brand/logo.svg and logo-icon.svg) are
   checked at intake time as file existence, not YAML fields.
 
@@ -144,6 +144,10 @@ properties:
     type: string
     description: Brand voice adjectives that guide all copy.
     example: "Clear, credible, practical"
+  user_language:
+    type: array
+    description: "Verbatim quotes from the user captured during intake conversation. Used as seed material for authentic headlines, taglines, and copy."
+    example: ["I just want a site that doesn't look like a template", "we're fast but not cheap"]
   competitors:
     type: array
     description: Known competitors or alternative solutions.
@@ -418,6 +422,46 @@ properties:
         type: string
         description: Target accessibility standard.
         example: "WCAG 2.1 AA"
+
+  # ── Competitor analysis (populated by skills/market-research/) ──
+  competitor_analysis:
+    type: array
+    description: "Competitor profiles discovered through market research."
+    example:
+      - name: "Competitor A"
+        url: "https://example.com"
+        positioning: "Their hero headline"
+        strengths: ["Fast delivery"]
+        weaknesses: ["No local support"]
+        pricing_model: "Tiered"
+        proof_types: ["Case studies", "Client logos"]
+
+  # ── Market language (populated by skills/market-research/) ────
+  market_language:
+    type: object
+    description: "Real buyer language captured from forums, reviews, and discussions."
+    properties:
+      buyer_phrases:
+        type: array
+        description: "How real buyers describe the problem in their own words."
+        example: ["I just need a simple website that looks professional"]
+      common_objections:
+        type: array
+        description: "Concerns that come up repeatedly."
+        example: ["cheap usually means bad quality"]
+      decision_factors:
+        type: array
+        description: "What buyers say matters when choosing."
+        example: ["portfolio quality vs price"]
+      emotional_triggers:
+        type: object
+        properties:
+          frustration:
+            type: array
+            example: ["wasted money on templates"]
+          aspiration:
+            type: array
+            example: ["look like a legit company"]
 
   # ── Content rules ──────────────────────────────────────────
   content_rules:

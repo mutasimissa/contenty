@@ -43,5 +43,5 @@ description: Use for final quality review against rubrics and launch-readiness c
 - Score every dimension — do not skip any rubric
 - Minimum average score of 4 across all rubrics
 - Flag specific, actionable issues — not vague feedback
-- Output goes to `business/10-launch-checklist.md`
+- Output goes to `content/05-checklist.md`
 - Run `deno task validate` and `deno task audit` as first steps before manual review

@@ -4,7 +4,7 @@
   (150-160 chars)
 - Metadata must reflect the actual page content — no misleading titles
 - Keywords must map to real buyer intent, not vanity traffic
-- Use schema markup per `business/08-seo-brief.md` (Organization, FAQPage,
+- Use schema markup per `content/03-seo-brief.md` (Organization, FAQPage,
   BreadcrumbList, Service)
 - Primary keyword appears naturally in the H1 and first paragraph
 - Internal links create logical pathways between pages — follow the linking plan

@@ -12,21 +12,21 @@ elements before implementation begins.
 
 ## Prerequisites
 
-- All business files (`business/01-*` through `business/09-*`) should be
-  complete
+- All business files (`business/01-*` through `business/06-*`) and content
+  files (`content/01-*` through `content/04-*`) should be complete
 - Content deck should have copy for all primary pages
 
 ## Read these files first
 
 1. `business/01-business-input.yaml` — business facts
 2. `business/02-brand-strategy.md` — positioning and tone
-3. `business/03-business-model.md` — offers and conversion path
-4. `business/04-value-proposition.md` — promise and proof
-5. `business/05-personas-jobs.md` — buyer needs
-6. `business/06-sitemap.yaml` — page inventory
-7. `business/07-page-briefs/` — all page briefs
-8. `business/08-seo-brief.md` — keywords and metadata
-9. `business/09-content-deck.md` — page copy
+3. `business/04-business-model.md` — offers and conversion path
+4. `business/05-value-proposition.md` — promise and proof
+5. `business/06-personas-jtbd.md` — buyer needs
+6. `content/01-sitemap.yaml` — page inventory
+7. `content/02-page-briefs/` — all page briefs
+8. `content/03-seo-brief.md` — keywords and metadata
+9. `content/04-content-deck.md` — page copy
 10. `agency/methodology/qa-framework.md` — review layers
 11. `agency/rubrics/launch-rubric.md` — scoring criteria
 12. `agency/rubrics/strategy-rubric.md` — strategy scoring
@@ -74,7 +74,7 @@ elements before implementation begins.
 
 ## Output format
 
-Write `business/10-launch-checklist.md`:
+Write `content/05-checklist.md`:
 
 ```markdown
 # Launch Checklist
@@ -148,7 +148,8 @@ Write `business/10-launch-checklist.md`:
 
 ## Dependency chain
 
-- **Requires:** All business files (`business/01-*` through `business/09-*`)
+- **Requires:** All business files (`business/01-*` through `business/06-*`) and
+  all content files (`content/01-*` through `content/04-*`)
 - **Feeds into:** Website implementation (`skills/website-init/`)
 
 ## Next step

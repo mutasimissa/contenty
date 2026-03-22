@@ -12,9 +12,9 @@ implementation — scannable, specific, and conversion-oriented.
 ## Prerequisites
 
 - `business/02-brand-strategy.md` is complete
-- `business/04-value-proposition.md` is complete
-- `business/07-page-briefs/<page>.md` exists for the target page
-- `business/08-seo-brief.md` is complete (run `skills/seo-brief/` first)
+- `business/05-value-proposition.md` is complete
+- `content/02-page-briefs/<page>.md` exists for the target page
+- `content/03-seo-brief.md` is complete (run `skills/seo-brief/` first)
 
 ## Read these files first
 
@@ -22,11 +22,11 @@ implementation — scannable, specific, and conversion-oriented.
    headline, key messages, pain points, transformation outcomes, objection
    handling, CTA variants), `content_rules.*`, `generation.*` (depth, style,
    creativity)
-2. `business/07-page-briefs/<page>.md` — the specific page brief
+2. `content/02-page-briefs/<page>.md` — the specific page brief
 3. `business/02-brand-strategy.md` — tone, positioning, message pillars
-4. `business/04-value-proposition.md` — promise and differentiation
-5. `business/05-personas-jobs.md` — buyer needs and objections
-6. `business/08-seo-brief.md` — keywords, metadata direction, FAQ targets
+4. `business/05-value-proposition.md` — promise and differentiation
+5. `business/06-personas-jtbd.md` — buyer needs and objections
+6. `content/03-seo-brief.md` — keywords, metadata direction, FAQ targets
 7. `agency/blueprints/<page-type>.md` — section-level structure for this page
    type
 8. `agency/methodology/content-strategy-framework.md` — writing rules
@@ -53,7 +53,7 @@ implementation — scannable, specific, and conversion-oriented.
 
 ## Output format
 
-Append to or update `business/09-content-deck.md`:
+Append to or update `content/04-content-deck.md`:
 
 ```markdown
 ## [Page Name]
@@ -104,7 +104,7 @@ Score output against `agency/rubrics/copy-rubric.md`. Before finishing:
 ## Dependency chain
 
 - **Requires:** `business/02-*`, `business/04-*`, `business/05-*`,
-  `business/07-page-briefs/<page>.md`, `business/08-seo-brief.md`
+  `content/02-page-briefs/<page>.md`, `content/03-seo-brief.md`
 - **Feeds into:** `skills/launch-qa/`
 
 ## Next step

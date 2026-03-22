@@ -22,7 +22,34 @@ strategy. Used by strategist and SEO agents as a supporting resource.
 
 - `business/01-business-input.yaml` — competitors, industry, target markets
 - `business/02-brand-strategy.md` — positioning claims to validate
-- `business/08-seo-brief.md` — keywords to research
+- `content/03-seo-brief.md` — keywords to research
+
+## Search patterns
+
+### Competitor research
+- `"[industry] [offer type] for [target segment]"`
+- `"best [offer type] agency/company"`
+- `"[competitor name] reviews"`
+
+### Keyword discovery
+- `"[offer] for [segment]"`
+- `"how much does [offer] cost"`
+- `"best [offer] [year]"`
+- `"[offer] vs [alternative]"`
+
+### Market language
+- `"[problem] reddit"`
+- `"[industry] [pain point] forum"`
+- `"looking for [offer type]"`
+- `"[competitor] review"`
+
+## Extraction rules
+
+- Always cite sources when reporting findings
+- Distinguish between verified facts and inferences
+- Store competitor data in `business/01-business-input.yaml` under `competitor_analysis`
+- Store market language in `business/01-business-input.yaml` under `market_language`
+- Update SEO keyword seeds with discovered keywords
 
 ## Guardrails
 

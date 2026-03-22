@@ -17,7 +17,7 @@ const toSlug = (name: string): string =>
 const ROOT = path.resolve(__dirname, "../../../");
 
 export function loadSitemapPages(): TestPage[] {
-  const sitemapPath = path.join(ROOT, "business/06-sitemap.yaml");
+  const sitemapPath = path.join(ROOT, "content/01-sitemap.yaml");
   if (!fs.existsSync(sitemapPath)) return [];
 
   const raw = fs.readFileSync(sitemapPath, "utf-8");

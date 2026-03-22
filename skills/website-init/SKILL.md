@@ -20,6 +20,13 @@ back to a business file.
 | **Styling**   | Tailwind CSS                         | 4.x (via `@tailwindcss/vite`) |
 | **Rendering** | Server-side with island architecture | —                             |
 
+## Library documentation
+
+Before generating Fresh routes or Tailwind config, use Context7 MCP to fetch
+current documentation for `fresh` (Deno Fresh framework), `tailwindcss` (v4),
+and `preact` to ensure correct API usage. This prevents outdated patterns like
+v3 `tailwind.config.js` or wrong Vite plugin names.
+
 ## Prerequisites
 
 - All business files (`business/01-*` through `business/10-*`) are complete and
@@ -32,10 +39,10 @@ back to a business file.
 
 1. `business/01-business-input.yaml` — seed fields: `conversion.*` (booking
    link, WhatsApp, email, phone, locations), `operations.*`, `localization.*`
-2. `business/06-sitemap.yaml` — page inventory and navigation
-3. `business/07-page-briefs/` — all page briefs (section structure per page)
-4. `business/09-content-deck.md` — all page copy
-5. `business/08-seo-brief.md` — metadata, schema markup, keywords
+2. `content/01-sitemap.yaml` — page inventory and navigation
+3. `content/02-page-briefs/` — all page briefs (section structure per page)
+4. `content/04-content-deck.md` — all page copy
+5. `content/03-seo-brief.md` — metadata, schema markup, keywords
 6. `business/02-brand-strategy.md` — tone and message pillars
 7. `agency/blueprints/` — section-level page structures
 8. `agency/rubrics/launch-rubric.md` — launch readiness criteria
@@ -53,7 +60,15 @@ back to a business file.
      should be the most visible interactive element on every page.
    - **personal-blog**: Blog infrastructure (index, post routes, RSS) is the
      primary focus. Build the blog system first, then layer on static pages.
-2. **Review the sitemap** — confirm which pages to build and their navigation
+2. **Generate dynamic pages** — read `agency/blueprints/dynamic-pages.md` and:
+   - Create individual `/services/[slug]` routes for each offer in business input
+   - Add trust signal components (SocialProof, StatsBar, TestimonialCard) that
+     render conditionally based on proof data — show when data exists, render
+     nothing when empty
+   - Scaffold blog infrastructure (index, post route, RSS) for corporate,
+     service, and personal-blog types
+   - Consider `/for/[segment]` audience pages when 3+ target segments exist
+3. **Review the sitemap** — confirm which pages to build and their navigation
    order
 3. **Set up routing** — create Fresh routes for each page in `website/routes/`
 4. **Build shared layout** — header with navigation, footer with CTA and legal
@@ -80,7 +95,7 @@ back to a business file.
   needed.
 - **Performance:** No layout shift, fast first paint, minimal bundle size.
 - **Content-driven:** Every heading, paragraph, and CTA comes from
-  `business/09-content-deck.md`.
+  `content/04-content-deck.md`.
 
 ## File structure guidance
 
@@ -113,10 +128,10 @@ website/
 
 ## Validation criteria
 
-- [ ] Every page in `business/06-sitemap.yaml` has a corresponding route
-- [ ] All copy matches `business/09-content-deck.md` exactly
+- [ ] Every page in `content/01-sitemap.yaml` has a corresponding route
+- [ ] All copy matches `content/04-content-deck.md` exactly
 - [ ] Primary CTA is consistent across all pages
-- [ ] Meta tags match `business/08-seo-brief.md` metadata direction
+- [ ] Meta tags match `content/03-seo-brief.md` metadata direction
 - [ ] Schema markup is implemented where noted in SEO brief
 - [ ] Navigation matches the sitemap primary navigation order
 - [ ] Contact form works and submits to a handler
@@ -142,7 +157,7 @@ website/
 ## Guardrails
 
 - Never invent copy — all text comes from business files
-- Never add pages not in the sitemap without updating `business/06-sitemap.yaml`
+- Never add pages not in the sitemap without updating `content/01-sitemap.yaml`
 - Prefer server rendering over client-side JavaScript
 - Record any implementation decisions in `docs/decisions/`
 - Keep components small and composable

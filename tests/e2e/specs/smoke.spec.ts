@@ -43,8 +43,14 @@ test.describe("Pre-launch Smoke Tests @smoke", () => {
     expect(response.status()).toBe(200);
   });
 
-  test("404 page returns 404 status", async ({ page }) => {
+  test("404 page returns 404 status with branded content", async ({ page }) => {
     const response = await page.goto("/this-page-definitely-does-not-exist-12345");
     expect(response?.status()).toBe(404);
+    // Verify 404 page has actual content (not blank or default server error)
+    const body = await page.textContent("body");
+    expect(body?.length).toBeGreaterThan(50);
+    // Should contain a link back to home
+    const homeLink = page.locator('a[href="/"]');
+    expect(await homeLink.count()).toBeGreaterThan(0);
   });
 });

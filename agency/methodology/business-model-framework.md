@@ -89,6 +89,205 @@ How existing customers grow: upsell, cross-sell, seat expansion, usage growth.
 **How to analyze:** Expansion paths inform secondary CTAs and account-level
 content.
 
+### Customer segments
+
+Who exactly the business serves. Not "small businesses" — specific roles,
+industries, company sizes, and decision-making contexts. Each segment may need
+its own messaging, landing page, or service page.
+
+**How to analyze:** List every distinct buyer type. For each, identify their
+role, industry, company size, budget authority, and how they discover solutions.
+Two segments are distinct if they have different problems, evaluate differently,
+or need different proof. If the business says "everyone," push for the top 2-3
+segments that generate 80% of revenue.
+
+**Impact on site:** Each segment may warrant a dedicated landing page or at least
+a segment-specific section on the homepage. Navigation labels should use the
+language each segment uses. Hero copy must speak to the primary segment; secondary
+segments get supporting sections or their own pages.
+
+### Value propositions (per segment)
+
+What the business promises each segment. Different segments value different
+aspects of the same offer. A CTO cares about integration reliability; a CFO
+cares about cost savings; an operations manager cares about time saved.
+
+**How to analyze:** For each customer segment, answer: What specific problem does
+this segment have? What outcome do they want? What does this business deliver
+that competitors do not? The value proposition must be concrete enough to become
+a headline and subheadline.
+
+**Impact on site:** The primary segment's value proposition drives the homepage
+hero. Secondary segments get value props on their landing pages or service pages.
+Every page's H1 and opening paragraph should reflect the value proposition for
+that page's target segment.
+
+### Channels
+
+How customers discover, evaluate, and engage with the business. Channels
+determine where the business needs visibility and what content types matter most.
+
+**How to analyze:** Map each channel the business uses or should use: organic
+search, paid search, social media, referrals, partnerships, events, email,
+content marketing, directories, or word of mouth. For each, determine the
+buyer's intent level (browsing vs. actively searching) and the content format
+that performs (blog posts vs. case studies vs. landing pages).
+
+**Impact on site:** High organic search dependency means strong SEO foundations,
+blog content, and keyword-targeted pages. Referral-heavy businesses need
+credibility pages (about, case studies, testimonials). Social-driven businesses
+need shareable content and strong OG metadata. Paid traffic needs dedicated
+landing pages with focused conversion paths.
+
+### Customer relationships
+
+How the business builds and maintains relationships with customers over time.
+This determines the tone of site copy, the type of CTAs, and whether the site
+needs post-purchase content.
+
+**How to analyze:** Identify the relationship model: personal service (dedicated
+rep), self-service, automated service, community, or co-creation. Determine
+whether the relationship is transactional (one-time) or ongoing (subscription,
+retainer). Map what happens after the first purchase.
+
+**Impact on site:** Personal service models need team pages, direct booking CTAs,
+and process transparency. Self-service models need comprehensive documentation
+and FAQ. Community models need forums or links to community spaces. Ongoing
+relationships benefit from a client portal mention, onboarding content, or
+resource library CTA.
+
+### Key activities
+
+The core activities the business performs to deliver its value proposition. These
+are the processes, expertise, and work that make the business function.
+
+**How to analyze:** Identify the 3-5 activities that are essential to delivering
+the offer. Distinguish between delivery activities (what the customer sees) and
+support activities (internal operations). Focus on activities that are visible
+and meaningful to the buyer.
+
+**Impact on site:** Key activities become the "how we work" or process section.
+They inform the about page content, service page details, and any methodology
+or approach sections. Activities that demonstrate expertise become trust signals.
+
+### Key resources
+
+The assets the business needs to deliver: team expertise, proprietary tools,
+technology stack, intellectual property, certifications, or physical
+infrastructure.
+
+**How to analyze:** List resources that are genuinely differentiating versus
+table stakes. A certification everyone has is not a differentiator. A proprietary
+methodology or rare expertise is. Identify resources that give the buyer
+confidence.
+
+**Impact on site:** Key resources inform the about page (team bios, credentials),
+trust signals (certifications, technology partners), and credibility sections.
+Proprietary tools or methodologies can become dedicated sections or even pages.
+Technology resources inform "built with" or "powered by" mentions.
+
+### Key partnerships
+
+Organizations, platforms, or individuals the business partners with to deliver
+value. Not every vendor relationship is a partnership — focus on those that
+strengthen the offer or build trust.
+
+**How to analyze:** Identify partnerships that the buyer would recognize and
+respect. Technology partnerships (certified partner, integration partner),
+industry partnerships (associations, standards bodies), and delivery
+partnerships (agencies, consultants who refer work) all serve different purposes.
+
+**Impact on site:** Partnerships become logo bars, "trusted by" sections,
+integration pages, or partner badges. They are among the strongest trust signals
+for B2B businesses. Each partnership logo or mention should link to proof
+(certification page, joint case study, or integration documentation).
+
+### Cost structure
+
+The major cost drivers of the business. This is not shown directly on the site,
+but it informs pricing rationale, value arguments, and positioning around
+affordability or premium quality.
+
+**How to analyze:** Identify whether the business is cost-driven (competing on
+price) or value-driven (competing on quality/expertise). Determine the largest
+cost categories: labor, technology, materials, marketing. Understand how cost
+structure affects pricing flexibility.
+
+**Impact on site:** Cost-driven businesses need "why we're affordable" messaging
+and comparison content. Value-driven businesses need "why we're worth it" proof
+and ROI arguments. The cost structure also informs whether a pricing page makes
+sense and how pricing should be framed (investment vs. cost).
+
+### Competitive advantages
+
+What is genuinely hard for competitors to copy. Not "great customer service"
+or "experienced team" — the real moat. This drives differentiation copy across
+every page.
+
+**How to analyze:** Apply the VRIN test: Is the advantage Valuable, Rare,
+Inimitable, and Non-substitutable? Common advantages that are not moats:
+"experienced team" (everyone says this), "quality work" (not provable without
+specifics), "customer focus" (generic). Real moats: proprietary methodology,
+unique data access, regulatory advantages, network effects, switching costs,
+deep domain expertise in a narrow niche.
+
+**Impact on site:** Competitive advantages should appear in the hero section
+(implicit), the differentiation section (explicit), and throughout service page
+copy. Every page should reinforce the moat without repeating the same phrasing.
+If the advantage is methodology, create a process page. If it is expertise,
+create detailed team or credentials content. If it is data or technology, show
+it with screenshots or demos.
+
+### Metrics that matter
+
+The KPIs the business tracks and the results it delivers for customers. These
+become the quantitative proof that makes claims credible.
+
+**How to analyze:** Identify two categories of metrics: business health metrics
+(revenue growth, retention rate, customer count) and customer outcome metrics
+(time saved, cost reduced, revenue increased, error rates decreased). Customer
+outcome metrics are more powerful on the website because they speak to the
+buyer's desired results.
+
+**Impact on site:** Metrics become the stats bar (often on the homepage), proof
+sections on service pages, and case study headlines. Every metric shown on the
+site must be either verified or clearly qualified ("on average," "for clients
+with X profile"). Unverified statistics destroy trust faster than having no
+numbers at all.
+
+### Conversion architecture
+
+The full buyer journey from awareness through action: awareness (discovers the
+business), consideration (evaluates the offer), decision (compares alternatives),
+and action (converts). Each stage requires different content.
+
+**How to analyze:** Map the four stages for the primary buyer persona. At each
+stage, identify: What question is the buyer asking? What content answers it?
+What page delivers it? What CTA moves them to the next stage? The conversion
+architecture should make the "next step" obvious at every point.
+
+**Impact on site:** Awareness-stage content includes blog posts, guides, and
+SEO-targeted landing pages. Consideration-stage content includes service pages,
+case studies, and process documentation. Decision-stage content includes
+comparison pages, pricing, testimonials, and FAQ. Action-stage content includes
+contact forms, booking widgets, and sign-up flows. Every page must have a clear
+role in this journey.
+
+### Website implications
+
+An explicit mapping from each business model element to the specific website
+decisions it drives. This table becomes the bridge between business strategy
+and site implementation.
+
+**How to analyze:** For each of the 12 dimensions above, write one row
+answering: "Given this business model element, what must be true about the
+website?" This forces specificity and prevents the common failure of business
+strategy that never connects to implementation.
+
+**Impact on site:** This mapping table is the primary input for sitemap
+decisions, page prioritization, and content briefs. It should be created during
+business model definition and referenced throughout the website build process.
+
 ## Sales motion patterns
 
 ### Self-serve

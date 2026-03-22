@@ -85,7 +85,7 @@ const generateStylesCss = (brand: BrandIdentity): string => {
     }
   };
 
-  lines.push("  /* Primary — derived from 02b-brand-identity.yaml */");
+  lines.push("  /* Primary — derived from 03-brand-identity.yaml */");
   addScale("brand", brand.colors.primary);
   lines.push("");
   lines.push("  /* Accent — from brand identity */");
@@ -461,20 +461,117 @@ export default function Footer() {
 const generateHeroTsx = (input: BusinessInput): string => `interface HeroProps {
   headline: string;
   subheadline: string;
+  variant?: "centered" | "split" | "minimal" | "image-bg";
   ctaText?: string;
   ctaHref?: string;
   secondaryCtaText?: string;
   secondaryCtaHref?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  breadcrumb?: { label: string; href: string }[];
 }
 
 export default function Hero({
   headline,
   subheadline,
+  variant = "centered",
   ctaText = "${input.primary_cta}",
   ctaHref = "/contact",
   secondaryCtaText,
   secondaryCtaHref,
+  imageSrc,
+  imageAlt = "",
+  breadcrumb,
 }: HeroProps) {
+  const ctaButtons = (
+    <div class="mt-10 flex flex-col sm:flex-row items-center gap-4">
+      <a
+        href={ctaHref}
+        class="inline-flex items-center px-6 py-3 text-base font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-md transition-colors"
+      >
+        {ctaText}
+      </a>
+      {secondaryCtaText && secondaryCtaHref && (
+        <a
+          href={secondaryCtaHref}
+          class="inline-flex items-center px-6 py-3 text-base font-semibold text-brand-700 bg-white border border-brand-200 hover:border-brand-300 rounded-lg transition-colors"
+        >
+          {secondaryCtaText}
+        </a>
+      )}
+    </div>
+  );
+
+  if (variant === "minimal") {
+    return (
+      <section class="bg-white pt-8 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {breadcrumb && breadcrumb.length > 0 && (
+            <nav class="mb-4 text-sm text-neutral-500" aria-label="Breadcrumb">
+              {breadcrumb.map((item, i) => (
+                <span key={item.href}>
+                  {i > 0 && <span class="mx-2">/</span>}
+                  <a href={item.href} class="hover:text-brand-600 transition-colors">{item.label}</a>
+                </span>
+              ))}
+            </nav>
+          )}
+          <h1 class="text-3xl sm:text-4xl font-bold text-neutral-900 tracking-tight">
+            {headline}
+          </h1>
+          <p class="mt-3 text-lg text-neutral-600 max-w-2xl">{subheadline}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (variant === "split") {
+    return (
+      <section class="bg-gradient-to-br from-brand-50 to-white py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 class="text-4xl sm:text-5xl font-bold text-neutral-900 leading-tight tracking-tight">
+              {headline}
+            </h1>
+            <p class="mt-6 text-lg text-neutral-600 leading-relaxed">{subheadline}</p>
+            {ctaButtons}
+          </div>
+          {imageSrc && (
+            <div class="relative">
+              <img
+                src={imageSrc}
+                alt={imageAlt}
+                class="rounded-xl shadow-lg w-full"
+                loading="lazy"
+              />
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  if (variant === "image-bg") {
+    return (
+      <section
+        class="relative bg-neutral-900 py-24 sm:py-32 bg-cover bg-center"
+        style={imageSrc ? \`background-image: url('\${imageSrc}')\` : undefined}
+      >
+        <div class="absolute inset-0 bg-neutral-900/70" />
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
+            {headline}
+          </h1>
+          <p class="mt-6 text-lg sm:text-xl text-neutral-200 leading-relaxed max-w-3xl mx-auto">
+            {subheadline}
+          </p>
+          {ctaButtons}
+        </div>
+      </section>
+    );
+  }
+
+  // Default: centered
   return (
     <section class="relative bg-gradient-to-b from-brand-50 to-white py-20 sm:py-28 lg:py-32">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -485,20 +582,7 @@ export default function Hero({
           {subheadline}
         </p>
         <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href={ctaHref}
-            class="inline-flex items-center px-6 py-3 text-base font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-md transition-colors"
-          >
-            {ctaText}
-          </a>
-          {secondaryCtaText && secondaryCtaHref && (
-            <a
-              href={secondaryCtaHref}
-              class="inline-flex items-center px-6 py-3 text-base font-semibold text-brand-700 bg-white border border-brand-200 hover:border-brand-300 rounded-lg transition-colors"
-            >
-              {secondaryCtaText}
-            </a>
-          )}
+          {ctaButtons}
         </div>
       </div>
     </section>
@@ -509,6 +593,7 @@ export default function Hero({
 const generateCtaTsx = (input: BusinessInput): string => `interface CTAProps {
   headline: string;
   body: string;
+  variant?: "banner" | "inline" | "card";
   ctaText?: string;
   ctaHref?: string;
 }
@@ -516,20 +601,52 @@ const generateCtaTsx = (input: BusinessInput): string => `interface CTAProps {
 export default function CTA({
   headline,
   body,
+  variant = "banner",
   ctaText = "${input.primary_cta}",
   ctaHref = "/contact",
 }: CTAProps) {
+  const button = (
+    <a
+      href={ctaHref}
+      class={\`inline-flex items-center px-6 py-3 text-base font-semibold rounded-lg shadow-md transition-colors \${
+        variant === "banner"
+          ? "text-brand-900 bg-white hover:bg-brand-50"
+          : "text-white bg-brand-600 hover:bg-brand-700"
+      }\`}
+    >
+      {ctaText}
+    </a>
+  );
+
+  if (variant === "inline") {
+    return (
+      <div class="flex flex-col sm:flex-row items-center gap-4 py-6">
+        <div>
+          <p class="text-lg font-semibold text-neutral-900">{headline}</p>
+          <p class="text-sm text-neutral-600">{body}</p>
+        </div>
+        {button}
+      </div>
+    );
+  }
+
+  if (variant === "card") {
+    return (
+      <div class="bg-brand-50 rounded-xl p-8 shadow-sm border border-brand-100">
+        <h3 class="text-xl font-bold text-neutral-900">{headline}</h3>
+        <p class="mt-2 text-neutral-600 leading-relaxed">{body}</p>
+        <div class="mt-6">{button}</div>
+      </div>
+    );
+  }
+
+  // Default: banner
   return (
     <section class="bg-brand-800 py-16 sm:py-20">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-3xl sm:text-4xl font-bold text-white">{headline}</h2>
         <p class="mt-4 text-lg text-brand-200 leading-relaxed">{body}</p>
-        <a
-          href={ctaHref}
-          class="mt-8 inline-flex items-center px-6 py-3 text-base font-semibold text-brand-900 bg-white hover:bg-brand-50 rounded-lg shadow-md transition-colors"
-        >
-          {ctaText}
-        </a>
+        <div class="mt-8">{button}</div>
       </div>
     </section>
   );
@@ -538,21 +655,181 @@ export default function CTA({
 
 const generateSectionTsx = (): string => `interface SectionProps {
   headline: string;
+  variant?: "default" | "cards" | "split" | "full-bleed" | "stats" | "testimonials";
   bg?: "white" | "light";
   children: preact.ComponentChildren;
 }
 
-export default function Section({ headline, bg = "white", children }: SectionProps) {
+export default function Section({
+  headline,
+  variant = "default",
+  bg = "white",
+  children,
+}: SectionProps) {
   const bgClass = bg === "light" ? "bg-neutral-50" : "bg-white";
+
+  const variantClasses: Record<string, string> = {
+    default: "mt-8",
+    cards: "mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
+    split: "mt-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center",
+    "full-bleed": "mt-8",
+    stats: "mt-10 flex flex-wrap justify-center gap-8 sm:gap-16",
+    testimonials: "mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+  };
+
+  if (variant === "full-bleed") {
+    return (
+      <section class={\`py-16 sm:py-20 \${bg === "light" ? "bg-neutral-50" : "bg-brand-800 text-white"}\`}>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class={\`text-3xl font-bold tracking-tight \${bg === "light" ? "text-neutral-900" : "text-white"}\`}>
+            {headline}
+          </h2>
+          <div class={variantClasses["full-bleed"]}>{children}</div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section class={\`py-16 sm:py-20 \${bgClass}\`}>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-neutral-900 tracking-tight">
           {headline}
         </h2>
-        <div class="mt-8">{children}</div>
+        <div class={variantClasses[variant] || variantClasses.default}>{children}</div>
       </div>
     </section>
+  );
+}
+`;
+
+// ── Trust signal components (conditional rendering) ───────
+
+const generateSocialProofTsx = (): string => `interface SocialProofProps {
+  clients: { name: string; logo?: string }[];
+  heading?: string;
+}
+
+export default function SocialProof({ clients, heading = "Trusted by" }: SocialProofProps) {
+  if (!clients || clients.length === 0) return null;
+
+  return (
+    <section class="py-12 bg-neutral-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-sm font-medium text-neutral-500 uppercase tracking-wider mb-8">
+          {heading}
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
+          {clients.map((client) => (
+            <div key={client.name} class="flex items-center">
+              {client.logo ? (
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  class="h-8 sm:h-10 grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all"
+                  loading="lazy"
+                />
+              ) : (
+                <span class="text-sm font-medium text-neutral-400">{client.name}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+`;
+
+const generateStatsBarTsx = (): string => `interface StatsBarProps {
+  stats: { value: string; label: string }[];
+}
+
+export default function StatsBar({ stats }: StatsBarProps) {
+  if (!stats || stats.length === 0) return null;
+
+  return (
+    <section class="py-12 bg-brand-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap justify-center gap-8 sm:gap-16">
+          {stats.map((stat) => (
+            <div key={stat.label} class="text-center">
+              <p class="text-3xl sm:text-4xl font-bold text-white">{stat.value}</p>
+              <p class="mt-1 text-sm text-brand-200">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+`;
+
+const generateTestimonialCardTsx = (): string => `interface TestimonialCardProps {
+  testimonials: { quote: string; name: string; role: string; company?: string }[];
+}
+
+export default function TestimonialCard({ testimonials }: TestimonialCardProps) {
+  if (!testimonials || testimonials.length === 0) return null;
+
+  return (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {testimonials.map((t) => (
+        <blockquote
+          key={t.name}
+          class="bg-white rounded-xl p-6 shadow-sm border border-neutral-100"
+        >
+          <p class="text-neutral-700 leading-relaxed italic">"{t.quote}"</p>
+          <footer class="mt-4 flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 font-bold text-sm">
+              {t.name.charAt(0)}
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-neutral-900">{t.name}</p>
+              <p class="text-xs text-neutral-500">
+                {t.role}{t.company ? \`, \${t.company}\` : ""}
+              </p>
+            </div>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  );
+}
+`;
+
+const generateCaseStudyCardTsx = (): string => `interface CaseStudyCardProps {
+  studies: { client: string; challenge: string; result: string; href?: string }[];
+}
+
+export default function CaseStudyCard({ studies }: CaseStudyCardProps) {
+  if (!studies || studies.length === 0) return null;
+
+  return (
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {studies.map((study) => {
+        const content = (
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-neutral-100 hover:shadow-md transition-shadow">
+            <p class="text-xs font-medium text-brand-600 uppercase tracking-wider">
+              {study.client}
+            </p>
+            <p class="mt-2 text-sm text-neutral-600">
+              <span class="font-semibold text-neutral-900">Challenge:</span> {study.challenge}
+            </p>
+            <p class="mt-2 text-sm text-neutral-600">
+              <span class="font-semibold text-neutral-900">Result:</span> {study.result}
+            </p>
+          </div>
+        );
+        return study.href ? (
+          <a key={study.client} href={study.href} class="block">
+            {content}
+          </a>
+        ) : (
+          <div key={study.client}>{content}</div>
+        );
+      })}
+    </div>
   );
 }
 `;
@@ -627,7 +904,7 @@ export default define.page(function ${titleCase.replace(/[^a-zA-Z]/g, "")}Page()
       </Head>
       <Header />
       <main id="main-content">
-        {/* Populate from business/09-content-deck.md */}
+        {/* Populate from content/04-content-deck.md */}
       </main>
       <Footer />
     </>
@@ -666,11 +943,13 @@ const generateRobotsTxt = (input: BusinessInput): string => `# Robots.txt for ${
 User-agent: *
 Allow: /
 
-Sitemap: https://REPLACE_WITH_DOMAIN/sitemap.xml
+# Update the domain below before launch (or set SITE_DOMAIN env var)
+Sitemap: https://example.com/sitemap.xml
 `;
 
 const generateSitemapRoute = (_input: BusinessInput): string => {
   return `import config from "../utils/locale.ts";
+import siteConfig from "../utils/site-config.ts";
 
 interface SitemapEntry {
   loc: string;
@@ -681,7 +960,7 @@ interface SitemapEntry {
 const STATIC_PAGES: SitemapEntry[] = [];
 
 // Build sitemap entries from the sitemap YAML at build time
-// This route reads business/06-sitemap.yaml and generates XML
+// This route reads content/01-sitemap.yaml and generates XML
 const buildEntries = (): SitemapEntry[] => {
   const entries: SitemapEntry[] = [...STATIC_PAGES];
 
@@ -696,7 +975,7 @@ const buildEntries = (): SitemapEntry[] => {
 
 export const handler = {
   GET(_req: Request): Response {
-    const baseUrl = "https://REPLACE_WITH_DOMAIN";
+    const baseUrl = siteConfig.baseUrl;
     const entries = buildEntries();
 
     const urls = entries
@@ -722,7 +1001,9 @@ export const handler = {
 `;
 };
 
-const generateOGMetaTsx = (input: BusinessInput): string => `interface OGMetaProps {
+const generateOGMetaTsx = (input: BusinessInput): string => `import siteConfig from "../utils/site-config.ts";
+
+interface OGMetaProps {
   title: string;
   description: string;
   path: string;
@@ -745,7 +1026,7 @@ export default function OGMeta({
   publishedTime,
   author,
 }: OGMetaProps) {
-  const baseUrl = "https://REPLACE_WITH_DOMAIN";
+  const baseUrl = siteConfig.baseUrl;
   const url = \`\${baseUrl}\${path}\`;
   const imageUrl = image.startsWith("http") ? image : \`\${baseUrl}\${image}\`;
 
@@ -777,7 +1058,9 @@ export default function OGMeta({
 }
 `;
 
-const generateJsonLdTsx = (input: BusinessInput): string => `interface JsonLdProps {
+const generateJsonLdTsx = (input: BusinessInput): string => `import siteConfig from "../utils/site-config.ts";
+
+interface JsonLdProps {
   data: Record<string, unknown>;
 }
 
@@ -793,9 +1076,9 @@ export const OrganizationJsonLd = () => (
     data={{
       "@context": "https://schema.org",
       "@type": "Organization",
-      name: "${input.business_name}",
-      url: "https://REPLACE_WITH_DOMAIN",
-      logo: "https://REPLACE_WITH_DOMAIN/logo.svg",
+      name: siteConfig.name,
+      url: siteConfig.baseUrl,
+      logo: \`\${siteConfig.baseUrl}/logo.svg\`,
     }}
   />
 );
@@ -805,8 +1088,8 @@ export const WebSiteJsonLd = () => (
     data={{
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: "${input.business_name}",
-      url: "https://REPLACE_WITH_DOMAIN",
+      name: siteConfig.name,
+      url: siteConfig.baseUrl,
     }}
   />
 );
@@ -820,7 +1103,7 @@ export const BreadcrumbJsonLd = ({ items }: { items: { name: string; href: strin
         "@type": "ListItem",
         position: i + 1,
         name: item.name,
-        item: \`https://REPLACE_WITH_DOMAIN\${item.href}\`,
+        item: \`\${siteConfig.baseUrl}\${item.href}\`,
       })),
     }}
   />
@@ -959,13 +1242,75 @@ export default define.page(function BlogIndex() {
 });
 `;
 
+// ── Generator fixes (Part J) ──────────────────────────────
+
+const generateViteConfig = (): string => `import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+  plugins: [tailwindcss()],
+});
+`;
+
+const generateSiteConfig = (input: BusinessInput): string => `/**
+ * Centralized site configuration — single source for domain, business name,
+ * and other site-wide constants. Import this instead of hardcoding values.
+ */
+const siteConfig = {
+  /** Business name from business/01-business-input.yaml */
+  name: "${input.business_name}",
+  /** Production domain — update this before launch */
+  domain: Deno.env.get("SITE_DOMAIN") || "localhost:8000",
+  /** Full base URL including protocol */
+  get baseUrl(): string {
+    const d = this.domain;
+    return d.startsWith("localhost") ? \`http://\${d}\` : \`https://\${d}\`;
+  },
+  /** Default locale */
+  defaultLocale: "${input.default_locale}",
+  /** Primary CTA text */
+  primaryCta: "${input.primary_cta}",
+} as const;
+
+export default siteConfig;
+`;
+
+const generateDenoJson = (input: BusinessInput): string =>
+  JSON.stringify(
+    {
+      lock: false,
+      tasks: {
+        start: "deno run -A main.ts",
+        build: "deno run -A main.ts build",
+        preview: "deno run -A main.ts preview",
+      },
+      imports: {
+        "fresh": "jsr:@fresh/core@^2",
+        "fresh/": "jsr:@fresh/core@^2/",
+        "preact": "npm:preact@^10",
+        "preact/": "npm:preact@^10/",
+        "@preact/signals": "npm:@preact/signals@^2",
+        "@tailwindcss/vite": "npm:@tailwindcss/vite@^4",
+        "tailwindcss": "npm:tailwindcss@^4",
+      },
+      compilerOptions: {
+        jsx: "react-jsx",
+        jsxImportSource: "preact",
+      },
+      nodeModulesDir: "auto",
+      name: input.business_name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    },
+    null,
+    2,
+  ) + "\n";
+
 // ── Public API ────────────────────────────────────────────
 
 export const readBrandIdentity = (): BrandIdentity =>
-  readYaml<BrandIdentity>("business/02b-brand-identity.yaml");
+  readYaml<BrandIdentity>("business/03-brand-identity.yaml");
 
 export const readSitemap = (): Sitemap =>
-  readYaml<Sitemap>("business/06-sitemap.yaml");
+  readYaml<Sitemap>("content/01-sitemap.yaml");
 
 export const readBusinessInput = (): BusinessInput =>
   readYaml<BusinessInput>("business/01-business-input.yaml");
@@ -984,6 +1329,9 @@ export const generateAllBrandedFiles = async (): Promise<string[]> => {
   };
 
   // Core config files
+  await write("website/vite.config.ts", generateViteConfig());
+  await write("website/utils/site-config.ts", generateSiteConfig(input));
+  await write("website/deno.json", generateDenoJson(input));
   await write("website/assets/styles.css", generateStylesCss(brand));
   await write("website/utils/locale.ts", generateLocaleTs(input));
   await write("website/utils/i18n.ts", generateI18nTs());
@@ -999,6 +1347,12 @@ export const generateAllBrandedFiles = async (): Promise<string[]> => {
   await write("website/components/Hero.tsx", generateHeroTsx(input));
   await write("website/components/CTA.tsx", generateCtaTsx(input));
   await write("website/components/Section.tsx", generateSectionTsx());
+
+  // Trust signal components (conditional rendering)
+  await write("website/components/SocialProof.tsx", generateSocialProofTsx());
+  await write("website/components/StatsBar.tsx", generateStatsBarTsx());
+  await write("website/components/TestimonialCard.tsx", generateTestimonialCardTsx());
+  await write("website/components/CaseStudyCard.tsx", generateCaseStudyCardTsx());
   await write("website/components/HrefLang.tsx", generateHrefLangTsx(input));
 
   // Locale JSON stubs

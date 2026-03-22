@@ -24,7 +24,7 @@ export class Contenty extends World {
   lastResponse: { status: number } | null = null;
 
   loadSitemap(): void {
-    const sitemapPath = path.join(ROOT, "business/06-sitemap.yaml");
+    const sitemapPath = path.join(ROOT, "content/01-sitemap.yaml");
     if (!fs.existsSync(sitemapPath)) return;
     const raw = fs.readFileSync(sitemapPath, "utf-8");
     const data = parseYaml(raw) as Record<string, unknown>;

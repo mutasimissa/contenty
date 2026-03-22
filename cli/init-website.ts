@@ -8,8 +8,8 @@ const WEBSITE_DIR = "website";
 
 const requiredFiles = [
   "business/01-business-input.yaml",
-  "business/02b-brand-identity.yaml",
-  "business/06-sitemap.yaml",
+  "business/03-brand-identity.yaml",
+  "content/01-sitemap.yaml",
 ];
 
 const missingFiles = requiredFiles.filter((f) => !fileExists(f));

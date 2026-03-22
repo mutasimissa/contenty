@@ -1,5 +1,5 @@
-# Run `/fresh-start` or `/init-business` in Claude Code to fill this
-# conversationally. Or edit this file manually.
+# Run `/start` in Claude Code to fill this conversationally.
+# Or edit this file manually.
 # Schema: agency/schemas/business-input.yaml
 
 # ── Core (required) ──────────────────────────────────────────
@@ -49,7 +49,9 @@ secondary_ctas: []
 
 # ── Tone & constraints ───────────────────────────────────────
 desired_tone:
+user_language: []
 competitors: []
+competitor_analysis: []
 constraints: []
 
 # ── Proof seeds ──────────────────────────────────────────────
@@ -144,6 +146,15 @@ content_rules:
     allow_superlatives: false
     allow_guarantees: false
     require_evidence_for_claims: true
+
+# ── Market research (populated by skills/market-research/) ─────
+market_language:
+  buyer_phrases: []
+  common_objections: []
+  decision_factors: []
+  emotional_triggers:
+    frustration: []
+    aspiration: []
 
 # ── Operations ───────────────────────────────────────────────
 operations:

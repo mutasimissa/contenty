@@ -28,10 +28,25 @@ primary_cta:
 # Desired tone of voice for all site copy (e.g. clear and credible, warm and approachable).
 desired_tone:
 
+# Verbatim quotes from the intake conversation, used as seed material for copy.
+user_language: []
+
 # Direct or indirect competitors for context and differentiation.
 competitors:
   -
 
+# Competitor profiles discovered through market research (populated by skills/market-research/).
+competitor_analysis: []
+
 # Hard rules or limitations that must be respected in all content.
 constraints:
   -
+
+# Real buyer language captured from forums, reviews, and discussions (populated by skills/market-research/).
+market_language:
+  buyer_phrases: []
+  common_objections: []
+  decision_factors: []
+  emotional_triggers:
+    frustration: []
+    aspiration: []

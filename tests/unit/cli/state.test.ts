@@ -10,8 +10,8 @@ const detectStage = (completed: string[], siteType: SiteType): ProjectStage => {
   if (siteType === "coming-soon" || siteType === "single-page") {
     if (
       has("business/02-brand-strategy.md") &&
-      has("business/02b-brand-identity.yaml") &&
-      has("business/09-content-deck.md")
+      has("business/03-brand-identity.yaml") &&
+      has("content/04-content-deck.md")
     ) {
       return "content-done";
     }
@@ -19,25 +19,25 @@ const detectStage = (completed: string[], siteType: SiteType): ProjectStage => {
 
   if (siteType === "booking") {
     if (
-      has("business/03-business-model.md") &&
-      has("business/04-value-proposition.md") &&
-      has("business/05-personas-jobs.md") &&
-      has("business/09-content-deck.md")
+      has("business/04-business-model.md") &&
+      has("business/05-value-proposition.md") &&
+      has("business/06-personas-jtbd.md") &&
+      has("content/04-content-deck.md")
     ) {
       return "content-done";
     }
   }
 
-  if (has("business/09-content-deck.md") && has("business/10-launch-checklist.md")) {
+  if (has("content/04-content-deck.md") && has("content/05-checklist.md")) {
     return "content-done";
   }
-  if (has("business/06-sitemap.yaml") && has("business/08-seo-brief.md")) {
+  if (has("content/01-sitemap.yaml") && has("content/03-seo-brief.md")) {
     return "sitemap-done";
   }
-  if (has("business/03-business-model.md") && has("business/04-value-proposition.md") && has("business/05-personas-jobs.md")) {
+  if (has("business/04-business-model.md") && has("business/05-value-proposition.md") && has("business/06-personas-jtbd.md")) {
     return "offers-done";
   }
-  if (has("business/02b-brand-identity.yaml")) {
+  if (has("business/03-brand-identity.yaml")) {
     return "identity-done";
   }
   if (has("business/02-brand-strategy.md")) {
@@ -69,7 +69,7 @@ Deno.test("detectStage: identity-done with brand identity", () => {
     detectStage([
       "business/01-business-input.yaml",
       "business/02-brand-strategy.md",
-      "business/02b-brand-identity.yaml",
+      "business/03-brand-identity.yaml",
     ], "corporate"),
     "identity-done"
   );
@@ -80,10 +80,10 @@ Deno.test("detectStage: offers-done with all offer files", () => {
     detectStage([
       "business/01-business-input.yaml",
       "business/02-brand-strategy.md",
-      "business/02b-brand-identity.yaml",
-      "business/03-business-model.md",
-      "business/04-value-proposition.md",
-      "business/05-personas-jobs.md",
+      "business/03-brand-identity.yaml",
+      "business/04-business-model.md",
+      "business/05-value-proposition.md",
+      "business/06-personas-jtbd.md",
     ], "corporate"),
     "offers-done"
   );
@@ -94,12 +94,12 @@ Deno.test("detectStage: sitemap-done with sitemap and SEO brief", () => {
     detectStage([
       "business/01-business-input.yaml",
       "business/02-brand-strategy.md",
-      "business/02b-brand-identity.yaml",
-      "business/03-business-model.md",
-      "business/04-value-proposition.md",
-      "business/05-personas-jobs.md",
-      "business/06-sitemap.yaml",
-      "business/08-seo-brief.md",
+      "business/03-brand-identity.yaml",
+      "business/04-business-model.md",
+      "business/05-value-proposition.md",
+      "business/06-personas-jtbd.md",
+      "content/01-sitemap.yaml",
+      "content/03-seo-brief.md",
     ], "corporate"),
     "sitemap-done"
   );
@@ -110,14 +110,14 @@ Deno.test("detectStage: content-done with content deck and checklist", () => {
     detectStage([
       "business/01-business-input.yaml",
       "business/02-brand-strategy.md",
-      "business/02b-brand-identity.yaml",
-      "business/03-business-model.md",
-      "business/04-value-proposition.md",
-      "business/05-personas-jobs.md",
-      "business/06-sitemap.yaml",
-      "business/08-seo-brief.md",
-      "business/09-content-deck.md",
-      "business/10-launch-checklist.md",
+      "business/03-brand-identity.yaml",
+      "business/04-business-model.md",
+      "business/05-value-proposition.md",
+      "business/06-personas-jtbd.md",
+      "content/01-sitemap.yaml",
+      "content/03-seo-brief.md",
+      "content/04-content-deck.md",
+      "content/05-checklist.md",
     ], "corporate"),
     "content-done"
   );
@@ -128,8 +128,8 @@ Deno.test("detectStage: coming-soon shortcut to content-done", () => {
   assertEquals(
     detectStage([
       "business/02-brand-strategy.md",
-      "business/02b-brand-identity.yaml",
-      "business/09-content-deck.md",
+      "business/03-brand-identity.yaml",
+      "content/04-content-deck.md",
     ], "coming-soon"),
     "content-done"
   );
@@ -139,8 +139,8 @@ Deno.test("detectStage: single-page shortcut to content-done", () => {
   assertEquals(
     detectStage([
       "business/02-brand-strategy.md",
-      "business/02b-brand-identity.yaml",
-      "business/09-content-deck.md",
+      "business/03-brand-identity.yaml",
+      "content/04-content-deck.md",
     ], "single-page"),
     "content-done"
   );
@@ -149,10 +149,10 @@ Deno.test("detectStage: single-page shortcut to content-done", () => {
 Deno.test("detectStage: booking shortcut to content-done", () => {
   assertEquals(
     detectStage([
-      "business/03-business-model.md",
-      "business/04-value-proposition.md",
-      "business/05-personas-jobs.md",
-      "business/09-content-deck.md",
+      "business/04-business-model.md",
+      "business/05-value-proposition.md",
+      "business/06-personas-jtbd.md",
+      "content/04-content-deck.md",
     ], "booking"),
     "content-done"
   );
@@ -161,9 +161,9 @@ Deno.test("detectStage: booking shortcut to content-done", () => {
 Deno.test("detectStage: booking without content deck is offers-done", () => {
   assertEquals(
     detectStage([
-      "business/03-business-model.md",
-      "business/04-value-proposition.md",
-      "business/05-personas-jobs.md",
+      "business/04-business-model.md",
+      "business/05-value-proposition.md",
+      "business/06-personas-jtbd.md",
     ], "booking"),
     "offers-done"
   );

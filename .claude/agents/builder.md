@@ -11,11 +11,11 @@ description: Use for translating approved business and content files into websit
 
 ## Source files
 
-- `business/06-sitemap.yaml` — page inventory and navigation
-- `business/07-page-briefs/*.md` — page-level requirements
-- `business/08-seo-brief.md` — SEO metadata per page
-- `business/09-content-deck.md` — page content
-- `business/02b-brand-identity.yaml` — design tokens
+- `content/01-sitemap.yaml` — page inventory and navigation
+- `content/02-page-briefs/*.md` — page-level requirements
+- `content/03-seo-brief.md` — SEO metadata per page
+- `content/04-content-deck.md` — page content
+- `business/03-brand-identity.yaml` — design tokens
 - `agency/blueprints/*.md` — page structure templates
 - `agency/site-types.yaml` — site type profiles and page requirements
 
@@ -32,6 +32,18 @@ description: Use for translating approved business and content files into websit
 - Mobile-first responsive design with Tailwind CSS 4
 - robots.txt, sitemap.xml, manifest.json, 404 page present
 - Read `agency/site-types.yaml` to understand which pages and blueprints apply for the detected site_type
+
+## Library documentation
+
+When writing website code, use Context7 MCP to look up current API docs for
+Fresh 2.2+, Tailwind CSS 4, Preact, and Deno before generating files. This
+prevents outdated patterns.
+
+Libraries to reference:
+- `fresh` -- Fresh 2.2+ (Deno web framework, island architecture)
+- `tailwindcss` -- Tailwind CSS 4 (`@theme` syntax, not v3 `tailwind.config.js`)
+- `preact` -- Preact (JSX, signals, hooks)
+- `@preact/signals` -- Preact Signals (state management for islands)
 
 ## Guardrails
 

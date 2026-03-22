@@ -4,16 +4,22 @@
 
 Explain a specific offer and convert qualified interest.
 
+## Component variants
+
+- **Hero:** `split` — text left, visual right (distinct from homepage)
+- **Sections:** `split` (process), `cards` (features), `testimonials` (proof)
+- **CTA:** `banner` — full-width colored band
+
 ## Recommended sections
 
-1. Hero with offer clarity
-2. Customer problem
-3. Solution summary
-4. Feature / capability blocks
-5. Process or delivery model
-6. Outcomes and proof
-7. FAQ
-8. CTA
+1. Hero with offer clarity (`split` variant)
+2. Customer problem (`default` section)
+3. Solution summary (`split` section)
+4. Feature / capability blocks (`cards` section)
+5. Process or delivery model (`split` section — alternating sides)
+6. Outcomes and proof (`stats` + `testimonials` sections)
+7. FAQ (`default` section)
+8. CTA (`banner` variant)
 
 ## Inputs required
 

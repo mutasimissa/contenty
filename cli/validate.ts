@@ -16,14 +16,14 @@ const fail = (msg: string) => { printError(`  ${msg}`); hasErrors = true; };
 const REQUIRED_FILES = [
   "business/01-business-input.yaml",
   "business/02-brand-strategy.md",
-  "business/02b-brand-identity.yaml",
-  "business/03-business-model.md",
-  "business/04-value-proposition.md",
-  "business/05-personas-jobs.md",
-  "business/06-sitemap.yaml",
-  "business/08-seo-brief.md",
-  "business/09-content-deck.md",
-  "business/10-launch-checklist.md",
+  "business/03-brand-identity.yaml",
+  "business/04-business-model.md",
+  "business/05-value-proposition.md",
+  "business/06-personas-jtbd.md",
+  "content/01-sitemap.yaml",
+  "content/03-seo-brief.md",
+  "content/04-content-deck.md",
+  "content/05-checklist.md",
 ];
 
 printSection("1/5 — Business Files", "Checking required business files exist.");
@@ -44,7 +44,7 @@ const REQUIRED_YAML_KEYS: Record<string, string[]> = {
     "website_goal",
     "industry",
   ],
-  "business/02b-brand-identity.yaml": [
+  "business/03-brand-identity.yaml": [
     "brand_philosophy",
     "colors",
     "typography",
@@ -116,7 +116,7 @@ if (fileExists("business/01-business-input.yaml")) {
     const pct = Math.round((filled / total) * 100);
     console.log(`\n  Seed completeness: ${filled}/${total} sections (${pct}%)`);
     if (filled < 5) {
-      printInfo("  Run /init-business in your AI tool to fill more sections.");
+      printInfo("  Run /start in your AI tool to fill more sections.");
     }
   } catch { /* skip if unparseable */ }
 }

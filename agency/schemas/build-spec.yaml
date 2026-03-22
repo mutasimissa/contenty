@@ -12,7 +12,7 @@ properties:
   content_sources:
     type: array
     description: Where page content comes from.
-    example: ["business/09-content-deck.md", "business/07-page-briefs/"]
+    example: ["content/04-content-deck.md", "content/02-page-briefs/"]
   page_templates:
     type: array
     description: Reusable page templates or layouts.

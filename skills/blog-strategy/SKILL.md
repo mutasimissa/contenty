@@ -13,16 +13,16 @@ authority and drive readers to commercial pages.
 ## Prerequisites
 
 - `business/02-brand-strategy.md` is complete
-- `business/06-sitemap.yaml` is complete
-- `business/08-seo-brief.md` is complete
+- `content/01-sitemap.yaml` is complete
+- `content/03-seo-brief.md` is complete
 
 ## Read these files first
 
 1. `business/01-business-input.yaml` — business context
 2. `business/02-brand-strategy.md` — tone of voice, message pillars
-3. `business/06-sitemap.yaml` — service pages to support
-4. `business/08-seo-brief.md` — keyword opportunities, content clusters
-5. `business/05-personas-jobs.md` — audience context
+3. `content/01-sitemap.yaml` — service pages to support
+4. `content/03-seo-brief.md` — keyword opportunities, content clusters
+5. `business/06-personas-jtbd.md` — audience context
 6. `agency/methodology/content-strategy-framework.md` — content cluster model
 7. `agency/methodology/seo-framework.md` — content cluster strategy
 8. `agency/blueprints/blog-post.md` — post structure
@@ -107,8 +107,8 @@ Before finishing, verify:
 
 ## Dependency chain
 
-- **Requires:** `business/02-brand-strategy.md`, `business/06-sitemap.yaml`,
-  `business/08-seo-brief.md`, `business/05-personas-jobs.md`
+- **Requires:** `business/02-brand-strategy.md`, `content/01-sitemap.yaml`,
+  `content/03-seo-brief.md`, `business/06-personas-jtbd.md`
 - **Feeds into:** `/add-blog-post` (category selection),
   `skills/page-copy/` (blog post writing)
 

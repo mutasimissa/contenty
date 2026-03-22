@@ -24,14 +24,14 @@ fix recommendations.
 5. Read `agency/site-types.yaml` — skip checks for pages/skills not required by the site type
 6. Score each rubric in `agency/rubrics/`:
    - `strategy-rubric.md` against `business/02-brand-strategy.md`
-   - `brand-identity-rubric.md` against `business/02b-brand-identity.yaml`
-   - `copy-rubric.md` against `business/09-content-deck.md`
-   - `seo-rubric.md` against `business/08-seo-brief.md`
+   - `brand-identity-rubric.md` against `business/03-brand-identity.yaml`
+   - `copy-rubric.md` against `content/04-content-deck.md`
+   - `seo-rubric.md` against `content/03-seo-brief.md`
    - `launch-rubric.md` across all files
    - `accessibility-rubric.md` against website routes
    - `performance-rubric.md` against website implementation
    - `testing-rubric.md` against test suite coverage
-7. Produce `business/10-launch-checklist.md` with per-rubric scores and specific fix items
+7. Produce `content/05-checklist.md` with per-rubric scores and specific fix items
 
 ## Source files
 

@@ -21,8 +21,8 @@ interface Schema {
 
 const SCHEMA_MAP: Record<string, string> = {
   "business/01-business-input.yaml": "agency/schemas/business-input.yaml",
-  "business/02b-brand-identity.yaml": "agency/schemas/brand-identity.yaml",
-  "business/06-sitemap.yaml": "agency/schemas/sitemap.yaml",
+  "business/03-brand-identity.yaml": "agency/schemas/brand-identity.yaml",
+  "content/01-sitemap.yaml": "agency/schemas/sitemap.yaml",
 };
 
 let errors = 0;

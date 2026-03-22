@@ -18,7 +18,7 @@ const fail = (msg: string) => { printError(`  ${msg}`); issues++; };
 printSection("1/5 — Sitemap Coverage", "Does every page in the sitemap have a brief?");
 
 try {
-  const sitemap = readYaml<Record<string, unknown>>("business/06-sitemap.yaml");
+  const sitemap = readYaml<Record<string, unknown>>("content/01-sitemap.yaml");
   const primary = (sitemap.primary_navigation as string[]) || [];
   const secondary = (sitemap.secondary_pages as string[]) || [];
   const allPages = [...primary, ...secondary];
@@ -28,7 +28,7 @@ try {
   } else {
     for (const page of allPages) {
       const slug = page.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-      const briefPath = `business/07-page-briefs/${slug}.md`;
+      const briefPath = `content/02-page-briefs/${slug}.md`;
       if (fileExists(briefPath)) {
         pass(`${page} → ${briefPath}`);
       } else {
@@ -37,7 +37,7 @@ try {
     }
   }
 } catch {
-  fail("Could not read business/06-sitemap.yaml");
+  fail("Could not read content/01-sitemap.yaml");
 }
 
 // ── 2. Brief → Content deck coverage ─────────────────────
@@ -45,8 +45,8 @@ try {
 printSection("2/5 — Copy Coverage", "Does every page brief have content in the content deck?");
 
 try {
-  const deck = readText("business/09-content-deck.md");
-  const sitemap = readYaml<Record<string, unknown>>("business/06-sitemap.yaml");
+  const deck = readText("content/04-content-deck.md");
+  const sitemap = readYaml<Record<string, unknown>>("content/01-sitemap.yaml");
   const primary = (sitemap.primary_navigation as string[]) || [];
   const secondary = (sitemap.secondary_pages as string[]) || [];
   const allPages = [...primary, ...secondary];
@@ -68,8 +68,8 @@ try {
 printSection("3/5 — SEO Coverage", "Does every page have keyword mapping in the SEO brief?");
 
 try {
-  const seo = readText("business/08-seo-brief.md");
-  const sitemap = readYaml<Record<string, unknown>>("business/06-sitemap.yaml");
+  const seo = readText("content/03-seo-brief.md");
+  const sitemap = readYaml<Record<string, unknown>>("content/01-sitemap.yaml");
   const primary = (sitemap.primary_navigation as string[]) || [];
 
   for (const page of primary) {
@@ -92,7 +92,7 @@ if (!fileExists("website/deno.json") && !fileExists("website/fresh.config.ts")) 
   printInfo("Website not bootstrapped yet — skipping route check.");
 } else {
   try {
-    const sitemap = readYaml<Record<string, unknown>>("business/06-sitemap.yaml");
+    const sitemap = readYaml<Record<string, unknown>>("content/01-sitemap.yaml");
     const primary = (sitemap.primary_navigation as string[]) || [];
 
     for (const page of primary) {
@@ -120,7 +120,7 @@ try {
   if (!cta) {
     fail("No primary CTA defined in business input");
   } else {
-    const deck = readText("business/09-content-deck.md");
+    const deck = readText("content/04-content-deck.md");
     const ctaRegex = new RegExp(cta.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
     if (ctaRegex.test(deck)) {
       pass(`Primary CTA "${cta}" found in content deck`);
@@ -137,10 +137,10 @@ try {
 printSection("6/7 — Launch Checklist", "How many launch checklist items remain?");
 
 try {
-  if (!fileExists("business/10-launch-checklist.md")) {
-    fail("Launch checklist not found: business/10-launch-checklist.md");
+  if (!fileExists("content/05-checklist.md")) {
+    fail("Launch checklist not found: content/05-checklist.md");
   } else {
-    const checklist = readText("business/10-launch-checklist.md");
+    const checklist = readText("content/05-checklist.md");
     const done = (checklist.match(/- \[x\]/gi) || []).length;
     const todo = (checklist.match(/- \[ \]/g) || []).length;
     const total = done + todo;
@@ -184,7 +184,7 @@ if (!websiteExists) {
 
   // Check route files for OG meta usage
   try {
-    const sitemap = readYaml<Record<string, unknown>>("business/06-sitemap.yaml");
+    const sitemap = readYaml<Record<string, unknown>>("content/01-sitemap.yaml");
     const primary = (sitemap.primary_navigation as string[]) || [];
     let ogPresent = 0;
     let ogMissing = 0;

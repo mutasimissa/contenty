@@ -11,7 +11,7 @@ grounded in the business strategy, not vanity metrics.
 
 ## Prerequisites
 
-- `business/01-business-input.yaml` through `business/07-page-briefs/` are
+- `business/01-business-input.yaml` through `content/02-page-briefs/` are
   complete
 - Run `skills/sitemap-ia/` first
 
@@ -22,9 +22,9 @@ grounded in the business strategy, not vanity metrics.
    `seo_content.*` (FAQ questions, glossary, blog topics, comparison/landing
    pages)
 2. `business/02-brand-strategy.md` — positioning and message pillars
-3. `business/04-value-proposition.md` — promise and differentiation
-4. `business/06-sitemap.yaml` — page inventory
-5. `business/07-page-briefs/` — read all page briefs
+3. `business/05-value-proposition.md` — promise and differentiation
+4. `content/01-sitemap.yaml` — page inventory
+5. `content/02-page-briefs/` — read all page briefs
 6. `agency/methodology/seo-framework.md` — required deliverables
 7. `agency/templates/seo-brief.template.md` — output structure
 8. `agency/schemas/seo-brief.yaml` — required fields
@@ -52,7 +52,7 @@ grounded in the business strategy, not vanity metrics.
 
 ## Output format
 
-Write `business/08-seo-brief.md`:
+Write `content/03-seo-brief.md`:
 
 ```markdown
 # SEO Brief
@@ -152,7 +152,8 @@ Score output against `agency/rubrics/seo-rubric.md`. Before finishing:
 
 ## Dependency chain
 
-- **Requires:** `business/01-*` through `business/07-*`
+- **Requires:** `business/01-*` through `business/06-*`, `content/01-sitemap.yaml`,
+  `content/02-page-briefs/`
 - **Feeds into:** `skills/page-copy/`
 
 ## Next step

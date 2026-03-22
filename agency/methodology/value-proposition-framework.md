@@ -28,7 +28,7 @@ The value proposition must be concrete enough to shape:
 
 Identify the specific role, industry, and context of the buyer. Avoid generic
 descriptions like "businesses" or "professionals." Pull from
-`business/02-brand-strategy.md` personas and `business/03-offer-design.md`
+`business/02-brand-strategy.md` personas and `business/04-business-model.md`
 target segments.
 
 **Questions to ask:**
@@ -101,7 +101,7 @@ documentation, team experience, data points.
 - What third-party validation exists (awards, partnerships, audits)?
 
 **Connection to business files:** Pull proof from `business/02-brand-strategy.md`
-(proof elements section), `business/03-offer-design.md` (delivery method), and
+(proof elements section), `business/04-business-model.md` (delivery method), and
 any case studies or testimonials referenced in business intake.
 
 ### Urgency
@@ -164,3 +164,73 @@ Problems: no audience, no problem, no proof, superlative without evidence.
 Each element should appear at least once on the homepage. The hero carries
 the heaviest load (promise + outcome), while body sections expand on
 differentiation and proof.
+
+## Jobs-to-be-Done framework
+
+Beyond the seven-element structure, the value proposition should decompose the
+buyer's world using the JTBD framework:
+
+### Functional jobs
+
+What the buyer is trying to get done -- specific tasks, not abstract goals.
+Good: "Launch a website before Q2 fundraise." Bad: "Improve online presence."
+
+### Social jobs
+
+How the buyer wants to be perceived. These drive visual quality expectations
+and credibility requirements: "Look like a funded startup" drives different
+design than "Look like an established enterprise."
+
+### Emotional jobs
+
+What feelings the buyer seeks (confidence, relief, control) or avoids
+(embarrassment, anxiety, regret). Emotional jobs inform CTA language and
+pain-section intensity.
+
+## Pain/gain mapping
+
+Every pain in the customer profile must map to a specific pain reliever in the
+value map. Every gain must map to a gain creator. This one-to-one mapping
+ensures the value proposition is complete -- no claim exists without a
+corresponding customer need, and no need exists without a response.
+
+### How to map
+
+1. List all pains from the customer profile
+2. For each pain, identify which product/service feature addresses it
+3. Describe HOW it addresses it (mechanism, not just "we solve this")
+4. Repeat for gains
+
+Unmapped pains reveal product gaps. Unmapped features reveal positioning
+opportunities or bloat.
+
+## Proof matrix
+
+Every claim on the website must trace to a row in the proof matrix. The matrix
+has four columns:
+
+1. **Claim** -- what the site says (e.g., "Fast delivery")
+2. **Evidence** -- what supports it (e.g., "Average 14-day launch time")
+3. **Source** -- where the evidence comes from (internal data, case study, etc.)
+4. **Status** -- Verified, Assumption, or Gap
+
+Rules:
+- Claims with "Verified" status can appear as-is
+- Claims with "Assumption" status must be softened ("typically" instead of "always")
+- Claims with "Gap" status must either find evidence or be removed
+- No superlatives ("best", "fastest", "#1") without verified evidence
+
+## Per-segment positioning
+
+If multiple customer segments exist, write a fit statement for EACH segment.
+Different segments have different jobs, pains, and gains -- a single value
+proposition cannot serve all equally.
+
+The fit statement follows the pattern:
+> For [segment] who [job], [business] is the [category] that [key benefit]
+> unlike [alternatives] because [proof].
+
+This per-segment approach feeds directly into:
+- Audience-specific landing pages (/for/[segment])
+- Segment-specific hero variants
+- Targeted CTA language per audience

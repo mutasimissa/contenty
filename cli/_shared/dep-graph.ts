@@ -10,30 +10,30 @@ const DEPENDENCY_MAP: Record<string, string[]> = {
     "business/02-brand-strategy.md",
   ],
   "business/02-brand-strategy.md": [
-    "business/02b-brand-identity.yaml",
-    "business/03-business-model.md",
-    "business/04-value-proposition.md",
-    "business/05-personas-jobs.md",
+    "business/03-brand-identity.yaml",
+    "business/04-business-model.md",
+    "business/05-value-proposition.md",
+    "business/06-personas-jtbd.md",
   ],
-  "business/02b-brand-identity.yaml": [
+  "business/03-brand-identity.yaml": [
     "website/assets/styles.css",
   ],
-  "business/03-business-model.md": [
-    "business/06-sitemap.yaml",
+  "business/04-business-model.md": [
+    "content/01-sitemap.yaml",
   ],
-  "business/04-value-proposition.md": [
-    "business/06-sitemap.yaml",
+  "business/05-value-proposition.md": [
+    "content/01-sitemap.yaml",
   ],
-  "business/05-personas-jobs.md": [
-    "business/06-sitemap.yaml",
+  "business/06-personas-jtbd.md": [
+    "content/01-sitemap.yaml",
   ],
-  "business/06-sitemap.yaml": [
-    "business/08-seo-brief.md",
+  "content/01-sitemap.yaml": [
+    "content/03-seo-brief.md",
   ],
-  "business/08-seo-brief.md": [
-    "business/09-content-deck.md",
+  "content/03-seo-brief.md": [
+    "content/04-content-deck.md",
   ],
-  "business/09-content-deck.md": [
+  "content/04-content-deck.md": [
     "website/routes/",
   ],
 };
@@ -42,14 +42,14 @@ const DEPENDENCY_MAP: Record<string, string[]> = {
 const TRACKED_FILES = [
   "business/01-business-input.yaml",
   "business/02-brand-strategy.md",
-  "business/02b-brand-identity.yaml",
-  "business/03-business-model.md",
-  "business/04-value-proposition.md",
-  "business/05-personas-jobs.md",
-  "business/06-sitemap.yaml",
-  "business/08-seo-brief.md",
-  "business/09-content-deck.md",
-  "business/10-launch-checklist.md",
+  "business/03-brand-identity.yaml",
+  "business/04-business-model.md",
+  "business/05-value-proposition.md",
+  "business/06-personas-jtbd.md",
+  "content/01-sitemap.yaml",
+  "content/03-seo-brief.md",
+  "content/04-content-deck.md",
+  "content/05-checklist.md",
 ];
 
 // ── File state ──────────────────────────────────────────
@@ -175,16 +175,16 @@ export const getWorkflowSuggestions = (changed: string[], stale: string[]): stri
   const suggestions: string[] = [];
   const all = new Set([...changed, ...stale]);
 
-  if (all.has("business/02b-brand-identity.yaml") || all.has("website/assets/styles.css")) {
+  if (all.has("business/03-brand-identity.yaml") || all.has("website/assets/styles.css")) {
     suggestions.push("Brand identity changed → website styles need regeneration");
   }
-  if (all.has("business/06-sitemap.yaml")) {
+  if (all.has("content/01-sitemap.yaml")) {
     suggestions.push("Sitemap changed → check for new/removed pages, update routes");
   }
-  if (all.has("business/08-seo-brief.md")) {
+  if (all.has("content/03-seo-brief.md")) {
     suggestions.push("SEO brief changed → update meta tags across all routes");
   }
-  if (all.has("business/09-content-deck.md") || all.has("website/routes/")) {
+  if (all.has("content/04-content-deck.md") || all.has("website/routes/")) {
     suggestions.push("Content changed → update route content to match");
   }
   if (all.has("business/02-brand-strategy.md")) {

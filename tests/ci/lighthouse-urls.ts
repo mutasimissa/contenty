@@ -6,7 +6,7 @@ const toSlug = (name: string): string =>
   name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 try {
-  const raw = Deno.readTextFileSync(`${ROOT}/business/06-sitemap.yaml`);
+  const raw = Deno.readTextFileSync(`${ROOT}/content/01-sitemap.yaml`);
   const data = parseYaml(raw) as Record<string, unknown>;
   const primary = (data.primary_navigation as string[]) || [];
 

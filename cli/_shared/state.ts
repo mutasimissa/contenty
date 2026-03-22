@@ -37,14 +37,14 @@ export interface ProjectState {
 const BUSINESS_FILES = [
   "business/01-business-input.yaml",
   "business/02-brand-strategy.md",
-  "business/02b-brand-identity.yaml",
-  "business/03-business-model.md",
-  "business/04-value-proposition.md",
-  "business/05-personas-jobs.md",
-  "business/06-sitemap.yaml",
-  "business/08-seo-brief.md",
-  "business/09-content-deck.md",
-  "business/10-launch-checklist.md",
+  "business/03-brand-identity.yaml",
+  "business/04-business-model.md",
+  "business/05-value-proposition.md",
+  "business/06-personas-jtbd.md",
+  "content/01-sitemap.yaml",
+  "content/03-seo-brief.md",
+  "content/04-content-deck.md",
+  "content/05-checklist.md",
 ];
 
 const BRAND_ASSET_FILES = [
@@ -80,8 +80,8 @@ const detectStage = (completed: string[], siteType: SiteType): ProjectStage => {
     // These types skip offers, sitemap, seo-brief — jump from strategy to content
     if (
       has("business/02-brand-strategy.md") &&
-      has("business/02b-brand-identity.yaml") &&
-      has("business/09-content-deck.md")
+      has("business/03-brand-identity.yaml") &&
+      has("content/04-content-deck.md")
     ) {
       return "content-done";
     }
@@ -90,26 +90,26 @@ const detectStage = (completed: string[], siteType: SiteType): ProjectStage => {
   if (siteType === "booking") {
     // Booking skips sitemap — if offers are done and content exists, it's content-done
     if (
-      has("business/03-business-model.md") &&
-      has("business/04-value-proposition.md") &&
-      has("business/05-personas-jobs.md") &&
-      has("business/09-content-deck.md")
+      has("business/04-business-model.md") &&
+      has("business/05-value-proposition.md") &&
+      has("business/06-personas-jtbd.md") &&
+      has("content/04-content-deck.md")
     ) {
       return "content-done";
     }
   }
 
   // Default detection logic
-  if (has("business/09-content-deck.md") && has("business/10-launch-checklist.md")) {
+  if (has("content/04-content-deck.md") && has("content/05-checklist.md")) {
     return "content-done";
   }
-  if (has("business/06-sitemap.yaml") && has("business/08-seo-brief.md")) {
+  if (has("content/01-sitemap.yaml") && has("content/03-seo-brief.md")) {
     return "sitemap-done";
   }
-  if (has("business/03-business-model.md") && has("business/04-value-proposition.md") && has("business/05-personas-jobs.md")) {
+  if (has("business/04-business-model.md") && has("business/05-value-proposition.md") && has("business/06-personas-jtbd.md")) {
     return "offers-done";
   }
-  if (has("business/02b-brand-identity.yaml")) {
+  if (has("business/03-brand-identity.yaml")) {
     return "identity-done";
   }
   if (has("business/02-brand-strategy.md")) {
@@ -163,12 +163,12 @@ export const getProjectState = (): ProjectState => {
     }
   }
 
-  const hasBrandIdentity = isPopulated("business/02b-brand-identity.yaml");
+  const hasBrandIdentity = isPopulated("business/03-brand-identity.yaml");
 
   const isBrandingStale = (() => {
     if (!hasWebsite || !hasBrandIdentity) return false;
     try {
-      const brandMtime = Deno.statSync(resolve("business/02b-brand-identity.yaml")).mtime;
+      const brandMtime = Deno.statSync(resolve("business/03-brand-identity.yaml")).mtime;
       const stylesMtime = Deno.statSync(resolve("website/assets/styles.css")).mtime;
       if (brandMtime && stylesMtime) return brandMtime > stylesMtime;
     } catch { /* file doesn't exist */ }

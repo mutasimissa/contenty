@@ -13,18 +13,18 @@ is written.
 
 - `business/01-business-input.yaml` is complete
 - `business/02-brand-strategy.md` is complete
-- `business/03-business-model.md` is complete
-- `business/04-value-proposition.md` is complete
-- `business/05-personas-jobs.md` is complete
+- `business/04-business-model.md` is complete
+- `business/05-value-proposition.md` is complete
+- `business/06-personas-jtbd.md` is complete
 
 ## Read these files first
 
 1. `business/01-business-input.yaml` — seed fields: `site_map.*` (desired pages,
    navigation, page priority), `page_modules` (section hints per page)
 2. `business/02-brand-strategy.md` — positioning and audience
-3. `business/03-business-model.md` — offers and conversion path
-4. `business/04-value-proposition.md` — promise and differentiation
-5. `business/05-personas-jobs.md` — buyer needs and objections
+3. `business/04-business-model.md` — offers and conversion path
+4. `business/05-value-proposition.md` — promise and differentiation
+5. `business/06-personas-jtbd.md` — buyer needs and objections
 6. `agency/schemas/sitemap.yaml` — required sitemap fields
 7. `agency/schemas/page-brief.yaml` — required page brief fields
 8. `agency/templates/sitemap.template.yaml` — sitemap structure
@@ -46,14 +46,14 @@ is written.
 4. Define **primary navigation** — the main pages visible in the nav bar
 5. Define **secondary pages** — support pages (FAQ, legal, case studies, etc.)
 6. Assign each page a **single clear objective** (what it must accomplish)
-7. For each page, create a page brief in `business/07-page-briefs/`
+7. For each page, create a page brief in `content/02-page-briefs/`
 8. Add **internal linking notes** — which pages should link to each other and
    why
 9. Ask the user to confirm the page inventory before writing briefs
 
 ## Output files
 
-### `business/06-sitemap.yaml`
+### `content/01-sitemap.yaml`
 
 ```yaml
 primary_navigation:
@@ -74,7 +74,7 @@ page_goals:
   # ... one entry per page
 ```
 
-### `business/07-page-briefs/<slug>.md` (one per page)
+### `content/02-page-briefs/<slug>.md` (one per page)
 
 ```markdown
 # [Page Name]
