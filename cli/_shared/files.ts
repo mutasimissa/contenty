@@ -47,4 +47,7 @@ export const isMultilingual = (): boolean => {
   return locales.length > 1;
 };
 
+export const toSlug = (name: string): string =>
+  name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
 export { ROOT };

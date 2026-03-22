@@ -1,11 +1,12 @@
 {
-  "version": "2.1.1",
+  "version": "2.2.1",
   "license": "MIT",
   "authors": [
     "Mutasim Issa <mutasim@sourcya.com>",
     "Claude <noreply@anthropic.com>"
   ],
   "description": "Contenty - AI-Powered Content Management System",
+  "workspace": ["cli", "tests"],
   "tasks": {
     "start": "deno run --allow-read --allow-write --allow-run cli/start.ts",
     "intake": "deno run --allow-read --allow-write cli/intake.ts",
@@ -17,6 +18,11 @@
     "audit": "deno run --allow-read cli/audit.ts",
     "add-locale": "deno run --allow-read --allow-write cli/add-locale.ts",
     "sync": "deno run --allow-read --allow-write cli/sync.ts",
-    "snapshot": "deno run --allow-read --allow-write cli/sync.ts -- --snapshot"
+    "snapshot": "deno run --allow-read --allow-write cli/sync.ts -- --snapshot",
+    "test": "deno task test:unit && deno task test:e2e",
+    "test:unit": "deno test --allow-read tests/unit/",
+    "test:e2e": "npx playwright test --config tests/e2e/playwright.config.ts",
+    "test:smoke": "npx playwright test --config tests/e2e/playwright.config.ts --grep @smoke",
+    "prelaunch": "deno task validate && deno task audit && deno task test:smoke"
   }
 }

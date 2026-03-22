@@ -55,6 +55,23 @@
 - Contact information is visible
 - Legal disclaimers are present where needed
 
+### 8. Automated testing
+
+- Unit tests pass for all CLI utilities and component logic
+- E2E tests verify every sitemap page loads and returns 200
+- No broken internal links or missing images
+- SEO meta tags verified programmatically on every page
+- Form submission tested end-to-end
+- Pre-launch smoke suite passes with zero failures
+
+### 9. CI/CD gates
+
+- YAML and schema validation passes
+- Markdown linting passes
+- Business/website drift check passes (no orphaned routes, no missing routes)
+- Lighthouse CI scores meet thresholds (performance, accessibility, SEO ≥ 0.9)
+- Visual diff snapshots reviewed for unintended changes
+
 ## Minimum checks
 
 - [ ] Message consistency across all pages

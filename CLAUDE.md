@@ -37,6 +37,28 @@ Run `deno task start` for the guided hub menu, or run any task directly:
 - `new-landing` — scaffold a conversion-focused landing page
 - `add-locale` — add a new language to the site
 - `init-website` — bootstrap Fresh 2.2+ project in `website/`
+- `test` — run all tests (unit + E2E)
+- `test:unit` — Deno unit tests for CLI utilities
+- `test:e2e` — Playwright E2E tests against running website
+- `test:smoke` — quick pre-launch smoke suite (subset of E2E)
+- `prelaunch` — full pre-launch gate: validate + audit + smoke tests
+
+## Testing
+
+Tests are data-driven from `business/06-sitemap.yaml` and site type config.
+
+- **Unit tests** (`tests/unit/`) — Deno native, test CLI utilities
+- **E2E tests** (`tests/e2e/specs/`) — Playwright, test the running website
+- **BDD features** (`tests/features/`) — Cucumber Given/When/Then scenarios
+- **CI scripts** (`tests/ci/`) — schema validation, drift detection, Lighthouse URLs
+- **Playwright MCP** — interactive browser testing via Claude
+
+### CI/CD (GitHub Actions)
+
+- `.github/workflows/ci.yml` — YAML validation, markdown lint, unit tests,
+  content audit, business/website drift check (every push and PR)
+- `.github/workflows/preview.yml` — build preview, E2E tests, broken link check,
+  Lighthouse CI, visual diff snapshots (PR only, requires website)
 
 ## Three developer paths
 

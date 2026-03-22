@@ -65,7 +65,12 @@ elements before implementation begins.
    - Is the contact pathway accessible?
    - Are image alt text guidelines noted?
 
-7. Score each rubric and produce the checklist
+7. **Automated test verification**
+   - Run `deno task test:smoke` to verify technical readiness
+   - Check CI pipeline status if available
+   - Include test results in the launch checklist
+
+8. Score each rubric and produce the checklist
 
 ## Output format
 

@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  yaml-validate:
+    name: YAML & Schema Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Run contenty validate
+        run: deno task validate
+
+      - name: Lint YAML syntax
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: business/
+          config_data: |
+            extends: default
+            rules:
+              line-length:
+                max: 200
+              truthy:
+                check-keys: false
+              document-start: disable
+              comments-indentation: disable
+
+      - name: Validate business schemas
+        run: deno run --allow-read tests/ci/validate-schemas.ts
+
+  markdown-lint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: |
+            business/**/*.md
+            agency/**/*.md
+            skills/**/*.md
+            docs/**/*.md
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Run unit tests
+        run: deno task test:unit
+
+  content-audit:
+    name: Content Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Run content audit
+        run: deno task audit
+
+  drift-check:
+    name: Business/Website Drift
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Check for drift
+        run: |
+          if [ -f website/deno.json ] || [ -f website/fresh.config.ts ]; then
+            deno run --allow-read tests/ci/drift-check.ts
+          else
+            echo "Website not bootstrapped — skipping drift check"
+          fi
