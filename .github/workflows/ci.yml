@@ -37,19 +37,20 @@ jobs:
         run: deno task validate
 
       - name: Lint YAML syntax
-        uses: ibiqlik/action-yamllint@v3
-        with:
-          file_or_dir: business/
-          config_data: |
-            extends: default
-            rules:
-              line-length:
-                max: 200
-              truthy:
-                check-keys: false
-              document-start: disable
-              comments-indentation: disable
-              empty-values: disable
+        run: |
+          pip install yamllint -q
+          cat <<'YAMLLINT_EOF' > /tmp/.yamllint.yml
+          extends: default
+          rules:
+            line-length:
+              max: 200
+            truthy:
+              check-keys: false
+            document-start: disable
+            comments-indentation: disable
+            empty-values: disable
+          YAMLLINT_EOF
+          yamllint -c /tmp/.yamllint.yml business/
 
       - name: Validate business schemas
         if: steps.state.outputs.populated == 'true'
@@ -61,13 +62,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: DavidAnson/markdownlint-cli2-action@v19
-        with:
-          globs: |
-            business/**/*.md
-            agency/**/*.md
-            skills/**/*.md
-            docs/**/*.md
+      - name: Lint markdown
+        run: npx markdownlint-cli2 "business/**/*.md" "agency/**/*.md" "skills/**/*.md" "docs/**/*.md"
 
   unit-tests:
     name: Unit Tests
