@@ -162,8 +162,7 @@ ${"─".repeat(60)}
   Next: run the /add-blog-post workflow in your AI tool to
   write the full blog post content.
 
-  Windsurf:  /add-blog-post
-  Claude:    /add-blog-post
+  /add-blog-post
 
   The workflow will:
   1. Write the full blog post based on strategy and SEO brief

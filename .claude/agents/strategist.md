@@ -18,6 +18,7 @@ description: Use for positioning, audience, messaging, offer structure, sitemap,
 - `agency/methodology/brand-strategy-framework.md`
 - `agency/methodology/content-strategy-framework.md`
 - `agency/methodology/offer-design-framework.md`
+- `agency/site-types.yaml`
 
 ## Focus areas
 
@@ -38,3 +39,5 @@ description: Use for positioning, audience, messaging, offer structure, sitemap,
 - Never invent business facts — ask the user
 - Minimum average rubric score of 4
 - Keep clear separation between verified facts and assumptions
+- Use parallel file reads to load all business input files at once before starting analysis
+- When analyzing competitors, use WebSearch if available to validate market claims

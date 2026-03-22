@@ -17,6 +17,10 @@ delivery phase, read and follow the corresponding skill file. It contains: role,
 prerequisites, files to read, working method, output format, and validation
 criteria.
 
+Skills are site-type-aware. Check `site_type` in `business/01-business-input.yaml`
+and consult `agency/site-types.yaml` to determine which skills, pages, and
+validation rules apply for the current project.
+
 ## CLI tools
 
 Run `deno task start` for the guided hub menu, or run any task directly:
@@ -39,6 +43,18 @@ Run `deno task start` for the guided hub menu, or run any task directly:
 1. **Fresh start** — `deno task start` → Fresh Start → sequential build
 2. **Edit & sync** — change business files, `deno task sync` → propagate
 3. **Rebuild** — `deno task start` → Rebuild Website → regenerate from scratch
+
+## Site types
+
+The `site_type` field in `business/01-business-input.yaml` controls which pages,
+skills, and validation rules apply. Defined in `agency/site-types.yaml`:
+
+- **corporate** — multi-page company site (services, about, contact, blog), 8-15 pages
+- **service** — service-oriented with booking/quote flows, 5-10 pages
+- **personal-blog** — author-focused blog with about + posts, 3-5 pages + posts
+- **booking** — book-a-call / appointment-driven, 1-3 pages
+- **single-page** — one-page scrolling site with all sections, 1 page
+- **coming-soon** — placeholder with email capture, minimal SEO, 1 page
 
 ## SEO requirements
 
@@ -80,6 +96,8 @@ Use `.claude/commands/` for slash-command workflows. Available commands:
 - `seo` — keywords, metadata, OG tags, schema, internal linking
 - `reviewer` — QA across all rubrics, launch checklist
 - `builder` — website implementation from business files
+- `researcher` — market validation, competitor research, keyword data
+- `qa-runner` — automated QA via CLI tools, rubric scoring, structured reports
 
 ## Mandatory rules
 

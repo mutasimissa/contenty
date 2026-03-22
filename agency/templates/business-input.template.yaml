@@ -1,22 +1,37 @@
-business_name: Acme Industrial Systems
-website_goal: Generate qualified inbound leads for industrial operations solutions
-industry: Industrial technology
+# Business input template
+# Fill in each field. Remove comments once populated.
+
+# Full legal or trading name of the business.
+business_name:
+
+# The primary goal of the website (e.g. generate leads, sell products, build authority).
+website_goal:
+
+# Industry or sector the business operates in.
+industry:
+
+# Geographic markets the business serves.
 target_markets:
-  - KSA
-  - GCC
+  -
+
+# Buyer segments or roles the site should address.
 target_segments:
-  - Operations leaders
-  - Plant managers
-  - Procurement stakeholders
+  -
+
+# Products, services, or solutions the business offers.
 offers:
-  - Industrial monitoring systems
-  - Maintenance visibility solutions
-  - Operational dashboards
-primary_cta: Book a discovery call
-desired_tone: Clear, credible, practical
+  -
+
+# The main action visitors should take on the site.
+primary_cta:
+
+# Desired tone of voice for all site copy (e.g. clear and credible, warm and approachable).
+desired_tone:
+
+# Direct or indirect competitors for context and differentiation.
 competitors:
-  - Competitor A
-  - Competitor B
+  -
+
+# Hard rules or limitations that must be respected in all content.
 constraints:
-  - Claims must be supportable
-  - No unverified customer logos
+  -

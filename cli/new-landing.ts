@@ -99,8 +99,7 @@ ${"─".repeat(60)}
   Next: run the /add-landing-page workflow in your AI tool
   to complete this landing page end-to-end.
 
-  Windsurf:  /add-landing-page
-  Claude:    /add-landing-page
+  /add-landing-page
 
   The workflow will:
   1. Fill in the brief using the landing page blueprint

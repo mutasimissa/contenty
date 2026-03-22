@@ -7,6 +7,7 @@
 - Website scope:
 - Primary market:
 - Geography:
+- Site type:
 - Stage: template / not started
 
 ## Current status

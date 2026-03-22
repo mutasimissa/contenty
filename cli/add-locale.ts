@@ -80,8 +80,7 @@ ${"─".repeat(60)}
   Next: run the /add-locale workflow in your AI tool to
   fully implement the "${newLocale}" locale.
 
-  Windsurf:  /add-locale
-  Claude:    /add-locale
+  /add-locale
 
   The workflow will:
   1. Create locale route stubs for all pages

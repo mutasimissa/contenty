@@ -22,6 +22,32 @@ delivery phase:
 4. Write outputs in the specified format
 5. Validate against the criteria before finishing
 
+Skills are site-type-aware. Check `site_type` in `business/01-business-input.yaml`
+and consult `agency/site-types.yaml` to determine which skills and pages apply.
+
+## Agents
+
+- **strategist** — positioning, audience, messaging, offer structure, sitemap,
+  and business-facing site strategy. Loads all business inputs in parallel and
+  validates market claims via web search when available.
+- **copywriter** — homepage, service pages, about pages, contact pages, blog
+  posts, and structured web copy. Adapts copy depth to site type (ultra-brief
+  for coming-soon, comprehensive for corporate).
+- **seo** — keyword strategy, intent mapping, metadata, internal links, OG tags,
+  schema markup. Produces simplified briefs for minimal-SEO site types and
+  validates keywords via web search when available.
+- **reviewer** — final quality review against all rubrics and launch-readiness
+  checks. Runs CLI validation tools before manual review.
+- **builder** — translates approved business and content files into website
+  implementation (routes, components, SEO, styling). Reads site type to
+  determine required pages and runs scaffolding before implementing routes.
+- **researcher** — validates market claims, researches competitors, checks
+  keyword data, and gathers external context. Supports strategist and SEO agents
+  with verified findings.
+- **qa-runner** — automated QA that runs CLI validation tools, scores every
+  applicable rubric, and produces a structured report with pass/fail status and
+  fix recommendations. Adapts checks to site type.
+
 ## CLI tools
 
 Run `deno task start` for the guided hub menu, or run any task directly:
@@ -30,7 +56,7 @@ Run `deno task start` for the guided hub menu, or run any task directly:
 - `intake` — quick business intake (5 core questions, then AI fills the rest via
   `/init-business`)
 - `validate` — check business files, YAML keys, brand assets, and SEO files
-- `audit` — content audit (sitemap ↔ brief ↔ copy ↔ route ↔ SEO coverage)
+- `audit` — content audit (sitemap <-> brief <-> copy <-> route <-> SEO coverage)
 - `sync` — detect changed business files and suggest AI workflows
 - `snapshot` — save file hashes for change detection
 - `new-page` — add a new page (brief + sitemap entry + optional route)
@@ -41,9 +67,9 @@ Run `deno task start` for the guided hub menu, or run any task directly:
 
 ## Three developer paths
 
-1. **Fresh start** — `deno task start` → Fresh Start → sequential build
-2. **Edit & sync** — change business files, `deno task sync` → propagate
-3. **Rebuild** — `deno task start` → Rebuild Website → regenerate from scratch
+1. **Fresh start** — `deno task start` -> Fresh Start -> sequential build
+2. **Edit & sync** — change business files, `deno task sync` -> propagate
+3. **Rebuild** — `deno task start` -> Rebuild Website -> regenerate from scratch
 
 ## SEO requirements
 
@@ -68,23 +94,23 @@ The website must have: robots.txt, sitemap.xml route, manifest.json, custom 404.
 
 ## Recommended workflow
 
-1. `deno task intake` → `business/01-business-input.yaml`
-2. `skills/brand-strategy/` → `business/02-brand-strategy.md` 2b.
-   `skills/brand-identity/` → `business/02b-brand-identity.yaml`
-3. `skills/offer-design/` → `business/03-*`, `04-*`, `05-*`
-4. `skills/sitemap-ia/` → `business/06-sitemap.yaml`, `07-page-briefs/`
-5. `skills/seo-brief/` → `business/08-seo-brief.md`
-6. `skills/page-copy/` → `business/09-content-deck.md`
-7. `skills/launch-qa/` → `business/10-launch-checklist.md`
-8. `deno task init-website` → `website/`
-9. `deno task snapshot` → `.contenty-state.json`
+1. `deno task intake` -> `business/01-business-input.yaml`
+2. `skills/brand-strategy/` -> `business/02-brand-strategy.md` 2b.
+   `skills/brand-identity/` -> `business/02b-brand-identity.yaml`
+3. `skills/offer-design/` -> `business/03-*`, `04-*`, `05-*`
+4. `skills/sitemap-ia/` -> `business/06-sitemap.yaml`, `07-page-briefs/`
+5. `skills/seo-brief/` -> `business/08-seo-brief.md`
+6. `skills/page-copy/` -> `business/09-content-deck.md`
+7. `skills/launch-qa/` -> `business/10-launch-checklist.md`
+8. `deno task init-website` -> `website/`
+9. `deno task snapshot` -> `.contenty-state.json`
 
 ## Content lifecycle
 
-- **Add page:** `deno task new-page` → `/add-page` workflow
-- **Add blog post:** `deno task new-blog` → `/add-blog-post` workflow
-- **Add landing page:** `deno task new-landing` → `/add-landing-page` workflow
-- **Add locale:** `deno task add-locale` → `/add-locale` workflow
+- **Add page:** `deno task new-page` -> `/add-page` workflow
+- **Add blog post:** `deno task new-blog` -> `/add-blog-post` workflow
+- **Add landing page:** `deno task new-landing` -> `/add-landing-page` workflow
+- **Add locale:** `deno task add-locale` -> `/add-locale` workflow
 - **Remove page:** `/remove-page` workflow (AI-driven cleanup)
 
 ## Output discipline

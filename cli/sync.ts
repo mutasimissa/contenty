@@ -50,8 +50,7 @@ if (report.stale.length > 0) {
 console.log("");
 printSection("Recommended Action", "Run the edit-sync workflow in your AI tool.");
 
-console.log("  Windsurf:  /edit-sync");
-console.log("  Claude:    /edit-sync");
+console.log("  /edit-sync");
 console.log("");
 
 printHint(

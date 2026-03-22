@@ -21,6 +21,7 @@ without blocking progress.
 3. `agency/schemas/business-input.yaml` — required fields and structure
 4. `agency/templates/business-input.template.yaml` — blank template for
    reference
+5. `agency/site-types.yaml` — site type profiles and detection criteria
 
 ## Working method
 
@@ -36,7 +37,14 @@ without blocking progress.
 4. Separate **verified facts** from **assumptions** (mark assumptions
    explicitly)
 5. Update `business/01-business-input.yaml` in structured YAML form
-6. List unresolved questions at the end of your response — do not block progress
+6. **Auto-detect site type:** After core fields are filled, analyze
+   `website_goal`, `offers`, `primary_cta`, and `site_map.pages` against the
+   profiles in `agency/site-types.yaml` to determine the best-fit `site_type`.
+   Present the detection reasoning to the user (e.g. "Based on your single
+   booking CTA and minimal page list, this looks like a **booking** site").
+   After the user confirms (or corrects), write the confirmed `site_type` value
+   to `business/01-business-input.yaml`.
+7. List unresolved questions at the end of your response — do not block progress
 
 ## Output format
 

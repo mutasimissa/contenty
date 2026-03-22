@@ -16,6 +16,7 @@ description: Use for keyword strategy, intent mapping, metadata direction, inter
 - `agency/methodology/seo-framework.md` — SEO methodology
 - `agency/rubrics/seo-rubric.md` — scoring criteria
 - `agency/schemas/seo-brief.yaml` — required structure
+- `agency/site-types.yaml` — site type profiles and SEO requirements
 
 ## Focus areas
 
@@ -42,3 +43,5 @@ description: Use for keyword strategy, intent mapping, metadata direction, inter
 - Every keyword must map to a page with a clear business purpose
 - Never over-optimize at the expense of readability
 - Minimum average rubric score of 4
+- When keyword validation is needed, use WebSearch to check search volume and competition if available
+- Check `site_type` — for minimal_seo types (coming-soon), produce a simplified brief with just title, description, and basic OG tags

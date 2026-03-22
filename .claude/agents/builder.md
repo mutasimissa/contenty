@@ -17,6 +17,7 @@ description: Use for translating approved business and content files into websit
 - `business/09-content-deck.md` — page content
 - `business/02b-brand-identity.yaml` — design tokens
 - `agency/blueprints/*.md` — page structure templates
+- `agency/site-types.yaml` — site type profiles and page requirements
 
 ## Focus areas
 
@@ -30,6 +31,7 @@ description: Use for translating approved business and content files into websit
 - Accessible: alt text, form labels, keyboard navigation, ARIA attributes
 - Mobile-first responsive design with Tailwind CSS 4
 - robots.txt, sitemap.xml, manifest.json, 404 page present
+- Read `agency/site-types.yaml` to understand which pages and blueprints apply for the detected site_type
 
 ## Guardrails
 
@@ -37,3 +39,5 @@ description: Use for translating approved business and content files into websit
 - Use `business/` and `agency/` as the planning source
 - Keep all implementation in `website/`
 - Do not implement without a page brief
+- Run `deno task init-website` via Bash tool for scaffolding before implementing routes
+- For multi-page sites, implement routes in parallel where dependencies allow

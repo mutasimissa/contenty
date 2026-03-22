@@ -39,25 +39,36 @@ back to a business file.
 6. `business/02-brand-strategy.md` — tone and message pillars
 7. `agency/blueprints/` — section-level page structures
 8. `agency/rubrics/launch-rubric.md` — launch readiness criteria
+9. `agency/site-types.yaml` — site type profiles and implementation hints
 
 ## Working method
 
-1. **Review the sitemap** — confirm which pages to build and their navigation
+1. **Read site type:** Read `site_type` from `business/01-business-input.yaml`.
+   Adapt the build approach based on the type:
+   - **single-page** and **coming-soon**: Implement as a single-page site with
+     scrolling sections on the homepage. Do not create separate routes for
+     content pages — all sections live in `index.tsx`.
+   - **booking**: Ensure the booking widget or booking link is prominently
+     placed in the hero, sticky header, and CTA sections. The booking link
+     should be the most visible interactive element on every page.
+   - **personal-blog**: Blog infrastructure (index, post routes, RSS) is the
+     primary focus. Build the blog system first, then layer on static pages.
+2. **Review the sitemap** — confirm which pages to build and their navigation
    order
-2. **Set up routing** — create Fresh routes for each page in `website/routes/`
-3. **Build shared layout** — header with navigation, footer with CTA and legal
+3. **Set up routing** — create Fresh routes for each page in `website/routes/`
+4. **Build shared layout** — header with navigation, footer with CTA and legal
    links
-4. **Build each page** following this pattern: a. Read the page brief for
+5. **Build each page** following this pattern: a. Read the page brief for
    section structure b. Read the content deck for actual copy c. Read the
    blueprint for section-level guidance d. Implement sections as Fresh
    components e. Use Tailwind CSS 4 for styling f. Add islands only where
    client-side interactivity is required (forms, mobile nav)
-5. **Implement SEO** — add meta tags, Open Graph, schema markup per the SEO
+6. **Implement SEO** — add meta tags, Open Graph, schema markup per the SEO
    brief
-6. **Implement contact form** — as an island component with server-side handling
-7. **Add accessibility** — semantic HTML, ARIA labels, keyboard navigation, skip
+7. **Implement contact form** — as an island component with server-side handling
+8. **Add accessibility** — semantic HTML, ARIA labels, keyboard navigation, skip
    links
-8. **Test** — verify all pages render, navigation works, CTAs link correctly
+9. **Test** — verify all pages render, navigation works, CTAs link correctly
 
 ## Architecture principles
 

@@ -22,6 +22,7 @@ console.log(`  Files:    ${fileCount}/${totalFiles} business files populated`);
 if (state.hasWebsite) console.log(`  Website:  bootstrapped`);
 if (state.locales.length > 1) console.log(`  Locales:  ${state.locales.join(", ")}`);
 if (state.hasBrandIdentity) console.log(`  Identity: defined`);
+if (state.siteType) console.log(`  Type:     ${state.siteType}`);
 if (state.brandAssets.present.length > 0) console.log(`  Brand:    ${state.brandAssets.present.length}/${state.brandAssets.present.length + state.brandAssets.missing.length} assets`);
 if (state.isBrandingStale) console.log(`  ⚠️  Branding out of sync — brand identity is newer than website styles`);
 console.log("");
@@ -42,14 +43,12 @@ const run = (script: string) => {
 const showAICommand = (
   skill: string,
   description: string,
-  opts: { windsurf?: string; claude?: string; reads?: string[]; writes?: string[] } = {},
+  opts: { command?: string; reads?: string[]; writes?: string[] } = {},
 ) => {
-  const wsCmd = opts.windsurf ?? `/${skill.replace("_", "-")}`;
-  const clCmd = opts.claude ?? `/${skill.replace("_", "-")}`;
+  const cmd = opts.command ?? `/${skill.replace("_", "-")}`;
 
-  printSection(description, "Run this in your AI tool:");
-  console.log(`    Windsurf:  ${wsCmd}`);
-  console.log(`    Claude:    ${clCmd}`);
+  printSection(description, "Run this in Claude Code:");
+  console.log(`    ${cmd}`);
 
   if (opts.reads?.length) {
     console.log(`\n  Reads:`);
@@ -64,10 +63,23 @@ const showAICommand = (
 
 // ── Launch phases ────────────────────────────────────────
 
+// Site-type skip rules (hardcoded from agency/site-types.yaml skip_skills)
+const SITE_TYPE_SKIPS: Record<string, Set<string>> = {
+  "coming-soon": new Set(["offer-design", "sitemap", "seo-brief", "launch-qa"]),
+  "single-page": new Set(["sitemap", "launch-qa"]),
+  "booking": new Set(["sitemap"]),
+  "personal-blog": new Set(["offer-design"]),
+};
+
+const skippedPhases = state.siteType
+  ? (SITE_TYPE_SKIPS[state.siteType] ?? new Set())
+  : new Set<string>();
+
 interface LaunchPhase {
   num: string;
   label: string;
   done: boolean;
+  skipped: boolean;
   action: () => void | Promise<void>;
 }
 
@@ -76,15 +88,16 @@ const launchPhases: LaunchPhase[] = [
     num: "1",
     label: "Business intake",
     done: state.completedFiles.includes("business/01-business-input.yaml"),
+    skipped: false,
     action: () => run("intake"),
   },
   {
     num: "2",
     label: "Brand strategy",
     done: state.completedFiles.includes("business/02-brand-strategy.md"),
+    skipped: false,
     action: () => showAICommand("brand-strategy", "Build brand positioning and messaging", {
-      windsurf: "/build-brand-strategy",
-      claude: "/build-brand-strategy",
+      command: "/build-brand-strategy",
       reads: ["business/01-business-input.yaml", "agency/methodology/brand-strategy-framework.md"],
       writes: ["business/02-brand-strategy.md"],
     }),
@@ -93,9 +106,9 @@ const launchPhases: LaunchPhase[] = [
     num: "2b",
     label: "Brand identity",
     done: state.completedFiles.includes("business/02b-brand-identity.yaml"),
+    skipped: false,
     action: () => showAICommand("brand-identity", "Generate design tokens from brand strategy", {
-      windsurf: "/build-brand-strategy",
-      claude: "/build-brand-strategy",
+      command: "/build-brand-strategy",
       reads: ["business/02-brand-strategy.md", "business/01-business-input.yaml"],
       writes: ["business/02b-brand-identity.yaml"],
     }),
@@ -103,12 +116,13 @@ const launchPhases: LaunchPhase[] = [
   {
     num: "3",
     label: "Offer design",
-    done: state.completedFiles.includes("business/03-business-model.md") &&
+    done: skippedPhases.has("offer-design") ||
+      (state.completedFiles.includes("business/03-business-model.md") &&
       state.completedFiles.includes("business/04-value-proposition.md") &&
-      state.completedFiles.includes("business/05-personas-jobs.md"),
+      state.completedFiles.includes("business/05-personas-jobs.md")),
+    skipped: skippedPhases.has("offer-design"),
     action: () => showAICommand("offer-design", "Define business model, value prop, and personas", {
-      windsurf: "/run-offer-design",
-      claude: "/run-offer-design",
+      command: "/run-offer-design",
       reads: ["business/01-business-input.yaml", "business/02-brand-strategy.md"],
       writes: ["business/03-business-model.md", "business/04-value-proposition.md", "business/05-personas-jobs.md"],
     }),
@@ -116,10 +130,11 @@ const launchPhases: LaunchPhase[] = [
   {
     num: "4",
     label: "Sitemap & IA",
-    done: state.completedFiles.includes("business/06-sitemap.yaml"),
+    done: skippedPhases.has("sitemap") ||
+      state.completedFiles.includes("business/06-sitemap.yaml"),
+    skipped: skippedPhases.has("sitemap"),
     action: () => showAICommand("sitemap-ia", "Plan page structure and write page briefs", {
-      windsurf: "/generate-sitemap",
-      claude: "/generate-sitemap",
+      command: "/generate-sitemap",
       reads: ["business/02-brand-strategy.md", "business/03-business-model.md", "business/05-personas-jobs.md"],
       writes: ["business/06-sitemap.yaml", "business/07-page-briefs/*.md"],
     }),
@@ -127,10 +142,11 @@ const launchPhases: LaunchPhase[] = [
   {
     num: "5",
     label: "SEO brief",
-    done: state.completedFiles.includes("business/08-seo-brief.md"),
+    done: skippedPhases.has("seo-brief") ||
+      state.completedFiles.includes("business/08-seo-brief.md"),
+    skipped: skippedPhases.has("seo-brief"),
     action: () => showAICommand("seo-brief", "Define keyword strategy and metadata direction", {
-      windsurf: "/run-seo-brief",
-      claude: "/run-seo-brief",
+      command: "/run-seo-brief",
       reads: ["business/01-* through business/07-*"],
       writes: ["business/08-seo-brief.md"],
     }),
@@ -139,9 +155,9 @@ const launchPhases: LaunchPhase[] = [
     num: "6",
     label: "Page copy",
     done: state.completedFiles.includes("business/09-content-deck.md"),
+    skipped: false,
     action: () => showAICommand("page-copy", "Write structured copy for each page", {
-      windsurf: "/write-page-copy",
-      claude: "/write-page-copy",
+      command: "/write-page-copy",
       reads: ["business/07-page-briefs/*.md", "business/02-brand-strategy.md", "business/08-seo-brief.md"],
       writes: ["business/09-content-deck.md"],
     }),
@@ -149,10 +165,11 @@ const launchPhases: LaunchPhase[] = [
   {
     num: "7",
     label: "Launch QA",
-    done: state.completedFiles.includes("business/10-launch-checklist.md"),
+    done: skippedPhases.has("launch-qa") ||
+      state.completedFiles.includes("business/10-launch-checklist.md"),
+    skipped: skippedPhases.has("launch-qa"),
     action: () => showAICommand("launch-qa", "Review all files for launch readiness", {
-      windsurf: "/launch-qa",
-      claude: "/launch-qa",
+      command: "/launch-qa",
       reads: ["business/01-* through business/09-*", "agency/rubrics/*"],
       writes: ["business/10-launch-checklist.md"],
     }),
@@ -161,9 +178,9 @@ const launchPhases: LaunchPhase[] = [
     num: "8",
     label: "Website build",
     done: state.hasWebsite,
+    skipped: false,
     action: () => showAICommand("website-init", "Build the website from business files", {
-      windsurf: "/init-website",
-      claude: "/init-website",
+      command: "/init-website",
       reads: ["business/09-content-deck.md", "business/07-page-briefs/*.md", "business/08-seo-brief.md"],
       writes: ["website/"],
     }),
@@ -204,10 +221,11 @@ if (category === "launch") {
 
   console.log("  Phase checklist:\n");
   for (const phase of launchPhases) {
-    const icon = phase.done ? "✓" : "○";
-    const marker = phase.done ? "" : " ← next";
+    const icon = phase.skipped ? "—" : phase.done ? "✓" : "○";
+    const suffix = phase.skipped ? " (skipped)" : "";
     const isCurrent = !phase.done && launchPhases.filter((p) => !p.done)[0] === phase;
-    console.log(`    ${icon}  ${phase.num}. ${phase.label}${isCurrent ? marker : ""}`);
+    const marker = isCurrent ? " ← next" : "";
+    console.log(`    ${icon}  ${phase.num}. ${phase.label}${suffix}${marker}`);
   }
   console.log("");
 
@@ -232,8 +250,7 @@ ${"─".repeat(60)}
   After reviewing the report, run the edit-sync workflow
   in your AI tool to propagate changes:
 
-  Windsurf:  /edit-sync
-  Claude:    /edit-sync
+  /edit-sync
 ${"─".repeat(60)}
 `);
 }
@@ -243,8 +260,7 @@ ${"─".repeat(60)}
 if (category === "rebuild") {
   printSection("Rebuild Website", "Full rebuild from business files — wipes website/ and regenerates.");
   showAICommand("rebuild-website", "Regenerate the entire website from business files", {
-    windsurf: "/rebuild-website",
-    claude: "/rebuild-website",
+    command: "/rebuild-website",
     reads: ["business/01-* through business/09-*"],
     writes: ["website/"],
   });
@@ -288,13 +304,13 @@ if (category === "update") {
   if (task === "intake") {
     await run("intake");
   } else {
-    const skillMap: Record<string, { windsurf: string; claude: string; writes: string[] }> = {
-      "brand-strategy": { windsurf: "/build-brand-strategy", claude: "/build-brand-strategy", writes: ["business/02-brand-strategy.md"] },
-      "brand-identity": { windsurf: "/build-brand-strategy", claude: "/build-brand-strategy", writes: ["business/02b-brand-identity.yaml"] },
-      "offer-design": { windsurf: "/run-offer-design", claude: "/run-offer-design", writes: ["business/03-*.md", "04-*.md", "05-*.md"] },
-      "sitemap-ia": { windsurf: "/generate-sitemap", claude: "/generate-sitemap", writes: ["business/06-sitemap.yaml", "07-page-briefs/*.md"] },
-      "seo-brief": { windsurf: "/run-seo-brief", claude: "/run-seo-brief", writes: ["business/08-seo-brief.md"] },
-      "page-copy": { windsurf: "/write-page-copy", claude: "/write-page-copy", writes: ["business/09-content-deck.md"] },
+    const skillMap: Record<string, { command: string; writes: string[] }> = {
+      "brand-strategy": { command: "/build-brand-strategy", writes: ["business/02-brand-strategy.md"] },
+      "brand-identity": { command: "/build-brand-strategy", writes: ["business/02b-brand-identity.yaml"] },
+      "offer-design": { command: "/run-offer-design", writes: ["business/03-*.md", "04-*.md", "05-*.md"] },
+      "sitemap-ia": { command: "/generate-sitemap", writes: ["business/06-sitemap.yaml", "07-page-briefs/*.md"] },
+      "seo-brief": { command: "/run-seo-brief", writes: ["business/08-seo-brief.md"] },
+      "page-copy": { command: "/write-page-copy", writes: ["business/09-content-deck.md"] },
     };
     const info = skillMap[task];
     if (info) {
@@ -320,8 +336,7 @@ if (category === "audit") {
 
   if (task === "launch-qa") {
     showAICommand("launch-qa", "Comprehensive prelaunch audit across all business files", {
-      windsurf: "/launch-qa",
-      claude: "/launch-qa",
+      command: "/launch-qa",
       reads: ["business/01-* through business/09-*", "agency/rubrics/*"],
       writes: ["business/10-launch-checklist.md"],
     });

@@ -11,9 +11,19 @@ export type ProjectStage =
   | "launched"
   | "live";
 
+export type SiteType =
+  | "corporate"
+  | "service"
+  | "personal-blog"
+  | "booking"
+  | "single-page"
+  | "coming-soon"
+  | null;
+
 export interface ProjectState {
   stage: ProjectStage;
   businessName: string;
+  siteType: SiteType;
   completedFiles: string[];
   missingFiles: string[];
   hasWebsite: boolean;
@@ -62,9 +72,34 @@ const isPopulated = (path: string): boolean => {
   }
 };
 
-const detectStage = (completed: string[]): ProjectStage => {
+const detectStage = (completed: string[], siteType: SiteType): ProjectStage => {
   const has = (f: string) => completed.includes(f);
 
+  // Site-type-aware shortcuts: some types skip intermediate phases
+  if (siteType === "coming-soon" || siteType === "single-page") {
+    // These types skip offers, sitemap, seo-brief — jump from strategy to content
+    if (
+      has("business/02-brand-strategy.md") &&
+      has("business/02b-brand-identity.yaml") &&
+      has("business/09-content-deck.md")
+    ) {
+      return "content-done";
+    }
+  }
+
+  if (siteType === "booking") {
+    // Booking skips sitemap — if offers are done and content exists, it's content-done
+    if (
+      has("business/03-business-model.md") &&
+      has("business/04-value-proposition.md") &&
+      has("business/05-personas-jobs.md") &&
+      has("business/09-content-deck.md")
+    ) {
+      return "content-done";
+    }
+  }
+
+  // Default detection logic
   if (has("business/09-content-deck.md") && has("business/10-launch-checklist.md")) {
     return "content-done";
   }
@@ -99,9 +134,15 @@ export const getProjectState = (): ProjectState => {
   }
 
   let businessName = "";
+  let siteType: SiteType = null;
   try {
     const input = readYaml<Record<string, unknown>>("business/01-business-input.yaml");
     businessName = (input.business_name as string) || "";
+    const rawType = (input.site_type as string) || "";
+    const validTypes: SiteType[] = ["corporate", "service", "personal-blog", "booking", "single-page", "coming-soon"];
+    if (validTypes.includes(rawType as SiteType)) {
+      siteType = rawType as SiteType;
+    }
   } catch { /* empty */ }
 
   const hasWebsite = fileExists("website/deno.json") || fileExists("website/fresh.config.ts");
@@ -109,8 +150,8 @@ export const getProjectState = (): ProjectState => {
   const { defaultLocale, locales } = getLocales();
 
   const stage = hasWebsite
-    ? (detectStage(completed) === "content-done" ? "launched" : detectStage(completed))
-    : detectStage(completed);
+    ? (detectStage(completed, siteType) === "content-done" ? "launched" : detectStage(completed, siteType))
+    : detectStage(completed, siteType);
 
   const brandPresent: string[] = [];
   const brandMissing: string[] = [];
@@ -137,6 +178,7 @@ export const getProjectState = (): ProjectState => {
   return {
     stage,
     businessName,
+    siteType,
     completedFiles: completed,
     missingFiles: missing,
     hasWebsite,

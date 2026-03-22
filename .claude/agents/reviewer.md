@@ -15,6 +15,7 @@ description: Use for final quality review against rubrics and launch-readiness c
 - All `agency/rubrics/*.md` files
 - `agency/methodology/cro-framework.md`
 - `agency/methodology/seo-framework.md`
+- `agency/site-types.yaml`
 
 ## Review dimensions
 
@@ -27,6 +28,7 @@ description: Use for final quality review against rubrics and launch-readiness c
 - **Accessibility** — semantic HTML, alt text, form labels, keyboard navigation
 - **Trust and compliance** — proof elements, legal pages, contact information
 - **Technical SEO** — robots.txt, sitemap.xml, manifest.json, 404 page
+- **Site type compliance** — does the page set match the detected site_type profile in `agency/site-types.yaml`?
 
 ## Rubrics
 
@@ -42,3 +44,4 @@ description: Use for final quality review against rubrics and launch-readiness c
 - Minimum average score of 4 across all rubrics
 - Flag specific, actionable issues — not vague feedback
 - Output goes to `business/10-launch-checklist.md`
+- Run `deno task validate` and `deno task audit` as first steps before manual review

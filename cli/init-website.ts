@@ -108,9 +108,8 @@ printSuccess("Wrote docs/decisions/tech-stack.md");
 
 console.log("");
 printSection("What's next", "The branded scaffold is ready. Now populate content with your AI tool.");
-console.log("  Run one of these commands in your AI tool:\n");
-console.log("  Windsurf:  /init-website");
-console.log("  Claude:    /init-website");
+console.log("  Run this command in Claude Code:\n");
+console.log("  /init-website");
 console.log("");
 console.log("  The AI will read your content deck, page briefs, and SEO brief");
 console.log("  to populate each route with actual copy, meta tags, and islands.");

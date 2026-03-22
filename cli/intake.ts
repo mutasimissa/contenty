@@ -173,7 +173,7 @@ console.log("  generate better strategy, copy, and SEO. To fill them:");
 console.log("");
 
 printNext(
-  "Run /init-business in your AI tool (Windsurf or Claude).\n" +
+  "Run /init-business in Claude Code.\n" +
   "  The AI will interview you section by section and fill the rest.\n" +
   "  Or edit business/01-business-input.yaml manually.",
 );

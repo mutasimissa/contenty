@@ -30,18 +30,26 @@ is written.
 8. `agency/templates/sitemap.template.yaml` — sitemap structure
 9. `agency/templates/page-brief.template.md` — page brief structure
 10. `agency/blueprints/` — read all blueprint files for section guidance
+11. `agency/site-types.yaml` — site type profiles with required/optional pages
 
 ## Working method
 
-1. Read all prerequisite business files
-2. List all required page types based on the business model and buyer journey
-3. Define **primary navigation** — the main pages visible in the nav bar
-4. Define **secondary pages** — support pages (FAQ, legal, case studies, etc.)
-5. Assign each page a **single clear objective** (what it must accomplish)
-6. For each page, create a page brief in `business/07-page-briefs/`
-7. Add **internal linking notes** — which pages should link to each other and
+1. **Load site type profile:** Read `site_type` from
+   `business/01-business-input.yaml` and load the matching profile from
+   `agency/site-types.yaml`. Use `required_pages` as the baseline page set and
+   `optional_pages` to suggest additions based on business input richness (e.g.
+   add FAQ if the business has common objections, add case-studies if proof
+   elements are strong). Do not suggest pages that are not listed in the type's
+   `required_pages` or `optional_pages`.
+2. Read all prerequisite business files
+3. List all required page types based on the business model and buyer journey
+4. Define **primary navigation** — the main pages visible in the nav bar
+5. Define **secondary pages** — support pages (FAQ, legal, case studies, etc.)
+6. Assign each page a **single clear objective** (what it must accomplish)
+7. For each page, create a page brief in `business/07-page-briefs/`
+8. Add **internal linking notes** — which pages should link to each other and
    why
-8. Ask the user to confirm the page inventory before writing briefs
+9. Ask the user to confirm the page inventory before writing briefs
 
 ## Output files
 

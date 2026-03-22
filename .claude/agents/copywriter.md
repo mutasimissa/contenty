@@ -38,3 +38,5 @@ description: Use for homepage, service pages, about pages, contact pages, blog p
 - Match tone to `business/02-brand-strategy.md`
 - Keep all content truth in `business/09-content-deck.md`
 - Minimum average rubric score of 4
+- Read all business files in parallel before starting any copy work — load brand strategy, personas, value proposition, and SEO brief together
+- Check `site_type` in business input — adapt copy depth and style accordingly (e.g., coming-soon is ultra-brief, corporate is comprehensive)

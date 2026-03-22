@@ -27,6 +27,11 @@ properties:
     type: string
     description: The industry or sector the business operates in.
     example: "Industrial technology and operational visibility"
+  site_type:
+    type: string
+    description: Auto-detected from intake answers. Determines which skills, blueprints, and page sets are activated.
+    enum: [corporate, service, personal-blog, booking, single-page, coming-soon]
+    default: corporate
 
   # ── Brand seeds ────────────────────────────────────────────
   brand:

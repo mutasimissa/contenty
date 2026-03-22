@@ -4,10 +4,17 @@ description: Write and publish a new blog post end-to-end
 
 Complete workflow for creating a blog post from topic to live page.
 
-1. Run `deno task new-blog` to scaffold the post with frontmatter and create blog routes if needed.
-2. Read `business/02-brand-strategy.md` (tone), `business/08-seo-brief.md` (keywords), `business/05-personas-jobs.md` (audience), and `agency/blueprints/blog-post.md` (structure).
-3. Write the full blog post content: H1 with primary keyword, introduction, body sections with H2/H3, key takeaways, CTA linking to service pages, optional FAQ section.
-4. Add internal links to relevant service pages (2-3 links) and related blog posts.
-5. Update `website/routes/blog/index.tsx` to include the new post.
-6. Set frontmatter `draft: false` when content is finalized.
-7. Run `deno task snapshot` to save the updated state.
+1. Read `business/01-business-input.yaml` — check `site_type`. If site_type is `coming-soon` or `single-page`, warn that blog posts aren't typical for this site type.
+2. Run `deno task new-blog` to scaffold the post with frontmatter and create blog routes if needed.
+3. Read `business/02-brand-strategy.md` (tone), `business/08-seo-brief.md` (keywords), `business/05-personas-jobs.md` (audience), and `agency/blueprints/blog-post.md` (structure).
+4. Write the full blog post content following the blueprint:
+   - H1 with primary keyword placed naturally
+   - Introduction that hooks the reader and establishes relevance
+   - Body sections with H2/H3 hierarchy, each covering a distinct subtopic
+   - Key takeaways or summary section
+   - CTA linking to relevant service/product pages
+   - Optional FAQ section if keyword intent warrants it
+5. Add internal links: 2-3 links to relevant service pages, 1-2 links to related blog posts if they exist.
+6. Update `website/routes/blog/index.tsx` to include the new post in the listing.
+7. Set frontmatter `draft: false` when content is finalized.
+8. Run `deno task snapshot` to save the updated state.

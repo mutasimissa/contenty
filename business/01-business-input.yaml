@@ -6,6 +6,8 @@
 business_name:
 website_goal:
 industry:
+# Auto-detected during intake. Options: corporate, service, personal-blog, booking, single-page, coming-soon
+site_type:
 
 # ── Brand seeds (refined by skills/brand-strategy/) ──────────
 brand:

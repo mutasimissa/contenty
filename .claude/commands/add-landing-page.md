@@ -4,9 +4,18 @@ description: Add a conversion-focused landing page end-to-end
 
 Complete workflow for creating a conversion-focused landing page.
 
-1. Run `deno task new-landing` to create the brief, route stub, and sitemap entry.
-2. Read the brief, `agency/blueprints/local-landing-page.md`, `agency/methodology/cro-framework.md`, and `business/04-value-proposition.md`.
-3. Fill in the brief completely with audience, SEO target, conversion-focused sections, and proof elements.
-4. Write conversion-focused copy: Hero + CTA above fold, Problem, Solution, Proof, Objection handling, Final CTA. CTA text describes the outcome, not the action.
-5. Implement the route with minimal navigation (focused conversion), `OGMeta`, `JsonLd`, and mobile-first CTA placement.
-6. Run `deno task snapshot` to save the updated state.
+1. Read `business/01-business-input.yaml` — check `site_type` and `primary_cta`.
+2. Run `deno task new-landing` to create the brief, route stub, and sitemap entry.
+3. Read the brief, `agency/blueprints/local-landing-page.md`, `agency/methodology/cro-framework.md`, and `business/04-value-proposition.md`.
+4. Fill in the brief completely with audience, SEO target, conversion-focused sections, and proof elements.
+5. Read `business/08-seo-brief.md`. Add an entry for the landing page with primary keyword, title tag, meta description, and schema type.
+6. Write conversion-focused copy following the CRO framework:
+   - Hero + primary CTA above the fold
+   - Problem statement that resonates with the target audience
+   - Solution summary tied to business value proposition
+   - Proof section (testimonials, stats, credentials)
+   - Objection handling (FAQ or comparison)
+   - Final CTA with urgency or scarcity element
+   - CTA text describes the outcome, not the action
+7. Implement the route with minimal navigation (focused conversion), `OGMeta`, `JsonLd`, and mobile-first CTA placement.
+8. Run `deno task snapshot` to save the updated state.

@@ -1,0 +1,86 @@
+type: object
+description: >
+  Business model definition covering revenue mechanics, core offers, conversion
+  paths, and sales motion. Produced by skills/offer-design/ and consumed by
+  page copy, pricing pages, and conversion optimization.
+
+required:
+  - revenue_model
+  - core_offers
+  - conversion_path
+  - sales_motion
+
+properties:
+
+  revenue_model:
+    type: string
+    description: How the business generates revenue.
+    example: "Recurring SaaS subscriptions with per-facility pricing"
+
+  core_offers:
+    type: array
+    description: List of offers the business sells, each with name, type, pricing, and description.
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the offer.
+          example: "Asset Monitoring Platform"
+        type:
+          type: string
+          description: "Offer category: product, service, SaaS, retainer, one-time, etc."
+          example: "SaaS"
+        pricing:
+          type: string
+          description: Pricing model or range.
+          example: "Custom-quoted per facility"
+        description:
+          type: string
+          description: One-sentence summary of what the offer delivers.
+          example: "Real-time sensor data aggregation for legacy and modern equipment"
+
+  conversion_path:
+    type: string
+    description: Primary path from website visitor to paying customer.
+    example: "Landing page -> Contact form -> Discovery call -> Proposal -> Close"
+
+  sales_motion:
+    type: string
+    description: "How sales happen: self-serve, sales-led, hybrid, community-led."
+    example: "sales-led"
+
+  packaging:
+    type: array
+    description: Tiers or packages the business offers.
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Starter"
+        description:
+          type: string
+          example: "Up to 5 assets, email alerts, basic dashboard"
+        price:
+          type: string
+          example: "$499/month"
+
+  expansion_paths:
+    type: array
+    description: Upsell and cross-sell opportunities after initial purchase.
+    example:
+      - "Add-on: Predictive analytics module"
+      - "Cross-sell: Annual maintenance contract"
+
+  sales_cycle:
+    type: string
+    description: Typical length of the sales cycle from first touch to close.
+    example: "4-8 weeks"
+
+  dependencies:
+    type: array
+    description: External factors the business depends on to deliver its offers.
+    example:
+      - "On-site sensor hardware availability"
+      - "Customer IT network access for deployment"

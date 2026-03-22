@@ -143,8 +143,7 @@ ${"─".repeat(60)}
   Next: run the /add-page workflow in your AI tool to
   complete this page end-to-end.
 
-  Windsurf:  /add-page
-  Claude:    /add-page
+  /add-page
 
   The workflow will:
   1. Fill in the page brief using the ${pageType} blueprint
