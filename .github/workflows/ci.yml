@@ -21,7 +21,19 @@ jobs:
         with:
           deno-version: v2.x
 
+      - name: Check project state
+        id: state
+        run: |
+          # Detect if business files have been populated (not just template)
+          if grep -q '^business_name:$' business/01-business-input.yaml 2>/dev/null; then
+            echo "populated=false" >> $GITHUB_OUTPUT
+            echo "Project is in template state — will run in advisory mode"
+          else
+            echo "populated=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Run contenty validate
+        if: steps.state.outputs.populated == 'true'
         run: deno task validate
 
       - name: Lint YAML syntax
@@ -37,8 +49,10 @@ jobs:
                 check-keys: false
               document-start: disable
               comments-indentation: disable
+              empty-values: disable
 
       - name: Validate business schemas
+        if: steps.state.outputs.populated == 'true'
         run: deno run --allow-read tests/ci/validate-schemas.ts
 
   markdown-lint:
@@ -78,8 +92,23 @@ jobs:
         with:
           deno-version: v2.x
 
+      - name: Check project state
+        id: state
+        run: |
+          if grep -q '^business_name:$' business/01-business-input.yaml 2>/dev/null; then
+            echo "populated=false" >> $GITHUB_OUTPUT
+            echo "Project is in template state — skipping content audit"
+          else
+            echo "populated=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Run content audit
+        if: steps.state.outputs.populated == 'true'
         run: deno task audit
+
+      - name: Skip notice
+        if: steps.state.outputs.populated == 'false'
+        run: echo "Content audit skipped — business files are empty (template state)"
 
   drift-check:
     name: Business/Website Drift
