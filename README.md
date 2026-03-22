@@ -687,4 +687,4 @@ the PR if:
 
 ## License
 
-[MIT](LICENSE) -- Copyright (c) 2025-2026 Mutasim Qaddoumi
+[MIT](LICENSE) -- Copyright (c) 2025-2026 Mutasim Issa <@mutasimissa>
