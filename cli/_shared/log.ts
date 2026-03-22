@@ -1,14 +1,3 @@
-import { Input, List, Confirm } from "@cliffy/prompt";
-
-export const askText = (message: string, defaultValue?: string): Promise<string> =>
-  Input.prompt({ message, default: defaultValue });
-
-export const askList = (message: string, defaultValue?: string[]): Promise<string[]> =>
-  List.prompt({ message, default: defaultValue });
-
-export const askConfirm = (message: string, defaultValue = true): Promise<boolean> =>
-  Confirm.prompt({ message, default: defaultValue });
-
 export const printSuccess = (msg: string): void =>
   console.log(`\n✅ ${msg}`);
 

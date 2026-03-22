@@ -1,5 +1,5 @@
 {
-  "version": "2.2.5",
+  "version": "3.0.0",
   "license": "MIT",
   "authors": [
     "Mutasim Issa <mutasim@sourcya.com>",
@@ -8,17 +8,9 @@
   "description": "Contenty - AI-Powered Content Management System",
   "workspace": ["cli", "tests"],
   "tasks": {
-    "start": "deno run --allow-read --allow-write --allow-run cli/start.ts",
-    "intake": "deno run --allow-read --allow-write cli/intake.ts",
     "validate": "deno run --allow-read cli/validate.ts",
-    "init-website": "deno run --allow-read --allow-write --allow-run --allow-net cli/init-website.ts",
-    "new-page": "deno run --allow-read --allow-write cli/new-page.ts",
-    "new-blog": "deno run --allow-read --allow-write cli/new-blog.ts",
-    "new-landing": "deno run --allow-read --allow-write cli/new-landing.ts",
     "audit": "deno run --allow-read cli/audit.ts",
-    "add-locale": "deno run --allow-read --allow-write cli/add-locale.ts",
-    "sync": "deno run --allow-read --allow-write cli/sync.ts",
-    "snapshot": "deno run --allow-read --allow-write cli/sync.ts -- --snapshot",
+    "init-website": "deno run --allow-read --allow-write --allow-run --allow-net cli/init-website.ts",
     "test": "deno task test:unit && deno task test:e2e",
     "test:unit": "deno test --allow-read tests/unit/",
     "test:e2e": "npx playwright test --config tests/e2e/playwright.config.ts",

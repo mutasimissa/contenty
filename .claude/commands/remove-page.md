@@ -12,4 +12,4 @@ Completely remove a page from the website, business files, and navigation.
 6. Delete `website/routes/<slug>.tsx` and locale variants.
 7. Update `Header.tsx` and `Footer.tsx` to remove nav links.
 8. Search all routes for internal links to the removed page — update or remove them.
-9. Run `deno task snapshot` to save the updated state.
+9. Verify no broken internal links remain and navigation is updated.

@@ -2,8 +2,8 @@
 
 ## Required source files (user-provided)
 
-The user must place these two SVG files before running `deno task intake`.
-Intake will fail if either is missing.
+The user must place these two SVG files before starting the intake process.
+The build will fail if either is missing.
 
 | File                         | Purpose                                   |
 | ---------------------------- | ----------------------------------------- |

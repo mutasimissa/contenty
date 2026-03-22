@@ -4,7 +4,7 @@ description: Detect business file changes and propagate updates to the website
 
 Detect which business files changed since last sync and propagate updates to all downstream files and website routes.
 
-1. Run `deno task sync` to detect changes. Read the output — it lists changed files and stale downstream files.
+1. Read the business files and use git diff or file comparison to detect what changed. Apply the dependency graph: business-input → brand-strategy → (brand-identity, business-model, value-prop, personas) → sitemap → seo-brief → content-deck → website/routes/. List changed and stale downstream files.
 2. Read `business/01-business-input.yaml` — note `site_type` for context.
 3. For each changed business file, assess impact and apply changes:
    - **Business input** changed → check if `site_type` changed; if so, warn user about potential structural changes
@@ -20,4 +20,4 @@ Detect which business files changed since last sync and propagate updates to all
    - No broken internal links
    - Meta tags match the current SEO brief
    - Navigation reflects the current sitemap
-5. Run `deno task snapshot` to record the new state.
+5. Confirm all updates are consistent and report a summary of changes made.

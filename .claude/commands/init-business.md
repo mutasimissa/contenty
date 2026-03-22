@@ -2,9 +2,9 @@
 description: Normalize and complete the business inputs for this repository
 ---
 
-Complete the expanded business input file. The CLI intake fills only the 3 core
-fields + CTA + locale. Interview the user section by section to fill seed
-fields.
+Complete the expanded business input file. The user provides core business
+information conversationally or by editing `business/01-business-input.yaml`
+directly. Interview the user section by section to fill seed fields.
 
 1. Read `business/01-business-input.yaml` — note which fields are already
    filled.

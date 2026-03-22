@@ -109,12 +109,12 @@ Before finishing, verify:
 
 - **Requires:** `business/02-brand-strategy.md`, `business/06-sitemap.yaml`,
   `business/08-seo-brief.md`, `business/05-personas-jobs.md`
-- **Feeds into:** `deno task new-blog` (category selection),
+- **Feeds into:** `/add-blog-post` (category selection),
   `skills/page-copy/` (blog post writing)
 
 ## Next step
 
-After this skill: use `deno task new-blog` to scaffold individual posts, then
+After this skill: use `/add-blog-post` to scaffold individual posts, then
 write content following `agency/blueprints/blog-post.md`
 
 ## Guardrails

@@ -5,7 +5,7 @@ description: Add a conversion-focused landing page end-to-end
 Complete workflow for creating a conversion-focused landing page.
 
 1. Read `business/01-business-input.yaml` — check `site_type` and `primary_cta`.
-2. Run `deno task new-landing` to create the brief, route stub, and sitemap entry.
+2. Ask the user for landing page name and CTA goal. Create a page brief at `business/07-page-briefs/<slug>.md`. Add to `business/06-sitemap.yaml`. Create route stub at `website/routes/<slug>.tsx` if the website exists.
 3. Read the brief, `agency/blueprints/local-landing-page.md`, `agency/methodology/cro-framework.md`, and `business/04-value-proposition.md`.
 4. Fill in the brief completely with audience, SEO target, conversion-focused sections, and proof elements.
 5. Read `business/08-seo-brief.md`. Add an entry for the landing page with primary keyword, title tag, meta description, and schema type.
@@ -18,4 +18,4 @@ Complete workflow for creating a conversion-focused landing page.
    - Final CTA with urgency or scarcity element
    - CTA text describes the outcome, not the action
 7. Implement the route with minimal navigation (focused conversion), `OGMeta`, `JsonLd`, and mobile-first CTA placement.
-8. Run `deno task snapshot` to save the updated state.
+8. Verify the landing page renders correctly with proper conversion flow.

@@ -9,7 +9,7 @@ workflow that supports both initial launch and ongoing operations.
 
 | Phase              | Deliverable                                   | Produced by                                       |
 | ------------------ | --------------------------------------------- | ------------------------------------------------- |
-| 1. Business intake | `business/01-business-input.yaml`             | `deno task intake`                                |
+| 1. Business intake | `business/01-business-input.yaml`             | `/fresh-start` or `/init-business`                |
 | 2. Brand strategy  | `business/02-brand-strategy.md`               | `skills/brand-strategy/`                          |
 | 3. Offer design    | `business/03-*`, `04-*`, `05-*`               | `skills/offer-design/`                            |
 | 4. Sitemap & IA    | `business/06-sitemap.yaml`, `07-page-briefs/` | `skills/sitemap-ia/`                              |
@@ -22,16 +22,16 @@ workflow that supports both initial launch and ongoing operations.
 
 ### Content operations
 
-- **Add a page** — `deno task new-page` → brief → copy → route
-- **Write a blog post** — `deno task new-blog` → draft → publish
-- **Create a landing page** — `deno task new-landing` → brief → copy → route
+- **Add a page** — `/add-page` → brief → copy → route
+- **Write a blog post** — `/add-blog-post` → draft → publish
+- **Create a landing page** — `/add-landing-page` → brief → copy → route
 - **Update page copy** — re-run `skills/page-copy/` for the target page
 
 ### Strategy updates
 
 - **Refine positioning** — re-run `skills/brand-strategy/`
 - **Add or change offers** — re-run `skills/offer-design/`
-- **Expand sitemap** — re-run `skills/sitemap-ia/` or use `deno task new-page`
+- **Expand sitemap** — re-run `skills/sitemap-ia/` or use `/add-page`
 - **Refresh SEO** — re-run `skills/seo-brief/`
 - **Update personas** — re-run `skills/offer-design/`
 
@@ -46,14 +46,15 @@ workflow that supports both initial launch and ongoing operations.
 
 - **Analytics setup** — `deno task analytics` → `docs/decisions/analytics.md`
 - **Brand assets** — `deno task brand-check` → verify logo naming
-- **Add a locale** — `deno task add-locale`
+- **Add a locale** — `/add-locale`
 - **Bootstrap website** — `deno task init-website`
 
 ## Central entry point
 
-Run `deno task start` at any time. It detects the project stage and routes you
-to the right task — whether you're launching for the first time, adding content,
-updating strategy, or running an audit.
+Run `/fresh-start` in Claude Code for a new project, or `/edit-sync` to propagate
+changes. Claude detects the project stage and guides you through the right
+workflow — whether you're launching for the first time, adding content, updating
+strategy, or running an audit.
 
 ## Non-negotiables
 

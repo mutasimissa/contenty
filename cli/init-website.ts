@@ -1,5 +1,5 @@
 import { writeText, resolve, fileExists } from "./_shared/files.ts";
-import { printSuccess, printError, printInfo, askConfirm, printSection } from "./_shared/prompts.ts";
+import { printSuccess, printError, printInfo, printSection } from "./_shared/log.ts";
 import { generateAllBrandedFiles } from "./_shared/brand-gen.ts";
 
 const WEBSITE_DIR = "website";
@@ -34,14 +34,7 @@ const hasFiles = (() => {
 })();
 
 if (hasFiles) {
-  const proceed = await askConfirm(
-    "website/ already has files. This will do a full rebuild from business files. Continue?",
-    false,
-  );
-  if (!proceed) {
-    printInfo("Aborted.");
-    Deno.exit(0);
-  }
+  printInfo("website/ already has files — rebuilding from business files.");
 }
 
 // ── Step 1: Scaffold Fresh project ───────────────────────

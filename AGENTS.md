@@ -9,7 +9,7 @@ This is a **single-business website system**.
   blueprints)
 - `website/` = implementation (Fresh 2.2+ / Tailwind 4 / Deno)
 - `skills/` = AI instructions (each skill is a SKILL.md you follow step by step)
-- `cli/` = Deno automation scripts (hub, intake, scaffolding, audit, sync)
+- `cli/` = Deno automation scripts (validation, audit, website init)
 
 ## How to use skills
 
@@ -48,28 +48,24 @@ and consult `agency/site-types.yaml` to determine which skills and pages apply.
   applicable rubric, and produces a structured report with pass/fail status and
   fix recommendations. Adapts checks to site type.
 
-## CLI tools
+## Build & test tasks
 
-Run `deno task start` for the guided hub menu, or run any task directly:
+Run with `deno task <command>`:
 
-- `start` — hub menu: detects project state, routes to the right task
-- `intake` — quick business intake (5 core questions, then AI fills the rest via
-  `/init-business`)
 - `validate` — check business files, YAML keys, brand assets, and SEO files
 - `audit` — content audit (sitemap <-> brief <-> copy <-> route <-> SEO coverage)
-- `sync` — detect changed business files and suggest AI workflows
-- `snapshot` — save file hashes for change detection
-- `new-page` — add a new page (brief + sitemap entry + optional route)
-- `new-blog` — scaffold a blog post with frontmatter, category, and routes
-- `new-landing` — scaffold a conversion-focused landing page
-- `add-locale` — add a new language to the site
 - `init-website` — bootstrap Fresh 2.2+ project in `website/`
+- `test` — run all tests (unit + E2E)
+- `test:unit` — Deno unit tests for CLI utilities
+- `test:e2e` — Playwright E2E tests against running website
+- `test:smoke` — quick pre-launch smoke suite (subset of E2E)
+- `prelaunch` — full pre-launch gate: validate + audit + smoke tests
 
 ## Three developer paths
 
-1. **Fresh start** — `deno task start` -> Fresh Start -> sequential build
-2. **Edit & sync** — change business files, `deno task sync` -> propagate
-3. **Rebuild** — `deno task start` -> Rebuild Website -> regenerate from scratch
+1. **Fresh start** — `/fresh-start` in Claude Code (fully AI-guided)
+2. **Edit & sync** — change business files, then `/edit-sync` in Claude Code
+3. **Rebuild** — `/rebuild-website` in Claude Code
 
 ## SEO requirements
 
@@ -94,7 +90,7 @@ The website must have: robots.txt, sitemap.xml route, manifest.json, custom 404.
 
 ## Recommended workflow
 
-1. `deno task intake` -> `business/01-business-input.yaml`
+1. `/fresh-start` or `/init-business` -> `business/01-business-input.yaml`
 2. `skills/brand-strategy/` -> `business/02-brand-strategy.md` 2b.
    `skills/brand-identity/` -> `business/02b-brand-identity.yaml`
 3. `skills/offer-design/` -> `business/03-*`, `04-*`, `05-*`
@@ -103,15 +99,14 @@ The website must have: robots.txt, sitemap.xml route, manifest.json, custom 404.
 6. `skills/page-copy/` -> `business/09-content-deck.md`
 7. `skills/launch-qa/` -> `business/10-launch-checklist.md`
 8. `deno task init-website` -> `website/`
-9. `deno task snapshot` -> `.contenty-state.json`
 
 ## Content lifecycle
 
-- **Add page:** `deno task new-page` -> `/add-page` workflow
-- **Add blog post:** `deno task new-blog` -> `/add-blog-post` workflow
-- **Add landing page:** `deno task new-landing` -> `/add-landing-page` workflow
-- **Add locale:** `deno task add-locale` -> `/add-locale` workflow
-- **Remove page:** `/remove-page` workflow (AI-driven cleanup)
+- **Add page:** `/add-page`
+- **Add blog post:** `/add-blog-post`
+- **Add landing page:** `/add-landing-page`
+- **Add locale:** `/add-locale`
+- **Remove page:** `/remove-page`
 
 ## Output discipline
 

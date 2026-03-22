@@ -1,5 +1,5 @@
-# Run `deno task intake` for the basics, then `/init-business` in your AI tool
-# to complete the rest conversationally. Or edit this file manually.
+# Run `/fresh-start` or `/init-business` in Claude Code to fill this
+# conversationally. Or edit this file manually.
 # Schema: agency/schemas/business-input.yaml
 
 # ── Core (required) ──────────────────────────────────────────

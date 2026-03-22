@@ -20,7 +20,7 @@ business/  ──>  AI skills + blueprints  ──>  website/
 - [The Build Process](#the-build-process)
 - [Content Lifecycle](#content-lifecycle)
 - [Project Structure](#project-structure)
-- [CLI Reference](#cli-reference)
+- [Build & Test Tasks](#build--test-tasks)
 - [AI Commands](#ai-commands)
 - [Testing](#testing)
 - [CI/CD Pipeline](#cicd-pipeline)
@@ -53,12 +53,11 @@ cd my-site
 #    assets/brand/logo.svg       (primary logo)
 #    assets/brand/logo-icon.svg  (square icon)
 
-# 3. Launch the hub
-deno task start
+# 3. Open Claude Code and run /fresh-start
 ```
 
-The hub detects your project state, shows what's done and what's next, and tells
-you exactly which command to run. No configuration needed.
+Claude Code walks you through each phase, detects your project state, and tells
+you exactly what to do next. No configuration needed.
 
 ---
 
@@ -118,12 +117,11 @@ automatically.
 
 ### Starting from scratch
 
-Run `deno task start` and choose **Fresh Start**. The hub walks you through each
-phase:
+Run `/fresh-start` in Claude Code. It walks you through each phase:
 
 | # | Phase | What happens | Command |
 |---|-------|-------------|---------|
-| 1 | Business intake | Answer 5 core questions | `deno task intake` |
+| 1 | Business intake | Answer 5 core questions | `/fresh-start` |
 | 2 | Fill seed fields | AI interviews you to complete all sections | `/init-business` |
 | 3 | Brand strategy | AI builds positioning, tone, messaging | `/build-brand-strategy` |
 | 3b | Brand identity | AI generates design tokens (colors, fonts, spacing) | `/build-brand-strategy` |
@@ -140,9 +138,9 @@ Phases that don't apply to your site type are skipped automatically.
 
 | Path | When to use | How |
 |------|-------------|-----|
-| **Fresh start** | New project from scratch | `deno task start` > Fresh Start |
-| **Edit & sync** | Update existing business files | Change files, `deno task sync`, then `/edit-sync` |
-| **Rebuild** | Major strategy changes | `deno task start` > Rebuild Website |
+| **Fresh start** | New project from scratch | `/fresh-start` in Claude Code (fully AI-guided) |
+| **Edit & sync** | Update existing business files | Change business files, then `/edit-sync` in Claude Code |
+| **Rebuild** | Major strategy changes | `/rebuild-website` in Claude Code |
 
 ---
 
@@ -150,24 +148,18 @@ Phases that don't apply to your site type are skipped automatically.
 
 ### Adding content
 
-| Task | Step 1 (CLI) | Step 2 (AI) |
-|------|-------------|-------------|
-| Add a page | `deno task new-page` | `/add-page` |
-| Add a blog post | `deno task new-blog` | `/add-blog-post` |
-| Add a landing page | `deno task new-landing` | `/add-landing-page` |
-| Add a language | `deno task add-locale` | `/add-locale` |
-| Remove a page | — | `/remove-page` |
+| Task | Command |
+|------|---------|
+| Add a page | `/add-page` |
+| Add a blog post | `/add-blog-post` |
+| Add a landing page | `/add-landing-page` |
+| Add a language | `/add-locale` |
+| Remove a page | `/remove-page` |
 
 ### Updating content
 
-Change any business file, then:
-
-```bash
-deno task sync     # shows what changed and what needs updating
-```
-
-Then run `/edit-sync` in Claude Code — it reads the changes and updates all
-downstream files and website routes automatically.
+Change any business file, then run `/edit-sync` in Claude Code. It reads the
+changes and updates all downstream files and website routes automatically.
 
 ### Dependency graph
 
@@ -185,8 +177,8 @@ business-input
                                                 └─> website/routes/
 ```
 
-`deno task sync` detects these cascades and tells you exactly what needs
-updating.
+`/edit-sync` detects these cascades and updates all downstream files
+automatically.
 
 ---
 
@@ -250,29 +242,16 @@ contenty/
 
 ---
 
-## CLI Reference
+## Build & Test Tasks
 
 Run with `deno task <command>`:
 
-### Core workflow
+### Build tasks
 
 | Command | What it does |
 |---------|-------------|
-| `start` | Hub menu — detects state, shows next step |
-| `intake` | 5-question business intake |
 | `validate` | Check business files, YAML keys, brand assets, SEO files |
 | `audit` | Content coverage audit (sitemap vs briefs vs copy vs routes vs SEO) |
-| `sync` | Detect changes since last snapshot, show stale files |
-| `snapshot` | Save file hashes for change detection |
-
-### Scaffolding
-
-| Command | What it does |
-|---------|-------------|
-| `new-page` | Create a new page (brief + sitemap entry + optional route) |
-| `new-blog` | Scaffold a blog post with frontmatter and category |
-| `new-landing` | Scaffold a conversion-focused landing page |
-| `add-locale` | Add a new language (locale stubs + route directory) |
 | `init-website` | Bootstrap Fresh 2.2+ project in `website/` |
 
 ### Testing
@@ -489,11 +468,7 @@ Contenty supports multilingual sites with locale-aware routing and RTL support.
 
 ### Adding a language
 
-```bash
-deno task add-locale    # creates locale stubs
-```
-
-Then run `/add-locale` in Claude Code to:
+Run `/add-locale` in Claude Code to:
 
 - Create locale route directories (`website/routes/[locale]/`)
 - Translate UI strings (`website/locales/[locale].json`)
@@ -598,9 +573,8 @@ custom 404 page.
 
 ### File dependency tracking
 
-The CLI tracks dependencies between business files using a directed graph.
-When you change a file, `deno task sync` identifies all downstream files that
-need updating:
+Claude handles dependency tracking between business files via `/edit-sync`.
+When you change a file, it identifies all downstream files that need updating:
 
 ```
 01-business-input.yaml

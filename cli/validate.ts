@@ -1,5 +1,5 @@
 import { fileExists, readYaml } from "./_shared/files.ts";
-import { printSuccess, printError, printInfo, printSection } from "./_shared/prompts.ts";
+import { printSuccess, printError, printInfo, printSection } from "./_shared/log.ts";
 
 console.log(`
 ╔══════════════════════════════════════════════════════════╗

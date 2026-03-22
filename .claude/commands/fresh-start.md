@@ -5,7 +5,13 @@ description: Full guided build from scratch — intake through live website
 Run the complete Contenty pipeline from business intake to a fully built website.
 
 ## Phase 1: Business Foundation
-1. Run `deno task intake` to collect core business information.
+1. Ask the user 5 core questions conversationally:
+   1. Business name
+   2. What the business does / website goal
+   3. Industry
+   4. Who it serves (target audience)
+   5. Primary CTA (what should visitors do)
+   Write the answers into `business/01-business-input.yaml`. Check for logo files at `assets/brand/logo.svg` and `assets/brand/logo-icon.svg`.
 2. Run `/init-business` to expand all seed fields conversationally.
 3. Read `business/01-business-input.yaml` — check the `site_type` field.
    - If empty, detect from `website_goal`, `offers`, `primary_cta`:
@@ -39,4 +45,4 @@ Run the complete Contenty pipeline from business intake to a fully built website
 14. Run `deno task init-website` to scaffold the Fresh project and generate branded files.
 15. Read `skills/website-init/SKILL.md`. Populate every route with content from the content deck, SEO metadata from the SEO brief, OG tags via `OGMeta` component, and JSON-LD via `JsonLd` component.
 16. **Checkpoint:** Run `deno task audit` to verify content coverage. Show results to user.
-17. Run `deno task snapshot` to save the initial state for future sync.
+17. Verify that all routes render correctly and content matches the content deck.

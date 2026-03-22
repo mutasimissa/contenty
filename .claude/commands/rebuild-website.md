@@ -14,4 +14,4 @@ Completely regenerate the website from the current business files.
    - Populate with content, `OGMeta`, `JsonLd`, proper heading hierarchy, internal links.
    - Verify accessibility: semantic HTML, alt text, form labels, keyboard navigation.
 7. Run `deno task audit` to verify the rebuild is complete.
-8. Run `deno task snapshot` to save the fresh state.
+8. Verify all routes render correctly and content matches the content deck.

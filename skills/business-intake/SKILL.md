@@ -11,8 +11,8 @@ without blocking progress.
 
 ## Prerequisites
 
-- User has run `deno task intake` OR manually filled
-  `business/01-business-input.yaml`
+- User has answered core business questions conversationally via `/fresh-start`
+  or `/init-business`, OR manually filled `business/01-business-input.yaml`
 
 ## Read these files first
 

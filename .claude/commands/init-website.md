@@ -9,4 +9,4 @@ Read `skills/website-init/SKILL.md` and follow every step.
 3. Populate each route with: full content, `OGMeta` component, `JsonLd` component, proper heading hierarchy, internal links.
 4. Ensure robots.txt, sitemap.xml, manifest.json, and 404 page are present.
 5. Verify accessibility: semantic HTML, alt text, form labels, keyboard navigation.
-6. Run `deno task snapshot` to save state.
+6. Verify all routes render correctly and required files (robots.txt, sitemap.xml, manifest.json, 404) are present.
